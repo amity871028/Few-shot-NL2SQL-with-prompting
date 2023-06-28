@@ -1,0 +1,6 @@
+
+index is 765
+SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "English" AND T2.IsOfficial  =  "T")
+Give the mean life expectancy of countries in which English is not the official language.
+SQL correction:
+SELECT AVG(lifeexpectancy) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE countrylanguage.language != 'English' AND countrylanguage.isofficial = 'F'

@@ -1,0 +1,1 @@
+SELECT MAX(weight), PetType FROM Pets GROUP BY PetType

@@ -1,0 +1,50 @@
+SELECT T1.department_name, T1.department_id, COUNT(T2.degree_program_id)  FROM Departments AS T1  JOIN Degree_Programs AS T2 ON T1.department_id = T2.department_id  GROUP BY T1.department_id, T1.department_name  ORDER BY COUNT(T2.degree_program_id) DESC  LIMIT 1
+SELECT COUNT (DISTINCT department_id) FROM Degree_Programs
+SELECT COUNT(DISTINCT department_id) FROM Degree_Programs
+SELECT COUNT(DISTINCT degree_summary_name) FROM Degree_Programs
+SELECT count(DISTINCT degree_program_id) FROM Degree_Programs
+SELECT COUNT(Degree_Programs.degree_program_id)  FROM Degree_Programs  INNER JOIN Departments ON Degree_Programs.department_id = Departments.department_id WHERE Departments.department_name = 'engineering'
+SELECT count(Degree_Programs.degree_program_id)  FROM Degree_Programs  WHERE department_id = (SELECT department_id FROM Departments WHERE department_name = 'Engineering')
+SELECT section_name ,  section_description FROM Sections
+SELECT section_name, section_description FROM Sections
+SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(T2.section_id) <= 2
+SELECT T1.course_name, T1.course_id, COUNT(T2.section_id)  FROM Courses AS T1  JOIN Sections AS T2 ON T1.course_id = T2.course_id  GROUP BY T1.course_id, T1.course_name  HAVING COUNT(T2.section_id) < 2
+SELECT section_name FROM Sections ORDER BY section_name DESC
+SELECT section_name FROM Sections ORDER BY section_name DESC
+SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T2.semester_id ORDER BY count(T2.student_id) DESC LIMIT 1
+SELECT T1.semester_id ,  T1.semester_name ,  COUNT (DISTINCT T2.student_id) FROM semesters AS T1 JOIN student_enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id, T1.semester_name ORDER BY COUNT(DISTINCT T2.student_id) DESC LIMIT 1
+SELECT department_description FROM Departments WHERE department_name LIKE '%the computer%'
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ,  T2.semester_id HAVING count(DISTINCT T2.degree_program_id)  =  2
+SELECT T1.first_name, T1.middle_name, T1.last_name, T1.student_id  FROM Students AS T1  JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id  GROUP BY T1.student_id, T2.semester_id  HAVING COUNT(DISTINCT T2.degree_program_id) = 2
+SELECT T1.first_name, T1.middle_name, T1.last_name  FROM Students AS T1  JOIN Student_Enrolment AS T2  ON T1.student_id = T2.student_id  JOIN Degree_Programs AS T3  ON T2.degree_program_id = T3.degree_program_id  WHERE T3.degree_summary_name = 'Bachelor'
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name  FROM Students AS T1  JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id  JOIN Degree_Programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id  WHERE T3.degree_summary_name  =  'Bachelors'   The original SQLite SQL QUERY is correct as per the provided tables, columns, foreign keys, and primary keys. It properly joins the relevant tables and filters for students in a 'Bachelors' degree program. It also correctly selects the first, middle, and last names of these students. Therefore, there is no need for any changes.
+SELECT T2.degree_summary_name FROM Student_Enrolment AS T1 JOIN Degree_Programs AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T2.degree_summary_name ORDER BY count(T1.degree_program_id) DESC LIMIT 1
+SELECT degree_summary_name  FROM Degree_Programs  JOIN Student_Enrolment ON Degree_Programs.degree_program_id = Student_Enrolment.degree_program_id  GROUP BY degree_summary_name  ORDER BY count(*) DESC  LIMIT 1
+SELECT T2.degree_program_id, T2.degree_summary_name  FROM Student_Enrolment AS T1  JOIN Degree_Programs AS T2  ON T1.degree_program_id = T2.degree_program_id  GROUP BY T1.degree_program_id  ORDER BY COUNT(*) DESC  LIMIT 1
+SELECT degree_program_id, degree_summary_name  FROM Degree_Programs  WHERE degree_program_id IN (     SELECT degree_program_id      FROM Student_Enrolment      GROUP BY degree_program_id      ORDER BY COUNT(*) DESC      LIMIT 1 )
+SELECT T1.student_id, T1.first_name, T1.middle_name, T1.last_name, COUNT(T2.student_enrolment_id) AS number_of_enrollments FROM Students AS T1  JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id  GROUP BY T1.student_id, T1.first_name, T1.middle_name, T1.last_name  ORDER BY number_of_enrollments DESC  LIMIT 1
+SELECT T1.first_name, T1.middle_name, T1.last_name, T1.student_id, COUNT(T2.student_id) AS enrollments FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY enrollments DESC  LIMIT 1
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN (SELECT semester_id FROM Student_Enrolment)
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN (SELECT semester_id FROM Student_Enrolment)
+SELECT DISTINCT course_name FROM Courses WHERE course_id IN (SELECT course_id FROM Student_Enrolment_Courses)
+SELECT DISTINCT course_name  FROM Courses  WHERE course_id IN (SELECT course_id FROM Student_Enrolment_Courses)
+SELECT T2.course_name  FROM Student_Enrolment_Courses AS T1  JOIN Courses AS T2  ON T1.course_id  =  T2.course_id  GROUP BY T1.course_id  ORDER BY COUNT(T1.student_course_id) DESC  LIMIT 1
+SELECT T1.course_name  FROM Courses AS T1  JOIN Student_Enrolment_Courses AS T2  ON T1.course_id = T2.course_id  GROUP BY T1.course_id  ORDER BY COUNT(T2.student_course_id) DESC  LIMIT 1
+SELECT T1.last_name  FROM Students AS T1  JOIN Addresses AS T2  ON T1.current_address_id = T2.address_id  WHERE T2.state_province_county = 'North Carolina'  AND NOT EXISTS (     SELECT *      FROM Student_Enrolment AS T3      WHERE T1.student_id = T3.student_id )
+SELECT DISTINCT T1.last_name  FROM Students AS T1  JOIN Addresses AS T2  ON T1.current_address_id = T2.address_id  WHERE T2.state_province_county = 'North Carolina'  AND NOT EXISTS (      SELECT *      FROM Student_Enrolment AS T3      WHERE T1.student_id = T3.student_id  )
+SELECT T1.transcript_date, T1.transcript_id  FROM Transcripts AS T1  JOIN Transcript_Contents AS T2  ON T1.transcript_id = T2.transcript_id  GROUP BY T1.transcript_id, T1.transcript_date  HAVING COUNT(T2.student_course_id) >= 2
+SELECT T1.transcript_date ,  T1.transcript_id FROM Transcripts AS T1 JOIN Transcript_Contents AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*) >= 2
+SELECT cell_mobile_number FROM Students WHERE first_name  =  'Timmothy' AND last_name  =  'Ward'
+SELECT cell_mobile_number FROM Students WHERE first_name = 'Timmothy' AND last_name = 'Ward'
+SELECT first_name, middle_name, last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+SELECT first_name , middle_name , last_name FROM Students ORDER BY date_left ASC LIMIT 1
+SELECT Students.first_name, Students.middle_name, Students.last_name FROM Students WHERE date_left IS NOT NULL ORDER BY date_left ASC LIMIT 1
+SELECT first_name FROM Students WHERE permanent_address_id != current_address_id
+SELECT first_name FROM Students WHERE permanent_address_id != current_address_id
+SELECT T2.address_id, T2.line_1, T2.line_2, T2.line_3, count(T1.current_address_id) AS students_count  FROM Students AS T1  JOIN Addresses AS T2 ON T1.current_address_id = T2.address_id  GROUP BY T2.address_id  ORDER BY students_count DESC  LIMIT 1
+SELECT address_id, line_1, line_2  FROM Addresses  WHERE address_id IN (   SELECT current_address_id    FROM Students    GROUP BY current_address_id    ORDER BY COUNT(student_id) DESC    LIMIT 1 )
+SELECT AVG(transcript_date) FROM Transcripts
+SELECT AVG(transcript_date) FROM Transcripts
+SELECT transcript_date, other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1

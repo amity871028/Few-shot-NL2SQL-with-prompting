@@ -1,0 +1,122 @@
+SELECT COUNT(*) FROM Likes WHERE student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle')
+SELECT count(*) FROM Likes JOIN Highschooler ON Likes.student_id = Highschooler.ID WHERE Highschooler.name = "Kyle"
+SELECT AVG (grade) FROM highschooler WHERE id  IN  (SELECT student_id FROM friend)
+SELECT avg(grade) FROM highschooler WHERE EXISTS (SELECT * FROM friend WHERE friend.student_id = highschooler.id)
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+SELECT DISTINCT state FROM owners WHERE state IN (SELECT state FROM professionals)
+SELECT DISTINCT state FROM owners WHERE state IN (SELECT DISTINCT state FROM professionals)
+SELECT AVG(age) FROM dogs WHERE dog_id IN (SELECT dog_id FROM treatments)
+SELECT AVG(age) FROM dogs JOIN treatments ON dogs.dog_id = treatments.dog_id
+SELECT professional_id, last_name, cell_number FROM Professionals WHERE state = 'Indiana' OR professional_id IN (   SELECT professional_id   FROM Treatments   GROUP BY professional_id   HAVING COUNT(*) > 2 )
+SELECT professional_id, last_name, cell_number FROM Professionals WHERE state = 'Indiana' OR professional_id IN (   SELECT professional_id   FROM Treatments   GROUP BY professional_id   HAVING COUNT(*) > 2 )
+SELECT name FROM dogs WHERE cost_of_treatment > 1000
+SELECT name FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments WHERE cost_of_treatment > 1000)
+SELECT DISTINCT T1.first_name FROM owners AS T1 WHERE T1.first_name NOT IN (SELECT T2.name FROM dogs AS T2)
+SELECT first_name FROM owners WHERE first_name NOT IN (SELECT name FROM dogs) UNION SELECT first_name FROM professionals WHERE first_name NOT IN (SELECT name FROM dogs)
+SELECT professional_id , role_code , email_address FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+SELECT professional_id ,  role_code ,  email_address FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+SELECT owner_id ,  first_name ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id ORDER BY count(*) DESC LIMIT 1)
+SELECT owner_id ,  first_name ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id HAVING count(*)  =  (SELECT max(count(*)) FROM dogs GROUP BY owner_id))
+SELECT professional_id ,  role_code ,  first_name FROM professionals WHERE professional_id IN (SELECT professional_id FROM treatments GROUP BY professional_id HAVING count(*) >= 2)
+SELECT professional_id ,  role_code ,  first_name FROM professionals GROUP BY professional_id , role_code , first_name HAVING count(*)  >=  2
+SELECT breed_name FROM breeds GROUP BY breed_name ORDER BY count(*) DESC LIMIT 1
+SELECT breed_name FROM breeds GROUP BY breed_name ORDER BY count(breed_code) DESC LIMIT 1
+SELECT owner_id ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id ORDER BY sum(cost_of_treatment) DESC LIMIT 1)
+SELECT owner_id ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs JOIN treatments ON dogs.dog_id  =  treatments.dog_id GROUP BY owner_id ORDER BY sum(cost_of_treatment) DESC LIMIT 1)
+SELECT treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code GROUP BY treatment_types.treatment_type_description ORDER BY sum(cost_of_treatment) LIMIT 1
+SELECT treatment_type_description FROM treatment_types WHERE treatment_type_code  =  (SELECT treatment_type_code FROM treatments GROUP BY treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1)
+SELECT owner_id , zip_code FROM owners ORDER BY (SELECT sum(charge_amount) FROM charges WHERE dogs.owner_id = owners.owner_id) DESC LIMIT 1
+SELECT owners.owner_id ,  owners.zip_code FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN treatments ON dogs.dog_id  =  treatments.dog_id GROUP BY owners.owner_id ORDER BY sum(treatments.cost_of_treatment) DESC LIMIT 1
+SELECT professional_id , cell_number FROM professionals GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2
+SELECT professional_id ,  cell_number FROM professionals GROUP BY professional_id HAVING count(DISTINCT treatment_type_code)  >  1
+SELECT first_name ,  last_name FROM professionals WHERE cost_of_treatment  <  (SELECT avg(cost_of_treatment) FROM treatments)
+SELECT first_name , last_name FROM professionals WHERE professional_id IN (SELECT professional_id FROM treatments WHERE cost_of_treatment < (SELECT avg(cost_of_treatment) FROM treatments))
+SELECT date_of_treatment , first_name FROM treatments JOIN professionals ON treatments.professional_id  =  professionals.professional_id
+SELECT date_of_treatment ,  first_name FROM treatments JOIN professionals ON treatments.professional_id  =  professionals.professional_id
+SELECT cost_of_treatment , treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code
+SELECT cost_of_treatment, treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code
+SELECT owners.first_name , owners.last_name , sizes.size_description FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN sizes ON dogs.size_code  =  sizes.size_code
+SELECT owners.first_name ,  owners.last_name ,  sizes.size_description FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN sizes ON dogs.size_code  =  sizes.size_code
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id
+SELECT dogs.name ,  treatments.date_of_treatment FROM dogs JOIN treatments ON dogs.dog_id  =  treatments.dog_id WHERE dogs.breed_code  =  (SELECT breed_code FROM breeds WHERE breed_name  =  (SELECT breed_name FROM breeds GROUP BY breed_name HAVING count(*)  =  1))
+SELECT dogs.name , treatments.date_of_treatment FROM dogs JOIN treatments ON dogs.dog_id = treatments.dog_id JOIN breeds ON dogs.breed_code = breeds.breed_code WHERE breeds.breed_code = (SELECT breed_code FROM breeds ORDER BY breed_code LIMIT 1)
+SELECT owners.first_name, dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id WHERE owners.state = 'Virginia'
+SELECT owners.first_name, dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id WHERE owners.state = 'Virginia'
+SELECT date_arrived ,  date_departed FROM dogs WHERE EXISTS (SELECT dog_id FROM treatments WHERE dogs.dog_id = treatments.dog_id)
+SELECT date_arrived ,  date_departed FROM dogs WHERE EXISTS (SELECT dog_id FROM treatments WHERE treatments.dog_id  =  dogs.dog_id)
+SELECT last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs WHERE age  =  (SELECT min(age) FROM dogs))
+SELECT last_name FROM dogs JOIN owners ON dogs.owner_id = owners.owner_id ORDER BY dogs.date_of_birth LIMIT 1
+SELECT email_address FROM Professionals WHERE state IN ('Hawaii', 'Wisconsin')
+SELECT email_address FROM Professionals WHERE state IN ('Hawaii', 'Wisconsin')
+SELECT date_arrived ,  date_departed FROM dogs
+SELECT date_arrived ,  date_departed FROM dogs
+SELECT count(DISTINCT dog_id) FROM treatments
+SELECT count(*) FROM treatments
+SELECT COUNT(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+SELECT COUNT(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+SELECT role_code, street, city, state FROM Professionals WHERE city LIKE '%West%'
+SELECT role_code, street, city, state FROM Professionals WHERE city LIKE '%West%';
+SELECT first_name, last_name, email_address FROM Owners WHERE state LIKE '%North%';
+SELECT first_name, last_name, email_address FROM Owners WHERE state LIKE '%North%'
+SELECT count(*) FROM dogs WHERE age < (SELECT avg(age) FROM dogs)
+SELECT count(dog_id) FROM dogs WHERE age  <  (SELECT AVG(age) FROM dogs)
+SELECT MAX(cost_of_treatment) FROM treatments
+SELECT cost_of_treatment FROM treatments ORDER BY date_of_treatment DESC LIMIT 1
+SELECT count(dog_id) FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments)
+SELECT count(dog_id) FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments)
+SELECT count(*) FROM owners WHERE owner_id NOT IN (SELECT DISTINCT owner_id FROM dogs)
+SELECT count(DISTINCT T1.owner_id) FROM owners AS T1 WHERE T1.owner_id NOT IN (SELECT owner_id FROM dogs)
+SELECT count(DISTINCT T1.professional_id) FROM professionals AS T1 WHERE T1.professional_id NOT IN (SELECT DISTINCT T2.professional_id FROM treatments AS T2)
+SELECT count(professional_id) FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+SELECT name, age, weight FROM Dogs WHERE abandoned_yn = 1
+SELECT name , age , weight FROM dogs WHERE abandoned_yn  =  1
+SELECT avg(age) FROM dogs
+SELECT AVG(age) FROM dogs
+SELECT max(age) FROM dogs
+SELECT max(age) FROM dogs
+SELECT charge_type ,  charge_amount FROM charges
+SELECT charge_type ,  charge_amount FROM charges
+SELECT max(charge_amount) FROM charges
+SELECT charge_amount FROM charges ORDER BY charge_amount DESC LIMIT 1
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+SELECT breeds.breed_name , sizes.size_description FROM breeds , sizes
+SELECT DISTINCT breed_code ,  size_code FROM dogs
+SELECT professionals.first_name , treatment_types.treatment_type_description FROM professionals JOIN treatments ON professionals.professional_id = treatments.professional_id
+SELECT professionals.first_name , treatment_types.treatment_type_description FROM professionals JOIN treatments ON professionals.professional_id  =  treatments.professional_id
+SELECT count(*) FROM singer
+SELECT count(*) FROM singer
+SELECT name FROM singer ORDER BY net_worth_millions ASC
+SELECT name FROM singer ORDER BY net_worth_millions ASC
+SELECT birth_year ,  citizenship FROM singer
+SELECT birth_year ,  citizenship FROM singer
+SELECT name FROM singer WHERE citizenship <> 'France'
+SELECT name FROM singer WHERE citizenship <> 'France'
+SELECT DISTINCT name FROM singer WHERE birth_year = 1948 OR birth_year = 1949
+SELECT DISTINCT name FROM singer WHERE birth_year = 1948 OR birth_year = 1949
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+SELECT DISTINCT citizenship , COUNT(citizenship) FROM singer GROUP BY citizenship
+SELECT citizenship , count(*) FROM singer GROUP BY citizenship
+SELECT citizenship ,  count(*) FROM singer GROUP BY citizenship ORDER BY count(*) DESC LIMIT 1
+SELECT citizenship FROM singer GROUP BY citizenship ORDER BY count(citizenship) DESC LIMIT 1
+SELECT citizenship ,  MAX (net_worth_millions) FROM singer GROUP BY citizenship
+SELECT citizenship ,  MAX(net_worth_millions) FROM singer GROUP BY citizenship
+SELECT title ,  name FROM song JOIN singer ON song.singer_id  =  singer.singer_id
+SELECT title , name FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID
+SELECT DISTINCT name FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID WHERE sales > 300000
+SELECT DISTINCT name FROM singer WHERE sales > 300000
+SELECT name FROM singer GROUP BY name HAVING count(*)  >  1
+SELECT name FROM singer GROUP BY name HAVING count(*)  >  1
+SELECT singer.name , sum(song.sales) FROM singer JOIN song ON singer.singer_id = song.singer_id GROUP BY singer.name
+SELECT singer.name , sum(song.sales) FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID GROUP BY singer.name
+SELECT name FROM singer WHERE singer_id NOT IN (SELECT singer_id FROM song)
+SELECT name FROM singer WHERE NOT EXISTS (SELECT * FROM song WHERE singer.Singer_ID = song.Singer_ID)
+SELECT DISTINCT citizenship FROM singer WHERE birth_year < 1945 AND birth_year > 1955
+SELECT DISTINCT citizenship FROM singer WHERE birth_year  <  1945 AND birth_year  >  1955
+SELECT count(*) FROM other_available_features
+SELECT feature_type_name  FROM ref_feature_types  WHERE feature_type_code = (SELECT feature_type_code                             FROM other_available_features                             WHERE feature_name = 'AirCon')
+SELECT property_type_description FROM ref_property_types WHERE property_type_code = (SELECT property_type_code FROM properties)
+SELECT property_name  FROM Properties  WHERE (property_type_code = 'Apartment' OR property_type_code = 'House')  AND room_count > 1

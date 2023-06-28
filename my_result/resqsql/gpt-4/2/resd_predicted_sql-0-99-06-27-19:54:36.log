@@ -1,0 +1,49 @@
+SELECT COUNT(DISTINCT Singer_ID) FROM singer
+SELECT COUNT (Singer_ID) FROM singer
+SELECT Name , Country , Age FROM singer ORDER BY Age DESC
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+SELECT AVG(age), MIN(age), MAX(age) FROM singer WHERE Country = 'France'
+SELECT AVG(age), MIN(age), MAX(age) FROM singer WHERE Country = 'France'
+SELECT Song_Name, Song_release_year  FROM singer  ORDER BY Age ASC  LIMIT 1
+SELECT The SQL query provided looks correct according to the requirements in the question.  The subquery in the WHERE clause correctly selects the minimum (youngest) age from the singer table. Then, the main query selects the name and song release year for any singer(s) with that minimum age.   So, the fixed SQL query is the same as the original query:  ```sql SELECT Name, Song_release_year FROM singer WHERE Age  =  (SELECT MIN(Age) FROM singer) ```
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+SELECT DISTINCT country FROM singer WHERE age  >  20
+SELECT The given SQLite SQL query is correct. It will count the number of singers (i.e., the 'Name' column in the 'singer' table) for each country (the 'Country' column in the 'singer' table). This aligns with the question requirement. Hence, the fixed SQL query is the same as the original one.  Here's the query:  ```sql SELECT count(Name) ,  Country FROM singer GROUP BY Country ```
+SELECT The provided SQL query seems correct as it adheres to the conditions given in the question. It is counting the number of singers based on their country of origin, which doesn't require joining any tables. Hence, the fixed SQL query would be the same as the original one:  ```sql SELECT COUNT(Singer_ID), Country FROM singer GROUP BY Country ```
+SELECT Song_Name  FROM singer  WHERE Age > (SELECT AVG(Age) FROM singer);
+SELECT Song_Name FROM singer WHERE Age  >  (SELECT AVG(Age) FROM singer)
+SELECT location, name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+SELECT MAX(capacity) ,  AVG(capacity) FROM stadium
+SELECT AVG(Capacity) AS Average_Capacity, MAX(Capacity) AS Maximum_Capacity FROM stadium;
+SELECT Name ,  Capacity FROM stadium ORDER BY Average DESC LIMIT 1
+SELECT Name, Capacity FROM stadium WHERE Average = (SELECT MAX(Average) FROM stadium)
+SELECT count(concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+SELECT COUNT(concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+SELECT The given SQL query is correct according to the given requirement, which is to show the stadium name and the number of concerts in each stadium. The JOIN operation is appropriately defined, and the GROUP BY clause is used correctly to group by the stadium name. The COUNT function is used properly to count the number of concerts in each stadium. Therefore, the fixed SQL query is the same as the original:  ```sql SELECT stadium.Name, COUNT(concert.concert_ID) AS NumberOfConcerts  FROM stadium  LEFT JOIN concert  ON stadium.Stadium_ID = concert.Stadium_ID  GROUP BY stadium.Name ```
+SELECT The provided SQLite SQL QUERY is correct as per the requirement of the question. The query is already grouping by stadium name and counting the concerts that have taken place there, which matches the question's instruction. Therefore, the fixed SQL query remains the same as the original.  ```sql SELECT count(*) ,  stadium.name FROM concert JOIN stadium ON concert.stadium_id  =  stadium.stadium_id GROUP BY stadium.name ```
+SELECT The SQLite SQL QUERY provided seems to be correct according to the instructions and database design provided.   It correctly selects the name and capacity of the stadium (from the "stadium" table), joins this table with the "concert" table using the shared "Stadium_ID" column (which is according to the defined foreign keys), then filters the concerts to those that are from the year 2014 or later. After that, it groups the results by "Stadium_ID" (it is mentioned to use GROUP BY on one column only) and orders the groups by the count of concerts in each group in descending order. Finally, it limits the result to only the first row, effectively only selecting the stadium with the most concerts.  Therefore, the FIXED SQL QUERY is the same as the provided SQL QUERY:  ```sql SELECT T1.name, T1.capacity  FROM stadium AS T1  JOIN concert AS T2  ON T1.Stadium_ID = T2.Stadium_ID  WHERE T2.year >= 2014  GROUP BY T1.Stadium_ID  ORDER BY COUNT(T2.concert_ID) DESC  LIMIT 1 ```
+SELECT T1.Name, T1.Capacity  FROM stadium AS T1  JOIN concert AS T2  ON T1.Stadium_ID = T2.Stadium_ID  WHERE T2.Year > 2013  GROUP BY T1.Stadium_ID  ORDER BY COUNT(T2.concert_ID) DESC  LIMIT 1
+SELECT Year FROM concert GROUP BY Year ORDER BY COUNT(concert_ID) DESC LIMIT 1
+SELECT Year FROM concert GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1
+SELECT stadium.Name FROM stadium WHERE stadium.Stadium_ID NOT IN (SELECT concert.Stadium_ID FROM concert)
+SELECT name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)
+SELECT DISTINCT country FROM singer WHERE country IN (SELECT country FROM singer WHERE age > 40) AND country IN (SELECT country FROM singer WHERE age < 30)
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year  =  2014)
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year  =  2014)
+SELECT T1.concert_Name ,  T1.Theme ,  COUNT(T2.Singer_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID  =  T2.concert_ID GROUP BY T1.concert_ID, T1.concert_Name, T1.Theme
+SELECT concert.concert_Name, concert.Theme, COUNT(singer_in_concert.Singer_ID) AS Number_of_singers  FROM concert  JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID  GROUP BY concert.concert_ID
+SELECT singer.Name, COUNT(singer_in_concert.concert_ID) AS Number_of_Concerts FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID GROUP BY singer.Name;
+SELECT T1.Name, COUNT(T2.concert_ID) AS NumberOfConcerts FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Name
+SELECT DISTINCT T1.Name FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID  =  T2.Singer_ID JOIN concert AS T3 ON T2.concert_ID  =  T3.concert_ID WHERE T3.Year  =  2014
+SELECT DISTINCT T1.Name FROM singer AS T1  JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID  JOIN concert AS T3 ON T2.concert_ID = T3.concert_ID  WHERE T3.Year = 2014
+SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+SELECT DISTINCT T2.name, T2.location  FROM concert AS T1  JOIN stadium AS T2  ON T1.Stadium_ID = T2.Stadium_ID  WHERE T1.year IN (2014, 2015) GROUP BY T2.name, T2.location HAVING COUNT(DISTINCT T1.year) = 2
+SELECT DISTINCT stadium.Name, stadium.Location FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year IN (2014, 2015) GROUP BY stadium.Stadium_ID HAVING COUNT(DISTINCT concert.Year) = 2
+SELECT COUNT(*) FROM concert WHERE Stadium_ID = (SELECT Stadium_ID FROM stadium ORDER BY Capacity DESC LIMIT 1)
+SELECT count(concert_ID) FROM concert WHERE Stadium_ID  =  (SELECT Stadium_ID FROM stadium ORDER BY Capacity DESC LIMIT 1)
+SELECT COUNT(*)  FROM Pets WHERE weight > 10;
+SELECT The provided SQL query already correctly answers the question: "How many pets have a greater weight than 10?". It is counting the number of records in the Pets table where the weight column value is greater than 10. No need to involve the other tables, no JOINs are needed here because the weight data resides in the Pets table itself. The fixed query is:  ```sql SELECT count(*) FROM Pets WHERE weight > 10 ```  Please note that SQLite is case-sensitive, so ensure your table name case matches the actual case in the database. If 'Pets' is the correct case, the provided query is correct. If 'pets' is the actual case, the original query is correct.
+SELECT weight FROM Pets WHERE PetType = 'dog' AND pet_age = (SELECT min(pet_age) FROM Pets WHERE PetType = 'dog')
+SELECT MIN(weight) AS youngest_dog_weight FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog' AND Pets.pet_age = (     SELECT MIN(pet_age)     FROM Pets     WHERE PetType = 'dog' );

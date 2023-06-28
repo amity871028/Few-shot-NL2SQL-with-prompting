@@ -1,0 +1,10 @@
+SELECT count(DISTINCT CountryName) FROM countries
+SELECT COUNT(*) FROM countries
+SELECT car_makers.FullName, car_makers.Id, COUNT(model_list.Model)  FROM car_makers  JOIN model_list  ON car_makers.Id = model_list.Maker  GROUP BY car_makers.Id
+SELECT car_makers.FullName, car_makers.Id, COUNT(model_list.Model)  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  GROUP BY car_makers.Id, car_makers.FullName
+SELECT car_names.Model FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Horsepower  =  (SELECT min(Horsepower) FROM cars_data)
+SELECT car_names.Model FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Horsepower = (SELECT MIN(Horsepower) FROM cars_data)
+SELECT Model FROM car_names WHERE MakeId IN (SELECT Id FROM cars_data WHERE Weight < (SELECT AVG(Weight) FROM cars_data))
+SELECT T3.Model  FROM cars_data AS T1  JOIN car_names AS T2 ON T1.Id = T2.MakeId  JOIN model_list AS T3 ON T2.Model = T3.Model  WHERE T1.Weight < (SELECT AVG(Weight) FROM cars_data)
+SELECT DISTINCT car_makers.Maker  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year = 1970
+SELECT DISTINCT car_makers.Maker  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year = 1970

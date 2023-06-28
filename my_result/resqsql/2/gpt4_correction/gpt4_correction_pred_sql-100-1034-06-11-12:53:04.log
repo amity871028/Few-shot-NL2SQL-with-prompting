@@ -1,0 +1,63 @@
+SELECT CountryName, COUNT(car_makers.Id) AS MakerCount  FROM countries  JOIN car_makers  ON countries.CountryId = car_makers.Country  GROUP BY CountryName  ORDER BY MakerCount DESC  LIMIT 1
+SELECT cars_data.Accelerate  FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE car_names.Model = 'amc hornet sportabout (sw)'
+SELECT count(DISTINCT model_list.Model)  FROM countries  JOIN car_makers ON countries.CountryId = car_makers.Country  JOIN model_list ON car_makers.Id = model_list.Maker  WHERE countries.CountryName = 'USA'
+SELECT car_makers.Maker, car_names.Model  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model
+SELECT max(cars_data.Horsepower), car_names.Make  FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Cylinders = 3  GROUP BY car_names.Make
+SELECT Cylinders , MAX(Accelerate) FROM cars_data GROUP BY Cylinders
+SELECT count(*) FROM cars_data WHERE Accelerate > (SELECT Horsepower FROM cars_data ORDER BY Horsepower DESC LIMIT 1)
+SELECT countries.countryid ,  countries.countryname  FROM countries  JOIN car_makers ON car_makers.country  =  countries.countryid  JOIN model_list ON car_makers.id  =  model_list.maker  JOIN car_names ON model_list.model  =  car_names.model  GROUP BY countries.countryid ,  countries.countryname HAVING COUNT(DISTINCT car_makers.id)  >  3 OR SUM(car_names.make = 'fiat') > 0  In the original query, there are several issues. The biggest issue is that the COUNT function was used in the WHERE clause. The WHERE clause is processed before aggregation operations like COUNT, so it doesn't have access to the count yet. In SQL, we need to use the HAVING clause to filter results based on aggregation results.  In the fixed query, the HAVING clause is used instead of WHERE to check if the COUNT of distinct car makers is more than 3 or if there's a 'fiat' car maker. SUM is used with a boolean condition to count the rows where the car's make is 'fiat'. The result of the boolean condition is a 1 or 0, so SUM will effectively count the number of rows where the condition is true.
+SELECT Abbreviation FROM airlines WHERE Airline = "JetBlue Airways"
+SELECT count(*) FROM airlines
+SELECT count(*) FROM flights WHERE DestAirport = 'ATO'
+SELECT DestAirport  FROM flights  GROUP BY DestAirport  ORDER BY COUNT(DestAirport) DESC  LIMIT 1
+SELECT DestAirport FROM  (SELECT DestAirport, COUNT(*) as flight_count  FROM flights  GROUP BY DestAirport ORDER BY flight_count ASC  LIMIT 1)
+SELECT Airline FROM flights GROUP BY Airline ORDER BY COUNT(*) DESC LIMIT 1
+SELECT Airline FROM airlines WHERE uid IN (SELECT Airline FROM flights WHERE SourceAirport IN ('APG', 'CVO')) GROUP BY Airline HAVING count(DISTINCT SourceAirport) = 2
+SELECT airlines.Airline FROM flights JOIN airlines ON flights.Airline = airlines.uid GROUP BY airlines.Airline HAVING COUNT(flights.FlightNo) >= 10
+SELECT Name FROM employee WHERE Employee_ID NOT IN (SELECT Employee_ID FROM evaluation)
+SELECT * FROM hiring
+SELECT District  FROM shop  WHERE Shop_ID IN (     SELECT Shop_ID      FROM shop      WHERE Number_products < 3000      UNION      SELECT Shop_ID      FROM shop      WHERE Number_products > 10000 ) GROUP BY District
+SELECT Document_Name, Template_ID FROM Documents WHERE Document_Description LIKE '%w%'
+SELECT Templates.Template_ID  FROM Templates  JOIN Documents ON Templates.Template_ID = Documents.Template_ID  GROUP BY Templates.Template_ID  HAVING COUNT(DISTINCT Documents.Document_ID) > 1
+SELECT Template_Type_Code  FROM Templates  GROUP BY Template_Type_Code  ORDER BY COUNT(*) DESC  LIMIT 1
+SELECT Templates.Template_Type_Code  FROM Templates  JOIN Documents  ON Templates.Template_ID = Documents.Template_ID  WHERE Documents.Document_Name = "Data base"
+SELECT T.Template_Type_Code FROM Templates T JOIN Documents D ON T.Template_ID = D.Template_ID GROUP BY T.Template_Type_Code ORDER BY COUNT(D.Document_ID) DESC LIMIT 1
+SELECT template_type_code FROM ref_template_types WHERE template_type_description = "Book"
+SELECT The SQLite SQL QUERY provided seems to be correct. It retrieves the 'hometown' of the teacher with the smallest 'age' value (indicating the youngest teacher). This is because the query sorts the 'teacher' table by 'age' in ascending order (from youngest to oldest) and then limits the output to the first record.  So, the FIXED SQLite SQL QUERY should be the same as the given query:  ```SQL SELECT hometown FROM teacher ORDER BY age ASC LIMIT 1 ```
+SELECT teacher.Name , course.Course  FROM teacher  JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID  JOIN course ON course.Course_ID = course_arrange.Course_ID  ORDER BY teacher.Name ASC
+SELECT count(*) FROM players
+SELECT count(*) FROM matches
+SELECT avg(winner_rank) FROM matches
+SELECT DISTINCT winner_name  FROM matches  WHERE year = 2013  AND winner_name IN (     SELECT winner_name      FROM matches      WHERE year = 2016 )
+SELECT winner_name, winner_rank_points FROM matches  GROUP BY winner_id  ORDER BY COUNT(*) DESC  LIMIT 1
+SELECT country_code, COUNT(player_id) AS player_count  FROM players  GROUP BY country_code  ORDER BY player_count DESC  LIMIT 1
+SELECT ranking_date ,  SUM(tours) FROM rankings GROUP BY ranking_date
+SELECT year , count(*) FROM matches GROUP BY year
+SELECT hand ,  COUNT(*) FROM players GROUP BY hand
+SELECT DISTINCT battle.id, battle.name FROM battle JOIN ship ON battle.id = ship.lost_in_battle WHERE ship.ship_type = 'Brig'
+SELECT battle.id, battle.name  FROM battle  JOIN ship ON battle.id = ship.lost_in_battle  JOIN death ON ship.id = death.caused_by_ship_id  GROUP BY battle.id  HAVING sum(death.killed) > 10
+SELECT count(*) FROM Courses
+SELECT course_description FROM Courses WHERE course_name = 'math'
+SELECT The SQLite SQL QUERY provided does not appear to have any issues. It's correctly looking for distinct `degree_summary_name` values from the `Degree_Programs` table, and counting them. The query should return the number of different degree names offered, as per the question.   Here's the SQLite SQL QUERY as is:  ```sql SELECT COUNT(DISTINCT degree_summary_name) FROM Degree_Programs ```  Note that table names in SQLite are case-insensitive, but it's a good practice to maintain the same case as defined while creating tables. Hence, I've capitalized the `Degree_Programs` table name. However, this does not impact the correctness or execution of your query.
+SELECT semester_name  FROM Semesters  WHERE NOT EXISTS      (SELECT semester_id       FROM Student_Enrolment       WHERE Semesters.semester_id = Student_Enrolment.semester_id)
+SELECT DISTINCT first_name  FROM Students  WHERE permanent_address_id != current_address_id
+SELECT The SQLite SQL query you provided:  ``` SELECT count(transcript_id) FROM transcripts ```  seems correct to answer the question: "How many transcripts are released?". This query is counting the total number of transcripts released, which is reflected in the count of unique transcript_id in the Transcripts table.  So, the fixed SQLite SQL query is:  ``` SELECT count(transcript_id) FROM transcripts ```
+SELECT T1.transcript_date ,  T1.transcript_id  FROM Transcripts AS T1  JOIN Transcript_Contents AS T2 ON T1.transcript_id  =  T2.transcript_id  GROUP BY T1.transcript_id  ORDER BY count(*) ASC  LIMIT 1
+SELECT semester_id FROM Student_Enrolment WHERE degree_program_id IN (SELECT degree_program_id FROM Degree_Programs WHERE degree_summary_name IN ('Masters', 'Bachelors')) GROUP BY semester_id HAVING COUNT(DISTINCT degree_program_id) > 1
+SELECT The given SQLite SQL QUERY appears to be correctly written, based on the provided instructions and question requirements. This query is designed to retrieve the unique addresses (comprising the various details like line_1, line_2, line_3, city, zip_postcode, state_province_county, country, other_address_details) where the students are currently living or have as their permanent address.  Here is the SQL query returned without changes:  ```sql SELECT DISTINCT line_1, line_2, line_3, city, zip_postcode, state_province_county, country, other_address_details  FROM Addresses  WHERE address_id IN (SELECT DISTINCT current_address_id FROM Students)  OR address_id IN (SELECT DISTINCT permanent_address_id FROM Students) ```  This query will work as intended in SQLite. It will ensure that it fetches all the unique addresses where students are currently living or have registered as their permanent address. If an address is associated with multiple students, this query will still only return it once, thanks to the DISTINCT keyword. The query properly leverages subqueries to check for address_ids in both current and permanent addresses of students.
+SELECT Title FROM Cartoon ORDER BY Title
+SELECT Title FROM Cartoon ORDER BY Title
+SELECT Title FROM Cartoon WHERE Directed_by = "Ben Jones"
+SELECT Country ,  COUNT(*)  FROM TV_Channel  GROUP BY Country  ORDER BY COUNT(*) DESC  LIMIT 1
+SELECT Language, COUNT(*)  FROM TV_Channel  GROUP BY Language  ORDER BY COUNT(*) ASC  LIMIT 1
+SELECT Language , COUNT(*) FROM TV_Channel GROUP BY Language
+SELECT Episode FROM TV_series ORDER BY Rating DESC
+SELECT DISTINCT TV_Channel.Country  FROM TV_Channel  JOIN Cartoon ON TV_Channel.id = Cartoon.Channel  WHERE Cartoon.Written_by = 'Todd Casey'
+SELECT name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM poker_player)
+SELECT max(area_code) , min(area_code) FROM AREA_CODE_STATE
+SELECT COUNT(*)  FROM CONTESTANTS  WHERE contestant_number NOT IN (SELECT contestant_number FROM VOTES)
+SELECT count(DISTINCT GovernmentForm) FROM country WHERE Continent = 'Africa'
+SELECT Name FROM country WHERE Code IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English') AND Code IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'French')
+SELECT AVG(country.LifeExpectancy)  FROM country  WHERE country.Code NOT IN      (SELECT countrylanguage.CountryCode      FROM countrylanguage      WHERE countrylanguage.Language = 'English' AND countrylanguage.IsOfficial = 'T')
+SELECT The provided SQL query seems to be accurate according to the requirements and information given. It sums the population of countries where English is not spoken, utilizing a subquery to filter out English speaking countries. The query should return the total number of people living in countries where English is not a spoken language.  However, please note that the 'countrylanguage' table might contain multiple entries for the same 'countrycode' with different languages. So, it might be better to use 'NOT EXISTS' instead of 'NOT IN' to ensure that if a country speaks multiple languages including English, it should be excluded.   The revised query would be as follows:  ```SQL SELECT SUM(Population)  FROM country  WHERE NOT EXISTS (     SELECT 1 FROM countrylanguage      WHERE country.Code = countrylanguage.CountryCode      AND Language = 'English' ) ```  This query ensures that if a country speaks multiple languages including English, it will be excluded from the sum of the population.
+SELECT count(DISTINCT countrylanguage.Language)  FROM country  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.IndepYear < 1930 AND countrylanguage.IsOfficial = 'T'

@@ -1,0 +1,1034 @@
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select avg ( _ ) , min ( _ ) , max ( _ ) from _ where _
+select avg ( _ ) , min ( _ ) , max ( _ ) from _ where _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ where @.@ > avg ( _ )
+select _ from _ where @.@ > avg ( _ )
+select _ from _ where _ between _ and _
+select _ from _ where _ between _ and _
+select max ( _ ) , _ from _
+select avg ( _ ) , max ( _ ) from _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ where _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select _ from _ where _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where except_ @.@ is _ and _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ order by _ desc limit _
+select count ( _ ) from _ order by _ desc limit _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select max ( _ ) , _ from _ group by _
+select max ( _ ) , _ from _ group by _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where @.@ not in _ and _
+select _ from _ where @.@ not in _ and _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where _ and @.@ not in _ and _
+select _ from _ where _ and @.@ not in _ and _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ where _
+select _ from _ where _
+select avg ( _ ) , max ( _ ) , _ from _ group by _
+select avg ( _ ) , max ( _ ) , _ from _ group by _
+select avg ( _ ) , _ from _ group by _
+select avg ( _ ) , _ from _ group by _
+select distinct _ from _ where @.@ join _
+select distinct _ from _ where @.@ join _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where _
+select _ from _ where _
+select avg ( _ ) from _ where @.@ not in _
+select avg ( _ ) from _ where @.@ not in _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ where @.@ < avg ( _ )
+select _ from _ where @.@ < avg ( _ )
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ where @.@ = min ( _ )
+select _ from _ where @.@ = min ( _ )
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select min ( _ ) from _ where _
+select min ( _ ) from _ where _
+select _ from _
+select _ from _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select avg ( _ ) , _ from _ group by _
+select avg ( _ ) , _ from _ group by _
+select _ from _ where _ and count ( _ ) >= _ group by _
+select _ from _ where _ and count ( _ ) >= _ group by _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select max ( _ ) , _ from _ group by _
+select max ( _ ) , _ from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select distinct _ from _ where _ between _ and _
+select distinct _ from _ where _ between _ and _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ where _ order by _ asc limit _
+select _ from _ where _ order by _ asc limit _
+select count ( _ ) from _ where @.@ > _ order by _ desc limit _
+select count ( _ ) from _ where @.@ > _ order by _ desc limit _
+select count ( _ ) from _ where count ( _ ) > _
+select count ( _ ) from _ where count ( _ ) > _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ and @.@ > min ( _ )
+select _ from _ where _ and @.@ > min ( _ )
+select max ( _ ) from _ where _
+select max ( _ ) from _ where _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ where count ( _ ) >= _ and count ( _ ) > _ group by _
+select _ from _ where count ( _ ) >= _ and count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ or _ group by _
+select _ from _ where count ( _ ) > _ or _ group by _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ join _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) < _ group by _
+select _ from _ where count ( _ ) < _ group by _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where @.@ not in _ and @.@ not in _
+select _ from _ where @.@ not in _ and @.@ not in _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select _ from _ where _ and count ( _ ) > _ group by _
+select _ from _ where _ and count ( _ ) > _ group by _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select min ( _ ) , max ( _ ) from _
+select min ( _ ) , max ( _ ) from _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select _ from _ where @.@ > avg ( _ )
+select _ from _ where @.@ > avg ( _ )
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select sum ( _ ) from _
+select sum ( _ ) from _
+select _ from _
+select _ from _
+select _ from _ where _
+select _ from _ where _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _
+select _ from _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select _ from _ where _
+select _ from _ where _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _
+select _ from _
+select distinct _ from _
+select distinct _ from _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) < _ group by _
+select _ from _ where count ( _ ) < _ group by _
+select min ( _ ) , _ from _
+select min ( _ ) , _ from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _
+select _ from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select distinct _ from _ where @.@ join _
+select distinct _ from _ where @.@ join _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ , count ( _ ) from _ group by _ order by _ asc
+select _ , count ( _ ) from _ group by _ order by _ asc
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ where count ( _ ) between _ and _ group by _
+select _ from _ where count ( _ ) between _ and _ group by _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _
+select _ from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _
+select _ from _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ where _
+select _ from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select count ( _ ) from _ where _
+select _ from _ where _ order by _ desc
+select avg ( _ ) from _ where _
+select _ from _ where _ order by _ desc
+select _ from _ order by _ desc limit _
+select avg ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where @.@ > min ( _ ) and _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ group by _ order by sum ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ not in _
+select _ from _ order by _ desc limit _
+select avg ( _ ) , max ( _ ) from _
+select sum ( _ ) from _ where _
+select _ from _ where _
+select count ( _ ) from _ where @.@ not in _ and _
+select count ( _ ) from _ where _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ where _
+select _ from _ where _
+select avg ( _ ) , avg ( _ ) from _
+select avg ( _ ) , avg ( _ ) from _
+select avg ( _ ) from _
+select avg ( _ ) from _
+select min ( _ ) from _
+select min ( _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ where _ order by _ asc
+select _ from _ where _ order by _ asc
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select avg ( _ ) , _ from _ group by _
+select avg ( _ ) , _ from _ group by _
+select sum ( _ ) , _ from _ group by _
+select sum ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select sum ( _ ) , _ from _ group by _
+select sum ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select distinct _ from _ order by _ asc limit _
+select distinct _ from _ order by _ asc limit _
+select count ( distinct _ ) from _ where _
+select count ( distinct _ ) from _ where _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) from _ where _
+select _ from _ order by _ desc
+select _ from _
+select max ( _ ) , min ( _ ) from _
+select avg ( _ ) from _
+select _ from _ where _
+select _ from _ where _
+select distinct _ from _ where _
+select _ from _ where sum ( _ ) > _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _
+select count ( distinct _ ) from _
+select count ( _ ) from _ where @.@ not in _ and _
+select _ from _ where _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where _ like _
+select _ from _
+select _ from _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _
+select _ from _
+select _ from _ where count ( _ ) <= _ group by _
+select _ from _ where count ( _ ) <= _ group by _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select _ from _ where @.@ join _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ join _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select _ from _ where count ( _ ) = _ group by _
+select _ from _ where count ( _ ) = _ group by _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ , count ( _ ) , _ from _ group by _ order by count ( _ ) desc limit _
+select _ , count ( _ ) , _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select distinct _ from _ where @.@ join _
+select distinct _ from _ where @.@ join _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _ except_ @.@ join _
+select _ from _ where _ except_ @.@ join _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ where _
+select _ from _ where _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select avg ( _ ) from _
+select avg ( _ ) from _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select count ( _ ) , _ from _ group by _ order by count ( _ ) desc limit _
+select count ( _ ) , _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ where _
+select _ from _ where _
+select _ , count ( _ ) from _ group by _ order by count ( _ ) desc limit _
+select _ , count ( _ ) from _ group by _ order by count ( _ ) desc limit _
+select count ( distinct _ ) , count ( distinct _ ) from _
+select count ( distinct _ ) , count ( distinct _ ) from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ , count ( _ ) from _ group by _ order by count ( _ ) asc limit _
+select _ , count ( _ ) from _ group by _ order by count ( _ ) asc limit _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select max ( _ ) , min ( _ ) from _
+select max ( _ ) , min ( _ ) from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) , _ from _ group by _
+select count ( _ ) , _ from _ group by _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where @.@ not in _ and _
+select _ from _ where @.@ not in _ and _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select _ from _
+select _ from _
+select avg ( _ ) from _
+select avg ( _ ) from _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select max ( _ ) from _ where _
+select max ( _ ) from _ where _
+select _ from _ where @.@ join _
+select _ from _ where @.@ join _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ where _
+select _ from _ where _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ desc
+select _ from _
+select max ( _ ) , min ( _ ) from _
+select max ( _ ) from _ where _
+select _ from _ where _
+select distinct _ from _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ group by _ order by count ( _ ) asc limit _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where @.@ not in _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _ like _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select sum ( _ ) from _ where _
+select sum ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select _ from _ where _ order by _ asc limit _
+select _ from _ where _ order by _ asc limit _
+select sum ( _ ) , max ( _ ) from _ where _
+select sum ( _ ) , max ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select avg ( _ ) from _ where _
+select sum ( _ ) from _ where _
+select sum ( _ ) from _ where _
+select sum ( _ ) from _ where _
+select sum ( _ ) from _ where _
+select avg ( _ ) , sum ( _ ) from _ where _
+select avg ( _ ) , sum ( _ ) from _ where _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _ where _
+select count ( distinct _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( distinct _ ) from _ where _
+select count ( distinct _ ) from _ where _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _ and count ( _ ) = _ group by _
+select _ from _ where _ and count ( _ ) = _ group by _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select _ from _ where _ order by _ desc limit _
+select avg ( _ ) from _ where @.@ not in _ and _ and _
+select avg ( _ ) from _ where @.@ not in _ and _ and _
+select sum ( _ ) from _ where @.@ not in _ and _
+select sum ( _ ) from _ where @.@ not in _ and _
+select _ from _ where _
+select _ from _ where _
+select count ( distinct _ ) from _ where _
+select count ( distinct _ ) from _ where _
+select _ from _ where @.@ > min ( _ ) and _
+select _ from _ where @.@ > min ( _ ) and _
+select _ from _ where _ and @.@ < max ( _ ) and _
+select _ from _ where _ and @.@ < min ( _ ) and _
+select _ from _ where _ and @.@ > max ( _ ) and _
+select _ from _ where _ and @.@ > min ( _ ) and _
+select _ from _ where except_ @.@ is _ and _
+select _ from _ where except_ @.@ is _ and _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select distinct _ from _ where _ and @.@ not in _ and _ and _
+select distinct _ from _ where _ and @.@ not in _ and _ and _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select count ( _ ) , _ from _ where count ( _ ) > _ group by _
+select count ( _ ) , _ from _ where count ( _ ) > _ group by _
+select count ( _ ) , _ from _ where @.@ > avg ( _ ) group by _
+select count ( _ ) , _ from _ where @.@ > avg ( _ ) group by _
+select sum ( _ ) , _ from _ where avg ( _ ) > _ group by _
+select sum ( _ ) , _ from _ where avg ( _ ) > _ group by _
+select sum ( _ ) , avg ( _ ) , _ from _ where avg ( _ ) < _ group by _
+select sum ( _ ) , avg ( _ ) , _ from _ where avg ( _ ) < _ group by _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ asc limit _
+select _ from _ order by _ asc limit _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where _
+select _ from _ where _
+select sum ( _ ) , avg ( _ ) from _ where _
+select sum ( _ ) , avg ( _ ) from _ where _
+select _ from _ where _ between _ and _
+select _ from _ where _ between _ and _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ , max ( _ ) from _ group by _
+select _ , max ( _ ) from _ group by _
+select count ( _ ) , max ( _ ) from _ where _ group by _
+select count ( _ ) , max ( _ ) from _ where _ group by _
+select _ , max ( _ ) from _ where _ group by _
+select _ , max ( _ ) from _ where _ group by _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select avg ( _ ) from _
+select avg ( _ ) from _
+select max ( _ ) , min ( _ ) from _ where _
+select max ( _ ) , min ( _ ) from _ where _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select _ from _ order by _ desc
+select _ from _ order by _ desc
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ from _
+select _ from _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where _
+select _ from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) asc
+select _ from _ group by _ order by count ( _ ) asc
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where @.@ = _ and _
+select _ from _ where @.@ = _ and _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ where intersect_ @.@ is _
+select _ from _ where intersect_ @.@ is _
+select _ from _ where @.@ join _ and @.@ = _
+select _ from _ where @.@ join _ and @.@ = _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where _ and count ( _ ) >= _ group by _
+select _ from _ where _ and count ( _ ) >= _ group by _
+select count ( _ ) from _ where _
+select count ( _ ) from _ where _
+select avg ( _ ) from _ where @.@ in _ and @.@ join _
+select avg ( _ ) from _ where @.@ in _ and @.@ join _
+select min ( _ ) from _ where @.@ not in _ and @.@ join _
+select min ( _ ) from _ where @.@ not in _ and @.@ join _
+select _ from _ where intersect_ @.@ is _
+select _ from _ where intersect_ @.@ is _
+select avg ( _ ) from _ where @.@ in _
+select avg ( _ ) from _ where @.@ in _
+select _ from _ where _ or count ( _ ) > _
+select _ from _ where _ or count ( _ ) > _
+select _ from _ where @.@ not in _ and sum ( _ ) > _
+select _ from _ where @.@ not in _ and sum ( _ ) > _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ where except_ @.@ is _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by sum ( _ ) asc limit _
+select _ from _ group by _ order by sum ( _ ) asc limit _
+select _ from _ group by _ order by sum ( _ ) desc limit _
+select _ from _ group by _ order by sum ( _ ) desc limit _
+select _ from _ where count ( _ ) >= _ group by _
+select _ from _ where count ( _ ) >= _ group by _
+select distinct _ from _ where @.@ < avg ( _ )
+select distinct _ from _ where @.@ < avg ( _ )
+select _ from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _
+select _ from _ where @.@ = _ order by count ( _ ) asc limit _
+select _ from _ where @.@ = _ order by count ( _ ) asc limit _
+select _ from _ where _
+select _ from _ where _
+select distinct _ from _ where @.@ join _
+select distinct _ from _ where @.@ join _
+select _ from _ where @.@ = max ( _ )
+select _ from _ where @.@ = max ( _ )
+select _ from _ where _
+select _ from _ where _
+select _ from _
+select _ from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select count ( distinct _ ) from _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select _ from _ where _ like _
+select count ( _ ) from _ where @.@ < avg ( _ )
+select count ( _ ) from _ where @.@ < avg ( _ )
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select count ( _ ) from _ where @.@ not in _
+select count ( _ ) from _ where @.@ not in _
+select count ( _ ) from _ where @.@ not in _
+select count ( _ ) from _ where @.@ not in _
+select count ( _ ) from _ where @.@ not in _
+select count ( _ ) from _ where @.@ not in _
+select _ from _ where _
+select _ from _ where _
+select avg ( _ ) from _
+select avg ( _ ) from _
+select max ( _ ) from _
+select max ( _ ) from _
+select _ from _
+select _ from _
+select max ( _ ) from _
+select max ( _ ) from _
+select _ from _
+select _ from _
+select distinct _ from _
+select distinct _ from _
+select distinct _ from _
+select distinct _ from _
+select count ( _ ) from _
+select count ( _ ) from _
+select _ from _ order by _ asc
+select _ from _ order by _ asc
+select _ from _
+select _ from _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ where _
+select _ from _ order by _ desc limit _
+select _ from _ order by _ desc limit _
+select _ , count ( _ ) from _ group by _
+select _ , count ( _ ) from _ group by _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ from _ group by _ order by count ( _ ) desc limit _
+select _ , max ( _ ) from _ group by _
+select _ , max ( _ ) from _ group by _
+select _ from _
+select _ from _
+select distinct _ from _ where _
+select distinct _ from _ where _
+select _ from _ where count ( _ ) > _ group by _
+select _ from _ where count ( _ ) > _ group by _
+select _ , sum ( _ ) from _ group by _
+select _ , sum ( _ ) from _ group by _
+select _ from _ where @.@ not in _
+select _ from _ where @.@ not in _
+select _ from _ where _
+select _ from _ where _
+select count ( _ ) from _
+select _ from _ where _
+select _ from _ where @.@ join _ group by _
+select _ from _ where _

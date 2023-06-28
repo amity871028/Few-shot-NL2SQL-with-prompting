@@ -1,0 +1,22 @@
+
+index is 50
+SELECT max(weight) ,  petType FROM pets GROUP BY petType
+List the maximum weight and type for each type of pet.
+schema_links:
+List the maximum weight and type for each type of pet. | pets : pets.pettype , pets.weight , pets.petid , pets.pet_age , pets.* | student : student.age , student.sex , student.major , student.advisor , student.stuid , student.* | has_pet : has_pet.stuid , has_pet.petid , has_pet.*
+natsql and SQL generation:
+select max ( _ ) , _ from _ group by _ | select max ( pets.weight ) , pets.pettype from pets group by pets.pettype
+SQL = SELECT MAX(weight), PetType FROM Pets GROUP BY PetType
+natsql:
+select max ( _ ) , _ from _ group by _ | select max ( pets.weight ) , pets.pettype from pets group by pets.pettype
+
+SQL:
+SELECT MAX(weight), PetType FROM Pets GROUP BY PetType
+self correction:
+SELECT MAX(weight), PetType FROM Pets GROUP BY PetType
+
+index is 51
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+Find number of pets owned by students who are older than 20.
+schema_links:
+Find number of pets owned by students who are older than 20. | student : student.age , student.stuid , student.advisor , student.lname , student.fname , student.* | has_pet : has_pet.stuid , has_pet.petid , has_pet.* | pets : pets.pet_age , pets.petid , pets.pettype , pets.weight , pets.*

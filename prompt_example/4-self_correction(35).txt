@@ -1,0 +1,22 @@
+#### For the given question, use the provided tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+#### Use the following instructions for fixing the SQL QUERY:
+1) Use the database values that are explicitly mentioned in the question.
+2) Pay attention to the columns that are used for the JOIN by using the Foreign_keys.
+3) Use DESC and DISTINCT when needed.
+4) Pay attention to the columns that are used for the GROUP BY statement.
+5) Pay attention to the columns that are used for the SELECT statement.
+6) Only change the GROUP BY clause when necessary (Avoid redundant columns in GROUP BY).
+7) Use GROUP BY on one column only.
+
+Table concert, columns = [*,concert_ID,concert_Name,Theme,Stadium_ID,Year]
+Table singer, columns = [*,Singer_ID,Name,Country,Song_Name,Song_release_year,Age,Is_male]
+Table singer_in_concert, columns = [*,concert_ID,Singer_ID]
+Table stadium, columns = [*,Stadium_ID,Location,Name,Capacity,Highest,Lowest,Average]
+Foreign_keys = [concert.Stadium_ID = stadium.Stadium_ID,singer_in_concert.Singer_ID = singer.Singer_ID,singer_in_concert.concert_ID = concert.concert_ID]
+Primary_keys = [stadium.Stadium_ID,singer.Singer_ID,concert.concert_ID,singer_in_concert.concert_ID]
+#### Question: List singer names and number of concerts for each singer.
+#### SQLite SQL QUERY
+SELECT Name, COUNT(concert_ID) FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID GROUP BY singer.Singer_ID
+                    
+#### SQLite FIXED SQL QUERY
+SELECT

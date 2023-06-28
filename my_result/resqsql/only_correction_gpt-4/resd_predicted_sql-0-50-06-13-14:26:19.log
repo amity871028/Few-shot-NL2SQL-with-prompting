@@ -1,0 +1,25 @@
+SELECT count(Singer_ID) FROM singer
+SELECT COUNT(Singer_ID) FROM singer
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+SELECT avg(Age) , min(Age) , max(Age) FROM singer WHERE Country = 'France'
+SELECT AVG(age), MIN(age), MAX(age) FROM singer WHERE Country = 'France'
+SELECT Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT Name , Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+SELECT DISTINCT country FROM singer WHERE age > 20
+SELECT The provided SQLite SQL query seems correct as per the requirements mentioned in the question. The task is to display all countries and the number of singers in each country. This is done by grouping singers by country and counting the number of singers in each country. The query does not require any other table for joining because all necessary data is available in the 'singer' table. So, the fixed SQL query is as follows:  ```sql SELECT country , COUNT(*) FROM singer GROUP BY country ```
+SELECT The original SQL query is correct based on the question asked. So the fixed query is the same:  ```sql SELECT country, COUNT(Singer_ID) FROM singer GROUP BY country ```
+SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)
+SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+SELECT max(Capacity), AVG(Capacity) FROM stadium
+SELECT AVG(Capacity), MAX(Capacity) FROM stadium
+SELECT The provided SQLite SQL QUERY appears to be correct. The question is asking for the name and capacity of the stadium with the highest average attendance. The SQL query is selecting the name and capacity columns from the stadium table, ordering the results by the average column in descending order, and then limiting the results to the first one. This would indeed give the name and capacity of the stadium with the highest average attendance. So, there's no need to change anything.  Here is the SQL query again:  ```sql SELECT name , capacity FROM stadium ORDER BY average DESC LIMIT 1 ```
+SELECT name, capacity FROM stadium WHERE average  =  (SELECT max(average) FROM stadium)
+SELECT COUNT(DISTINCT concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+SELECT count(*) FROM concert WHERE Year IN (2014, 2015)
+SELECT stadium.Name , COUNT(concert.concert_ID)  FROM stadium  JOIN concert  ON stadium.Stadium_ID  =  concert.Stadium_ID  GROUP BY stadium.Name
+SELECT stadium.name, COUNT(concert.concert_ID)  FROM stadium  JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID  GROUP BY stadium.name
+SELECT stadium.Name, stadium.Capacity FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year >= 2014 GROUP BY stadium.Stadium_ID ORDER BY COUNT(concert.concert_ID) DESC LIMIT 1

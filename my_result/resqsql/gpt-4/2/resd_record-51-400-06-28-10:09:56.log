@@ -1,0 +1,6 @@
+
+index is 51
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+Find number of pets owned by students who are older than 20.
+schema_links:
+Find number of pets owned by students who are older than 20. | student : student.age , student.stuid , student.advisor , student.lname , student.fname , student.* | has_pet : has_pet.stuid , has_pet.petid , has_pet.* | pets : pets.pet_age , pets.petid , pets.pettype , pets.weight , pets.*

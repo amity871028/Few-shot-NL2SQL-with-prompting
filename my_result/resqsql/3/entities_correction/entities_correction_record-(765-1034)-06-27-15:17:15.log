@@ -1,0 +1,1176 @@
+
+index is 765
+SELECT avg(LifeExpectancy) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "English" AND T2.IsOfficial  =  "T")
+Give the mean life expectancy of countries in which English is not the official language.
+SQL correction:
+SELECT AVG(lifeexpectancy) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE countrylanguage.language != 'English' AND countrylanguage.isofficial = 'F'
+entities correction:
+SELECT AVG(lifeexpectancy) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE countrylanguage.Language != 'English' AND countrylanguage.IsOfficial = 'F'
+
+index is 766
+SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "English")
+What is the total number of people living in the nations that do not use English?
+SQL correction:
+SELECT sum(population) FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English')
+entities correction:
+SELECT SUM(population) FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language IN ('Dutch', 'Papiamento', 'Spanish', 'Balochi', 'Dari', 'Pashto', 'Turkmenian', 'Uzbek', 'Ambo'))
+
+index is 767
+SELECT sum(Population) FROM country WHERE Name NOT IN (SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "English")
+How many people live in countries that do not speak English?
+SQL correction:
+SELECT sum(population) FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English')
+entities correction:
+SELECT sum(Population) FROM country WHERE Code NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language != 'English')
+
+index is 768
+SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.HeadOfState  =  "Beatrix" AND T2.IsOfficial  =  "T"
+What is the official language spoken in the country whose head of state is Beatrix?
+SQL correction:
+SELECT language FROM countrylanguage JOIN country ON countrylanguage.countrycode = country.code WHERE country.headofstate = 'Beatrix' AND countrylanguage.isofficial = 'T'
+entities correction:
+SELECT language FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE country.HeadOfState = 'Beatrix' AND countrylanguage.IsOfficial = 'T'
+
+index is 769
+SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.HeadOfState  =  "Beatrix" AND T2.IsOfficial  =  "T"
+What is the official language used in the country the name of whose head of state is Beatrix.
+SQL correction:
+SELECT language FROM countrylanguage WHERE countrycode  =  (SELECT code FROM country WHERE headofstate  =  'Beatrix') AND isofficial  =  'T'
+entities correction:
+SELECT language FROM countrylanguage WHERE CountryCode = (   SELECT Code   FROM country   WHERE HeadOfState = 'Beatrix' ) AND IsOfficial = 'T'
+
+index is 770
+SELECT count(DISTINCT T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE  IndepYear  <  1930 AND T2.IsOfficial  =  "T"
+What is the total number of unique official languages spoken in the countries that are founded before 1930?
+SQL correction:
+SELECT count(DISTINCT language) FROM countrylanguage JOIN country ON countrylanguage.countrycode = country.code WHERE country.indepyear < 1930
+original correction:
+SELECT count(DISTINCT language) FROM countrylanguage JOIN country ON countrylanguage.countrycode = country.code WHERE country.indepyear < 1930
+
+index is 771
+SELECT count(DISTINCT T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE  IndepYear  <  1930 AND T2.IsOfficial  =  "T"
+For the countries founded before 1930, what is the total number of distinct official languages?
+SQL correction:
+SELECT count(DISTINCT language) FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE country.IndepYear < 1930
+original correction:
+SELECT count(DISTINCT language) FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE country.IndepYear < 1930
+
+index is 772
+SELECT Name FROM country WHERE SurfaceArea  >  (SELECT min(SurfaceArea) FROM country WHERE Continent  =  "Europe")
+What are the countries that have greater surface area than any country in Europe?
+SQL correction:
+SELECT name FROM country WHERE surfacearea > (SELECT max(surfacearea) FROM country WHERE continent = 'Europe')
+entities correction:
+SELECT name  FROM country  WHERE surfacearea > (   SELECT MAX(surfacearea)    FROM country    WHERE continent = 'Europe' )
+
+index is 773
+SELECT Name FROM country WHERE SurfaceArea  >  (SELECT min(SurfaceArea) FROM country WHERE Continent  =  "Europe")
+Which countries have greater area than that of any country in Europe?
+SQL correction:
+SELECT name FROM country WHERE surfacearea  >  (SELECT max(surfacearea) FROM country WHERE continent = 'Europe')
+entities correction:
+SELECT name FROM country WHERE SurfaceArea > (SELECT MAX(SurfaceArea) FROM country WHERE Continent = 'Europe')
+
+index is 774
+SELECT Name FROM country WHERE Continent  =  "Africa"  AND population  <  (SELECT max(population) FROM country WHERE Continent  =  "Asia")
+What are the African countries that have a  population less than any country in Asia?
+SQL correction:
+SELECT name FROM country WHERE continent = 'Africa' AND population < ANY (SELECT population FROM country WHERE continent = 'Asia')
+entities correction:
+SELECT name FROM country WHERE continent = 'Africa' AND population < (SELECT MIN(population) FROM country WHERE continent = 'Asia')
+
+index is 775
+SELECT Name FROM country WHERE Continent  =  "Africa"  AND population  <  (SELECT min(population) FROM country WHERE Continent  =  "Asia")
+Which African countries have a smaller population than that of any country in Asia?
+SQL correction:
+SELECT name FROM country WHERE continent = 'Africa' AND population < (SELECT MIN(population) FROM country WHERE continent = 'Asia')
+entities correction:
+SELECT name FROM country WHERE continent = 'Africa' AND population < (SELECT MIN(population) FROM country WHERE continent = 'Asia')
+
+index is 776
+SELECT Name FROM country WHERE Continent  =  "Asia"  AND population  >  (SELECT max(population) FROM country WHERE Continent  =  "Africa")
+Which Asian countries have a population that is larger than any country in Africa?
+SQL correction:
+SELECT name FROM country WHERE continent = 'Asia' AND population > (SELECT MAX(population) FROM country WHERE continent = 'Africa')
+entities correction:
+SELECT name  FROM country  WHERE continent = 'Asia'  AND population > (SELECT MAX(population) FROM country WHERE continent = 'Africa')
+
+index is 777
+SELECT Name FROM country WHERE Continent  =  "Asia"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  "Africa")
+What are the Asian countries which have a population larger than that of any country in Africa?
+SQL correction:
+SELECT name FROM country WHERE continent = 'Asia' AND population > (SELECT max(population) FROM country WHERE continent = 'Africa')
+entities correction:
+SELECT name FROM country WHERE continent = 'Asia' AND population > (SELECT max(population) FROM country WHERE continent = 'Africa')
+
+index is 778
+SELECT CountryCode FROM countrylanguage EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  "English"
+What are the country codes for countries that do not speak English?
+SQL correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English')
+entities correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE UPPER(language) = 'ENGLISH')
+
+index is 779
+SELECT CountryCode FROM countrylanguage EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  "English"
+Return the country codes for countries that do not speak English.
+SQL correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English')
+entities correction:
+SELECT code FROM country WHERE code NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English')
+
+index is 780
+SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != "English"
+What are the country codes of countries where people use languages other than English?
+SQL correction:
+SELECT DISTINCT countrycode FROM countrylanguage WHERE language != 'English' AND countrycode NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English')
+entities correction:
+SELECT DISTINCT CountryCode  FROM countrylanguage  WHERE Language != 'English'  AND CountryCode NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English')
+
+index is 781
+SELECT DISTINCT CountryCode FROM countrylanguage WHERE LANGUAGE != "English"
+Give the country codes for countries in which people speak langauges that are not English.
+SQL correction:
+SELECT countrycode FROM countrylanguage WHERE language != 'English'
+entities correction:
+SELECT countrycode FROM countrylanguage WHERE language != 'English'
+
+index is 782
+SELECT Code FROM country WHERE GovernmentForm != "Republic" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  "English"
+What are the codes of the countries that do not speak English and whose government forms are not Republic?
+SQL correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language <> 'English') AND governmentform <> 'Republic'
+entities correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language <> 'English') AND governmentform NOT LIKE '%Republic%'
+
+index is 783
+SELECT Code FROM country WHERE GovernmentForm != "Republic" EXCEPT SELECT CountryCode FROM countrylanguage WHERE LANGUAGE  =  "English"
+Return the codes of countries that do not speak English and do not have Republics for governments.
+SQL correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English') AND governmentform != 'Republic'
+entities correction:
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English') AND governmentform NOT LIKE '%Republic%'
+
+index is 784
+SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode  =  T1.Code WHERE T1.Continent  =  'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code  =  T4.CountryCode WHERE T4.IsOfficial  =  'T' AND T4.Language  =  'English')
+Which cities are in European countries where English is not the official language?
+SQL correction:
+SELECT DISTINCT city.name FROM city JOIN country ON city.countrycode = country.code JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE country.continent = 'Europe' AND countrylanguage.language <> 'English'
+entities correction:
+SELECT DISTINCT city.Name FROM city JOIN country ON city.CountryCode = country.Code JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE country.Continent = 'Europe' AND countrylanguage.Language <> 'English'
+
+index is 785
+SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode  =  T1.Code WHERE T1.Continent  =  'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code  =  T4.CountryCode WHERE T4.IsOfficial  =  'T' AND T4.Language  =  'English')
+What are the names of cities in Europe for which English is not the official language?
+SQL correction:
+SELECT city.name FROM city JOIN country ON city.countrycode = country.code JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE country.continent = 'Europe' AND countrylanguage.language != 'English'
+entities correction:
+SELECT city.Name FROM city JOIN country ON city.CountryCode = country.Code JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE country.Continent = 'Europe' AND countrylanguage.Language != 'English'
+
+index is 786
+select distinct t3.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode join city as t3 on t1.code  =  t3.countrycode where t2.isofficial  =  't' and t2.language  =  'chinese' and t1.continent  =  "asia"
+Which unique cities are in Asian countries where Chinese is the official language ?
+SQL correction:
+SELECT DISTINCT name FROM city WHERE countrycode IN (SELECT code FROM country WHERE continent = 'Asia' AND code IN (SELECT countrycode FROM countrylanguage WHERE language = 'Chinese' AND isofficial = 'T'))
+entities correction:
+SELECT DISTINCT Name  FROM city  WHERE CountryCode IN (     SELECT Code      FROM country      WHERE Continent = 'Asia'          AND Code IN (             SELECT CountryCode              FROM countrylanguage              WHERE Language = 'Chinese'                  AND IsOfficial = 'T'         ) )
+
+index is 787
+SELECT DISTINCT T3.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode JOIN city AS T3 ON T1.Code  =  T3.CountryCode WHERE T2.IsOfficial  =  'T' AND T2.Language  =  'Chinese' AND T1.Continent  =  "Asia"
+Return the different names of cities that are in Asia and for which Chinese is the official language.
+SQL correction:
+SELECT DISTINCT name FROM city JOIN country ON city.CountryCode = country.Code JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE country.Continent = 'Asia' AND countrylanguage.Language = 'Chinese' AND countrylanguage.IsOfficial = 'T'
+entities correction:
+SELECT DISTINCT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.Continent = 'Asia'    AND countrylanguage.Language = 'Chinese'    AND countrylanguage.IsOfficial = 'T'
+
+index is 788
+SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1
+What are the name, independence year, and surface area of the country with the smallest population?
+SQL correction:
+SELECT name ,  indepyear ,  surfacearea FROM country WHERE population  =  (SELECT min(population) FROM country)
+original correction:
+SELECT name ,  indepyear ,  surfacearea FROM country WHERE population  =  (SELECT min(population) FROM country)
+
+index is 789
+SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1
+Give the name, year of independence, and surface area of the country that has the lowest population.
+SQL correction:
+SELECT name ,  indepyear ,  surfacearea FROM country WHERE population  =  (SELECT min(population) FROM country)
+original correction:
+SELECT name ,  indepyear ,  surfacearea FROM country WHERE population  =  (SELECT min(population) FROM country)
+
+index is 790
+SELECT Name ,  population ,  HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1
+What are the population, name and leader of the country with the largest area?
+SQL correction:
+SELECT population ,  name ,  headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+original correction:
+SELECT population ,  name ,  headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+
+index is 791
+SELECT Name ,  population ,  HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1
+Give the name, population, and head of state for the country that has the largest area.
+SQL correction:
+SELECT name ,  population ,  headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+original correction:
+SELECT name ,  population ,  headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+
+index is 792
+SELECT COUNT(T2.Language) ,  T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name HAVING COUNT(*)  >  2
+Return the country name and the numbers of languages spoken for each country that speaks at least 3 languages.
+SQL correction:
+SELECT country.name , count(DISTINCT countrylanguage.language) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode GROUP BY country.name HAVING count(DISTINCT countrylanguage.language) >= 3
+original correction:
+SELECT country.name , count(DISTINCT countrylanguage.language) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode GROUP BY country.name HAVING count(DISTINCT countrylanguage.language) >= 3
+
+index is 793
+SELECT COUNT(T2.Language) ,  T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name HAVING COUNT(*)  >  2
+What are the names of countries that speak more than 2 languages, as well as how many languages they speak?
+SQL correction:
+HAVING count(DISTINCT countrylanguage.language) > 2
+original correction:
+HAVING count(DISTINCT countrylanguage.language) > 2
+
+index is 794
+SELECT count(*) ,  District FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District
+Find the number of cities in each district whose population is greater than the average population of cities?
+SQL correction:
+SELECT district ,  count(*) FROM city WHERE population  >  (SELECT avg(population) FROM city) GROUP BY district
+original correction:
+SELECT district ,  count(*) FROM city WHERE population  >  (SELECT avg(population) FROM city) GROUP BY district
+
+index is 795
+SELECT count(*) ,  District FROM city WHERE Population  >  (SELECT avg(Population) FROM city) GROUP BY District
+How many cities in each district have a population that is above the average population across all cities?
+SQL correction:
+SELECT district , count(name) FROM city GROUP BY district HAVING population  >  (SELECT avg(population) FROM city)
+original correction:
+SELECT district , count(name) FROM city GROUP BY district HAVING population  >  (SELECT avg(population) FROM city)
+
+index is 796
+SELECT sum(Population) ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72
+Find the government form name and total population for each government form whose average life expectancy is longer than 72.
+SQL correction:
+SELECT governmentform , SUM(population) FROM country GROUP BY governmentform HAVING AVG(lifeexpectancy) > 72
+original correction:
+SELECT governmentform , SUM(population) FROM country GROUP BY governmentform HAVING AVG(lifeexpectancy) > 72
+
+index is 797
+SELECT sum(Population) ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72
+What are the different government forms and what is the total population of each for government forms that have an average life expectancy greater than 72?
+SQL correction:
+SELECT governmentform ,  SUM(population) FROM country WHERE lifeexpectancy > 72 GROUP BY governmentform
+original correction:
+SELECT governmentform ,  SUM(population) FROM country WHERE lifeexpectancy > 72 GROUP BY governmentform
+
+index is 798
+SELECT sum(Population) ,  avg(LifeExpectancy) ,  Continent FROM country GROUP BY Continent HAVING avg(LifeExpectancy)  <  72
+Find the average life expectancy and total population for each continent where the average life expectancy is shorter than 72?
+SQL correction:
+SELECT continent , AVG(lifeexpectancy) , SUM(population) FROM country GROUP BY continent HAVING AVG(lifeexpectancy) < 72
+original correction:
+SELECT continent , AVG(lifeexpectancy) , SUM(population) FROM country GROUP BY continent HAVING AVG(lifeexpectancy) < 72
+
+index is 799
+SELECT sum(Population) ,  avg(LifeExpectancy) ,  Continent FROM country GROUP BY Continent HAVING avg(LifeExpectancy)  <  72
+What are the different continents and the total popuation and average life expectancy corresponding to each, for continents that have an average life expectancy less than 72?
+SQL correction:
+SELECT continent , SUM(population) , AVG(lifeexpectancy) FROM country GROUP BY continent HAVING AVG(lifeexpectancy) < 72
+original correction:
+SELECT continent , SUM(population) , AVG(lifeexpectancy) FROM country GROUP BY continent HAVING AVG(lifeexpectancy) < 72
+
+index is 800
+SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+What are the names and areas of countries with the top 5 largest area?
+SQL correction:
+SELECT name , surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+original correction:
+SELECT name , surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+
+index is 801
+SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+Return the names and surface areas of the 5 largest countries.
+SQL correction:
+SELECT name ,  surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+original correction:
+SELECT name ,  surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+
+index is 802
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+What are names of countries with the top 3 largest population?
+SQL correction:
+SELECT name FROM country ORDER BY population DESC LIMIT 3
+original correction:
+SELECT name FROM country ORDER BY population DESC LIMIT 3
+
+index is 803
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+Return the names of the 3 most populated countries.
+SQL correction:
+SELECT name FROM country ORDER BY population DESC LIMIT 3
+original correction:
+SELECT name FROM country ORDER BY population DESC LIMIT 3
+
+index is 804
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+What are the names of the nations with the 3 lowest populations?
+SQL correction:
+SELECT name FROM country ORDER BY population ASC LIMIT 3
+original correction:
+SELECT name FROM country ORDER BY population ASC LIMIT 3
+
+index is 805
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+Return the names of the 3 countries with the fewest people.
+SQL correction:
+SELECT name FROM country ORDER BY population ASC LIMIT 3
+original correction:
+SELECT name FROM country ORDER BY population ASC LIMIT 3
+
+index is 806
+SELECT count(*) FROM country WHERE continent  =  "Asia"
+how many countries are in Asia?
+SQL correction:
+SELECT count(DISTINCT code) FROM country WHERE continent = 'Asia'
+entities correction:
+SELECT count(DISTINCT Code) FROM country WHERE Continent = 'Asia'
+
+index is 807
+SELECT count(*) FROM country WHERE continent  =  "Asia"
+Count the number of countries in Asia.
+SQL correction:
+SELECT count(*) FROM country WHERE continent = 'Asia'
+entities correction:
+SELECT count(*) FROM country WHERE continent = 'Asia';
+
+index is 808
+SELECT Name FROM country WHERE continent  =  "Europe" AND Population  =  "80000"
+What are the names of the countries that are in the continent of Europe and have a population of 80000?
+SQL correction:
+SELECT name FROM country WHERE continent = 'Europe' AND population = 80000
+entities correction:
+SELECT name FROM country WHERE continent = 'Europe' AND population = 80000
+
+index is 809
+SELECT Name FROM country WHERE continent  =  "Europe" AND Population  =  "80000"
+Give the names of countries that are in Europe and have a population equal to 80000.
+SQL correction:
+SELECT name FROM country WHERE continent = 'Europe' AND population = 80000
+entities correction:
+SELECT name  FROM country  WHERE continent = 'Europe' AND population = 80000
+
+index is 810
+select sum(population) ,  avg(surfacearea) from country where continent  =  "north america" and surfacearea  >  3000
+What is the total population and average area of countries in the continent of North America whose area is bigger than 3000 ?
+SQL correction:
+SELECT sum(population) ,  avg(surfacearea) FROM country WHERE continent  =  'North America' AND surfacearea  >  3000
+entities correction:
+SELECT sum(population), avg(surfacearea) FROM country WHERE continent = 'North America' AND surfacearea > 3000;
+
+index is 811
+select sum(population) ,  avg(surfacearea) from country where continent  =  "north america" and surfacearea  >  3000
+Give the total population and average surface area corresponding to countries in North America that have a surface area greater than 3000 .
+SQL correction:
+SELECT sum(population) , avg(surfacearea) FROM country WHERE surfacearea > 3000 AND continent = 'North America' GROUP BY continent
+entities correction:
+SELECT 
+
+index is 812
+SELECT name FROM city WHERE Population BETWEEN 160000 AND 900000
+What are the cities whose population is between 160000 and 900000?
+SQL correction:
+SELECT name FROM city WHERE population BETWEEN 160000 AND 900000
+original correction:
+SELECT name FROM city WHERE population BETWEEN 160000 AND 900000
+
+index is 813
+select name from city where population between 160000 and 900000
+Return the names of cities that have a population between 160000 and 900000 .
+SQL correction:
+SELECT name FROM city WHERE population BETWEEN 160000 AND 900000
+original correction:
+SELECT name FROM city WHERE population BETWEEN 160000 AND 900000
+
+index is 814
+SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1
+Which language is spoken by the largest number of countries?
+SQL correction:
+SELECT language FROM countrylanguage GROUP BY language ORDER BY count(countrycode) DESC LIMIT 1
+original correction:
+SELECT language FROM countrylanguage GROUP BY language ORDER BY count(countrycode) DESC LIMIT 1
+
+index is 815
+SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1
+Give the language that is spoken in the most countries.
+SQL correction:
+SELECT language FROM countrylanguage GROUP BY language ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT language FROM countrylanguage GROUP BY language ORDER BY count(*) DESC LIMIT 1
+
+index is 816
+SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode
+What is the language spoken by the largest percentage of people in each country?
+SQL correction:
+SELECT T1.name ,  T2.language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.code  =  T2.countrycode WHERE T2.percentage  = (SELECT MAX(T3.percentage) FROM countrylanguage AS T3 WHERE T3.countrycode  =  T2.countrycode GROUP BY countrycode) GROUP BY T2.countrycode
+original correction:
+SELECT T1.name ,  T2.language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.code  =  T2.countrycode WHERE T2.percentage  = (SELECT MAX(T3.percentage) FROM countrylanguage AS T3 WHERE T3.countrycode  =  T2.countrycode GROUP BY countrycode) GROUP BY T2.countrycode
+
+index is 817
+SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode
+What are the country codes of the different countries, and what are the languages spoken by the greatest percentage of people for each?
+SQL correction:
+SELECT countrylanguage.countrycode ,  countrylanguage.language FROM countrylanguage GROUP BY countrylanguage.countrycode ORDER BY MAX(countrylanguage.percentage) DESC
+original correction:
+SELECT countrylanguage.countrycode ,  countrylanguage.language FROM countrylanguage GROUP BY countrylanguage.countrycode ORDER BY MAX(countrylanguage.percentage) DESC
+
+index is 818
+SELECT count(*) ,   max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  "Spanish" GROUP BY CountryCode
+What is the total number of countries where Spanish is spoken by the largest percentage of people?
+SQL correction:
+SELECT count(DISTINCT countrycode) FROM countrylanguage WHERE language = 'Spanish' AND percentage = (SELECT max(percentage) FROM countrylanguage WHERE language = 'Spanish')
+entities correction:
+SELECT count(DISTINCT CountryCode) FROM countrylanguage WHERE Language = 'Spanish' AND Percentage = (SELECT MAX(Percentage) FROM countrylanguage WHERE Language = 'Spanish');
+
+index is 819
+SELECT count(*) ,   max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  "Spanish" GROUP BY CountryCode
+Count the number of countries for which Spanish is the predominantly spoken language.
+SQL correction:
+SELECT count(DISTINCT countrycode) FROM countrylanguage WHERE language = 'Spanish' AND isofficial = true AND percentage > 50
+entities correction:
+SELECT count(DISTINCT CountryCode) FROM countrylanguage WHERE Language = 'Spanish' AND IsOfficial = 'T' AND Percentage > 50
+
+index is 820
+SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  "Spanish" GROUP BY CountryCode
+What are the codes of countries where Spanish is spoken by the largest percentage of people?
+SQL correction:
+SELECT countrycode FROM countrylanguage WHERE language = 'Spanish' AND percentage = (SELECT max(percentage) FROM countrylanguage WHERE language = 'Spanish')
+entities correction:
+SELECT countrycode  FROM countrylanguage  WHERE language = 'Spanish'  AND percentage = (     SELECT max(percentage)      FROM countrylanguage      WHERE language = 'Spanish' ) ORDER BY percentage DESC LIMIT 1;
+
+index is 821
+SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  "Spanish" GROUP BY CountryCode
+Return the codes of countries for which Spanish is the predominantly spoken language.
+SQL correction:
+SELECT countrycode FROM countrylanguage WHERE language = 'Spanish' AND percentage > 50
+entities correction:
+SELECT countrycode FROM countrylanguage WHERE Language = 'Spanish' AND Percentage > 50
+
+index is 822
+SELECT count(*) FROM conductor
+How many conductors are there?
+SQL correction:
+SELECT count(Conductor_ID) FROM conductor
+original correction:
+SELECT count(Conductor_ID) FROM conductor
+
+index is 823
+SELECT count(*) FROM conductor
+Count the number of conductors.
+SQL correction:
+SELECT count(conductor_id) FROM conductor
+original correction:
+SELECT count(conductor_id) FROM conductor
+
+index is 824
+SELECT Name FROM conductor ORDER BY Age ASC
+List the names of conductors in ascending order of age.
+SQL correction:
+SELECT name FROM conductor ORDER BY age ASC
+original correction:
+SELECT name FROM conductor ORDER BY age ASC
+
+index is 825
+SELECT Name FROM conductor ORDER BY Age ASC
+What are the names of conductors, ordered by age?
+SQL correction:
+SELECT name FROM conductor ORDER BY age
+original correction:
+SELECT name FROM conductor ORDER BY age
+
+index is 826
+SELECT Name FROM conductor WHERE Nationality != 'USA'
+What are the names of conductors whose nationalities are not "USA"?
+SQL correction:
+SELECT name FROM conductor WHERE nationality <> 'USA'
+entities correction:
+SELECT name FROM conductor WHERE nationality NOT IN ('USA')
+
+index is 827
+SELECT Name FROM conductor WHERE Nationality != 'USA'
+Return the names of conductors that do not have the nationality "USA".
+SQL correction:
+SELECT name FROM conductor WHERE nationality != 'USA'
+entities correction:
+SELECT name FROM conductor WHERE nationality <> 'USA'
+
+index is 828
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+What are the record companies of orchestras in descending order of years in which they were founded?
+SQL correction:
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+original correction:
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+
+index is 829
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+Return the record companies of orchestras, sorted descending by the years in which they were founded.
+SQL correction:
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+original correction:
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+
+index is 830
+SELECT avg(Attendance) FROM SHOW
+What is the average attendance of shows?
+SQL correction:
+SELECT avg(attendance) FROM show
+original correction:
+SELECT avg(attendance) FROM show
+
+index is 831
+SELECT avg(Attendance) FROM SHOW
+Return the average attendance across all shows.
+SQL correction:
+SELECT avg(attendance) FROM show
+original correction:
+SELECT avg(attendance) FROM show
+
+index is 832
+SELECT max(SHARE) ,  min(SHARE) FROM performance WHERE TYPE != "Live final"
+What are the maximum and minimum share of performances whose type is not "Live final".
+SQL correction:
+SELECT max(share) , min(share) FROM performance WHERE type != 'Live final'
+entities correction:
+SELECT MAX(share), MIN(share) FROM performance WHERE type <> 'Live final'
+
+index is 833
+SELECT max(SHARE) ,  min(SHARE) FROM performance WHERE TYPE != "Live final"
+Return the maximum and minimum shares for performances that do not have the type "Live final".
+SQL correction:
+SELECT max(share) , min(share) FROM performance WHERE type != 'Live final' GROUP BY performance_id
+entities correction:
+SELECT MAX(share), MIN(share) FROM performance WHERE type <> 'Live final'
+
+index is 834
+SELECT count(DISTINCT Nationality) FROM conductor
+How many different nationalities do conductors have?
+SQL correction:
+SELECT count(DISTINCT nationality) FROM conductor
+original correction:
+SELECT count(DISTINCT nationality) FROM conductor
+
+index is 835
+SELECT count(DISTINCT Nationality) FROM conductor
+Count the number of different nationalities of conductors.
+SQL correction:
+SELECT COUNT(DISTINCT nationality) FROM conductor
+original correction:
+SELECT COUNT(DISTINCT nationality) FROM conductor
+
+index is 836
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC
+List names of conductors in descending order of years of work.
+SQL correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC
+original correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC
+
+index is 837
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC
+What are the names of conductors, sorted descending by the number of years they have worked?
+SQL correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC
+original correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC
+
+index is 838
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1
+List the name of the conductor with the most years of work.
+SQL correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC LIMIT 1
+original correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC LIMIT 1
+
+index is 839
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1
+What is the name of the conductor who has worked the greatest number of years?
+SQL correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC LIMIT 1
+original correction:
+SELECT name FROM conductor ORDER BY year_of_work DESC LIMIT 1
+
+index is 840
+SELECT T1.Name ,  T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID
+Show the names of conductors and the orchestras they have conducted.
+SQL correction:
+SELECT conductor.name , orchestra.orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID
+original correction:
+SELECT conductor.name , orchestra.orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID
+
+index is 841
+SELECT T1.Name ,  T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID
+What are the names of conductors as well as the corresonding orchestras that they have conducted?
+SQL correction:
+SELECT conductor.name , orchestra.orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID
+original correction:
+SELECT conductor.name , orchestra.orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID
+
+index is 842
+SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*)  >  1
+Show the names of conductors that have conducted more than one orchestras.
+SQL correction:
+SELECT name FROM conductor GROUP BY name HAVING count(orchestra_id) > 1
+original correction:
+SELECT name FROM conductor GROUP BY name HAVING count(orchestra_id) > 1
+
+index is 843
+SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID HAVING COUNT(*)  >  1
+What are the names of conductors who have conducted at more than one orchestra?
+SQL correction:
+SELECT name FROM conductor GROUP BY name HAVING count(*)  >  1
+original correction:
+SELECT name FROM conductor GROUP BY name HAVING count(*)  >  1
+
+index is 844
+SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1
+Show the name of the conductor that has conducted the most number of orchestras.
+SQL correction:
+SELECT name FROM conductor GROUP BY name ORDER BY count(orchestra_id) DESC LIMIT 1
+original correction:
+SELECT name FROM conductor GROUP BY name ORDER BY count(orchestra_id) DESC LIMIT 1
+
+index is 845
+SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1
+What is the name of the conductor who has conducted the most orchestras?
+SQL correction:
+SELECT name FROM conductor GROUP BY name ORDER BY count(orchestra_id) DESC LIMIT 1
+original correction:
+SELECT name FROM conductor GROUP BY name ORDER BY count(orchestra_id) DESC LIMIT 1
+
+index is 846
+SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE Year_of_Founded  >  2008
+Please show the name of the conductor that has conducted orchestras founded after 2008.
+SQL correction:
+SELECT name FROM conductor WHERE conductor_id IN (SELECT conductor_id FROM orchestra WHERE year_of_founded > 2008)
+original correction:
+SELECT name FROM conductor WHERE conductor_id IN (SELECT conductor_id FROM orchestra WHERE year_of_founded > 2008)
+
+index is 847
+SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE Year_of_Founded  >  2008
+What are the names of conductors who have conducted orchestras founded after the year 2008?
+SQL correction:
+SELECT DISTINCT T1.name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE T2.Year_of_Founded > 2008
+original correction:
+SELECT DISTINCT T1.name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE T2.Year_of_Founded > 2008
+
+index is 848
+SELECT Record_Company ,  COUNT(*) FROM orchestra GROUP BY Record_Company
+Please show the different record companies and the corresponding number of orchestras.
+SQL correction:
+SELECT record_company ,  COUNT(orchestra_id) FROM orchestra GROUP BY record_company
+original correction:
+SELECT record_company ,  COUNT(orchestra_id) FROM orchestra GROUP BY record_company
+
+index is 849
+SELECT Record_Company ,  COUNT(*) FROM orchestra GROUP BY Record_Company
+How many orchestras does each record company manage?
+SQL correction:
+SELECT count(DISTINCT orchestra_id) , record_company FROM orchestra GROUP BY record_company
+original correction:
+SELECT count(DISTINCT orchestra_id) , record_company FROM orchestra GROUP BY record_company
+
+index is 850
+SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY COUNT(*) ASC
+Please show the record formats of orchestras in ascending order of count.
+SQL correction:
+SELECT major_record_format FROM orchestra GROUP BY major_record_format ORDER BY count(major_record_format) ASC
+original correction:
+SELECT major_record_format FROM orchestra GROUP BY major_record_format ORDER BY count(major_record_format) ASC
+
+index is 851
+SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY COUNT(*) ASC
+What are the major record formats of orchestras, sorted by their frequency?
+SQL correction:
+SELECT major_record_format , COUNT(*) FROM orchestra GROUP BY major_record_format ORDER BY COUNT(*) DESC
+original correction:
+SELECT major_record_format , COUNT(*) FROM orchestra GROUP BY major_record_format ORDER BY COUNT(*) DESC
+
+index is 852
+SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1
+List the record company shared by the most number of orchestras.
+SQL correction:
+SELECT record_company FROM orchestra GROUP BY record_company ORDER BY count(orchestra_id) DESC LIMIT 1
+original correction:
+SELECT record_company FROM orchestra GROUP BY record_company ORDER BY count(orchestra_id) DESC LIMIT 1
+
+index is 853
+SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1
+What is the record company used by the greatest number of orchestras?
+SQL correction:
+SELECT record_company FROM orchestra GROUP BY record_company ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT record_company FROM orchestra GROUP BY record_company ORDER BY count(*) DESC LIMIT 1
+
+index is 854
+SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+List the names of orchestras that have no performance.
+SQL correction:
+SELECT DISTINCT orchestra FROM orchestra WHERE NOT EXISTS (SELECT * FROM performance WHERE orchestra.Orchestra_ID = performance.Orchestra_ID)
+original correction:
+SELECT DISTINCT orchestra FROM orchestra WHERE NOT EXISTS (SELECT * FROM performance WHERE orchestra.Orchestra_ID = performance.Orchestra_ID)
+
+index is 855
+SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+What are the orchestras that do not have any performances?
+SQL correction:
+SELECT DISTINCT orchestra FROM orchestra WHERE NOT EXISTS (SELECT * FROM performance WHERE orchestra.Orchestra_ID = performance.Orchestra_ID)
+original correction:
+SELECT DISTINCT orchestra FROM orchestra WHERE NOT EXISTS (SELECT * FROM performance WHERE orchestra.Orchestra_ID = performance.Orchestra_ID)
+
+index is 856
+SELECT Record_Company FROM orchestra WHERE Year_of_Founded  <  2003 INTERSECT SELECT Record_Company FROM orchestra WHERE Year_of_Founded  >  2003
+Show the record companies shared by orchestras founded before 2003 and after 2003.
+SQL correction:
+SELECT DISTINCT record_company FROM orchestra WHERE year_of_founded < 2003 AND year_of_founded > 2003
+original correction:
+SELECT DISTINCT record_company FROM orchestra WHERE year_of_founded < 2003 AND year_of_founded > 2003
+
+index is 857
+SELECT Record_Company FROM orchestra WHERE Year_of_Founded  <  2003 INTERSECT SELECT Record_Company FROM orchestra WHERE Year_of_Founded  >  2003
+What are the record companies that are used by both orchestras founded before 2003 and those founded after 2003?
+SQL correction:
+SELECT record_company FROM orchestra WHERE year_of_founded < 2003 AND year_of_founded > 2003 GROUP BY record_company
+original correction:
+SELECT record_company FROM orchestra WHERE year_of_founded < 2003 AND year_of_founded > 2003 GROUP BY record_company
+
+index is 858
+SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  "CD" OR Major_Record_Format  =  "DVD"
+Find the number of orchestras whose record format is "CD" or "DVD".
+SQL correction:
+SELECT COUNT(*) FROM orchestra WHERE major_record_format = 'CD' OR major_record_format = 'DVD'
+entities correction:
+SELECT COUNT(*) FROM orchestra WHERE major_record_format = 'CD' OR major_record_format = 'DVD'
+
+index is 859
+SELECT COUNT(*) FROM orchestra WHERE Major_Record_Format  =  "CD" OR Major_Record_Format  =  "DVD"
+Count the number of orchestras that have CD or DVD as their record format.
+SQL correction:
+SELECT COUNT(DISTINCT orchestra_id) FROM orchestra WHERE major_record_format = 'CD' OR major_record_format = 'DVD'
+entities correction:
+SELECT COUNT(DISTINCT Orchestra_ID) FROM orchestra WHERE major_record_format IN ('CD', 'DVD')
+
+index is 860
+SELECT Year_of_Founded FROM orchestra AS T1 JOIN performance AS T2 ON T1.Orchestra_ID  =  T2.Orchestra_ID GROUP BY T2.Orchestra_ID HAVING COUNT(*)  >  1
+Show the years in which orchestras that have given more than one performance are founded.
+SQL correction:
+SELECT year_of_founded FROM orchestra GROUP BY year_of_founded HAVING count(*)  >  1
+original correction:
+SELECT year_of_founded FROM orchestra GROUP BY year_of_founded HAVING count(*)  >  1
+
+index is 861
+SELECT Year_of_Founded FROM orchestra AS T1 JOIN performance AS T2 ON T1.Orchestra_ID  =  T2.Orchestra_ID GROUP BY T2.Orchestra_ID HAVING COUNT(*)  >  1
+What are years of founding for orchestras that have had more than a single performance?
+SQL correction:
+SELECT year_of_founded FROM orchestra GROUP BY year_of_founded HAVING count(*)  >  1
+original correction:
+SELECT year_of_founded FROM orchestra GROUP BY year_of_founded HAVING count(*)  >  1
+
+index is 862
+SELECT count(*) FROM Highschooler
+How many high schoolers are there?
+SQL correction:
+SELECT count(id) FROM highschooler
+original correction:
+SELECT count(id) FROM highschooler
+
+index is 863
+SELECT count(*) FROM Highschooler
+Count the number of high schoolers.
+SQL correction:
+SELECT count(id) FROM highschooler
+original correction:
+SELECT count(id) FROM highschooler
+
+index is 864
+SELECT name ,  grade FROM Highschooler
+Show the names and grades of each high schooler.
+SQL correction:
+SELECT name , grade FROM highschooler
+original correction:
+SELECT name , grade FROM highschooler
+
+index is 865
+SELECT name ,  grade FROM Highschooler
+What are the names and grades for each high schooler?
+SQL correction:
+SELECT name , grade FROM highschooler
+original correction:
+SELECT name , grade FROM highschooler
+
+index is 866
+SELECT grade FROM Highschooler
+Show all the grades of the high schoolers.
+SQL correction:
+SELECT grade FROM highschooler
+original correction:
+SELECT grade FROM highschooler
+
+index is 867
+SELECT grade FROM Highschooler
+What is the grade of each high schooler?
+SQL correction:
+SELECT grade ,  name FROM highschooler
+original correction:
+SELECT grade ,  name FROM highschooler
+
+index is 868
+SELECT grade FROM Highschooler WHERE name  =  "Kyle"
+What grade is Kyle in?
+SQL correction:
+SELECT grade FROM highschooler WHERE name  =  'Kyle'
+entities correction:
+SELECT grade FROM Highschooler WHERE name = 'Kyle'
+
+index is 869
+SELECT grade FROM Highschooler WHERE name  =  "Kyle"
+Return the grade for the high schooler named Kyle.
+SQL correction:
+SELECT grade FROM highschooler WHERE name = "Kyle"
+entities correction:
+SELECT grade FROM Highschooler WHERE name = "Kyle"
+
+index is 870
+SELECT name FROM Highschooler WHERE grade  =  10
+Show the names of all high schoolers in grade 10.
+SQL correction:
+SELECT name FROM highschooler WHERE grade  =  10
+original correction:
+SELECT name FROM highschooler WHERE grade  =  10
+
+index is 871
+SELECT name FROM Highschooler WHERE grade  =  10
+What are the names of all high schoolers in grade 10?
+SQL correction:
+SELECT name FROM highschooler WHERE grade = 10
+original correction:
+SELECT name FROM highschooler WHERE grade = 10
+
+index is 872
+SELECT ID FROM Highschooler WHERE name  =  "Kyle"
+Show the ID of the high schooler named Kyle.
+SQL correction:
+SELECT id FROM highschooler WHERE name = 'Kyle'
+entities correction:
+SELECT ID FROM Highschooler WHERE name = 'Kyle'
+
+index is 873
+SELECT ID FROM Highschooler WHERE name  =  "Kyle"
+What is Kyle's id?
+SQL correction:
+SELECT id FROM highschooler WHERE name = 'Kyle'
+entities correction:
+SELECT ID FROM Highschooler WHERE name = 'Kyle'
+
+index is 874
+SELECT count(*) FROM Highschooler WHERE grade  =  9 OR grade  =  10
+How many high schoolers are there in grade 9 or 10?
+SQL correction:
+SELECT count(id) FROM highschooler WHERE grade  =  9 OR grade  =  10
+original correction:
+SELECT count(id) FROM highschooler WHERE grade  =  9 OR grade  =  10
+
+index is 875
+SELECT count(*) FROM Highschooler WHERE grade  =  9 OR grade  =  10
+Count the number of high schoolers in grades 9 or 10.
+SQL correction:
+SELECT count(id) FROM highschooler WHERE grade  =  9 OR grade  =  10
+original correction:
+SELECT count(id) FROM highschooler WHERE grade  =  9 OR grade  =  10
+
+index is 876
+SELECT grade ,  count(*) FROM Highschooler GROUP BY grade
+Show the number of high schoolers for each grade.
+SQL correction:
+SELECT grade ,  COUNT(*) FROM highschooler GROUP BY grade
+original correction:
+SELECT grade ,  COUNT(*) FROM highschooler GROUP BY grade
+
+index is 877
+SELECT grade ,  count(*) FROM Highschooler GROUP BY grade
+How many high schoolers are in each grade?
+SQL correction:
+SELECT grade ,  COUNT(*) FROM highschooler GROUP BY grade
+original correction:
+SELECT grade ,  COUNT(*) FROM highschooler GROUP BY grade
+
+index is 878
+SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+Which grade has the most high schoolers?
+SQL correction:
+SELECT grade FROM highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT grade FROM highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+
+index is 879
+SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+Return the grade that has the greatest number of high schoolers.
+SQL correction:
+SELECT grade FROM highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT grade FROM highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+
+index is 880
+SELECT grade FROM Highschooler GROUP BY grade HAVING count(*)  >=  4
+Show me all grades that have at least 4 students.
+SQL correction:
+SELECT DISTINCT grade FROM takes GROUP BY grade HAVING count(DISTINCT id) >= 4
+original correction:
+SELECT DISTINCT grade FROM takes GROUP BY grade HAVING count(DISTINCT id) >= 4
+
+index is 881
+SELECT grade FROM Highschooler GROUP BY grade HAVING count(*)  >=  4
+Which grades have 4 or more high schoolers?
+SQL correction:
+SELECT grade FROM highschooler GROUP BY grade HAVING count(*) >= 4
+original correction:
+SELECT grade FROM highschooler GROUP BY grade HAVING count(*) >= 4
+
+index is 882
+SELECT student_id ,  count(*) FROM Friend GROUP BY student_id
+Show the student IDs and numbers of friends corresponding to each.
+SQL correction:
+SELECT student_id ,  COUNT(friend_id) FROM friend GROUP BY student_id
+original correction:
+SELECT student_id ,  COUNT(friend_id) FROM friend GROUP BY student_id
+
+index is 883
+SELECT student_id ,  count(*) FROM Friend GROUP BY student_id
+How many friends does each student have?
+SQL correction:
+SELECT T1.name ,  COUNT(T2.friend_id) FROM highschooler AS T1 JOIN friend AS T2 ON T1.id  =  T2.student_id GROUP BY T1.name
+original correction:
+SELECT T1.name ,  COUNT(T2.friend_id) FROM highschooler AS T1 JOIN friend AS T2 ON T1.id  =  T2.student_id GROUP BY T1.name
+
+index is 884
+SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id
+Show the names of high school students and their corresponding number of friends.
+SQL correction:
+SELECT highschooler.name , count(friend.friend_id) FROM highschooler JOIN friend ON highschooler.id = friend.student_id GROUP BY highschooler.name
+original correction:
+SELECT highschooler.name , count(friend.friend_id) FROM highschooler JOIN friend ON highschooler.id = friend.student_id GROUP BY highschooler.name
+
+index is 885
+SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id
+What are the names of the high schoolers and how many friends does each have?
+SQL correction:
+SELECT highschooler.name ,  count(friend.friend_id) FROM highschooler JOIN friend ON highschooler.id  =  friend.student_id GROUP BY highschooler.name
+original correction:
+SELECT highschooler.name ,  count(friend.friend_id) FROM highschooler JOIN friend ON highschooler.id  =  friend.student_id GROUP BY highschooler.name
+
+index is 886
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+What is the name of the high schooler who has the greatest number of friends?
+SQL correction:
+SELECT name FROM highschooler ORDER BY (SELECT COUNT(friend_id) FROM friend WHERE friend.student_id  =  highschooler.id) DESC LIMIT 1
+original correction:
+SELECT name FROM highschooler ORDER BY (SELECT COUNT(friend_id) FROM friend WHERE friend.student_id  =  highschooler.id) DESC LIMIT 1
+
+index is 887
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+Return the name of the high school student with the most friends.
+SQL correction:
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+
+index is 888
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  3
+Show the names of high schoolers who have at least 3 friends.
+SQL correction:
+SELECT DISTINCT name FROM Highschooler GROUP BY name HAVING COUNT(friend_id) >= 3
+original correction:
+SELECT DISTINCT name FROM Highschooler GROUP BY name HAVING COUNT(friend_id) >= 3
+
+index is 889
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  3
+What are the names of high schoolers who have 3 or more friends?
+SQL correction:
+SELECT name FROM Highschooler GROUP BY name HAVING count(*)  >=  3
+original correction:
+SELECT name FROM Highschooler GROUP BY name HAVING count(*)  >=  3
+
+index is 890
+SELECT T3.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id JOIN Highschooler AS T3 ON T1.friend_id  =  T3.id WHERE T2.name  =  "Kyle"
+Show the names of all of the high schooler Kyle's friends.
+SQL correction:
+SELECT T2.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID  =  T2.student_id WHERE T1.name  =  'Kyle'
+entities correction:
+SELECT T2.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.friend_id WHERE T1.name = 'Kyle'
+
+index is 891
+SELECT T3.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id JOIN Highschooler AS T3 ON T1.friend_id  =  T3.id WHERE T2.name  =  "Kyle"
+Return the names of friends of the high school student Kyle.
+SQL correction:
+
+original correction:
+
+
+index is 892
+SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  "Kyle"
+How many friends does the high school student Kyle have?
+SQL correction:
+SELECT COUNT(friend.friend_id) FROM friend JOIN highschooler ON friend.student_id = highschooler.id WHERE highschooler.name = 'Kyle'
+entities correction:
+SELECT COUNT(friend.friend_id) FROM friend JOIN highschooler ON friend.student_id = highschooler.ID WHERE highschooler.name = 'Kyle'
+
+index is 893
+SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  "Kyle"
+Count the number of friends Kyle has.
+SQL correction:
+SELECT count(*) FROM friend WHERE student_id = (SELECT id FROM highschooler WHERE name = 'Kyle')
+entities correction:
+SELECT count(*) FROM Friend WHERE student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle')
+
+index is 894
+SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend
+Show ids of all students who do not have any friends.
+SQL correction:
+SELECT id FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+original correction:
+SELECT id FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+
+index is 895
+SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend
+What are the ids of high school students who do not have friends?
+SQL correction:
+SELECT id FROM highschooler WHERE NOT EXISTS (SELECT * FROM friend WHERE highschooler.id  =  friend.student_id)
+original correction:
+SELECT id FROM highschooler WHERE NOT EXISTS (SELECT * FROM friend WHERE highschooler.id  =  friend.student_id)
+
+index is 896
+SELECT name FROM Highschooler EXCEPT SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id
+Show names of all high school students who do not have any friends.
+SQL correction:
+SELECT name FROM highschooler WHERE NOT EXISTS (SELECT friend_id FROM friend WHERE student_id = highschooler.id)
+original correction:
+SELECT name FROM highschooler WHERE NOT EXISTS (SELECT friend_id FROM friend WHERE student_id = highschooler.id)
+
+index is 897
+SELECT name FROM Highschooler EXCEPT SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id
+What are the names of students who have no friends?
+SQL correction:
+SELECT name FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+original correction:
+SELECT name FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+
+index is 898
+SELECT student_id FROM Friend INTERSECT SELECT liked_id FROM Likes
+Show the ids of high schoolers who have friends and are also liked by someone else.
+SQL correction:
+SELECT DISTINCT T1.id FROM highschooler AS T1 WHERE EXISTS (SELECT * FROM friend AS T2 WHERE T2.student_id = T1.id) AND EXISTS (SELECT * FROM likes AS T3 WHERE T3.student_id = T1.id)
+original correction:
+SELECT DISTINCT T1.id FROM highschooler AS T1 WHERE EXISTS (SELECT * FROM friend AS T2 WHERE T2.student_id = T1.id) AND EXISTS (SELECT * FROM likes AS T3 WHERE T3.student_id = T1.id)
+
+index is 899
+SELECT student_id FROM Friend INTERSECT SELECT liked_id FROM Likes
+What are the ids of students who both have friends and are liked?
+SQL correction:
+SELECT DISTINCT student_id FROM friend INNER JOIN likes ON friend.student_id = likes.student_id
+original correction:
+SELECT DISTINCT student_id FROM friend INNER JOIN likes ON friend.student_id = likes.student_id
+
+index is 900
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id INTERSECT SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.liked_id  =  T2.id
+Show name of all students who have some friends and also are liked by someone else.
+SQL correction:
+SELECT DISTINCT name FROM highschooler WHERE EXISTS (SELECT * FROM friend WHERE highschooler.id = friend.student_id) AND EXISTS (SELECT * FROM likes WHERE highschooler.id = likes.student_id)
+original correction:
+SELECT DISTINCT name FROM highschooler WHERE EXISTS (SELECT * FROM friend WHERE highschooler.id = friend.student_id) AND EXISTS (SELECT * FROM likes WHERE highschooler.id = likes.student_id)
+
+index is 901
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id INTERSECT SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.liked_id  =  T2.id
+What are the names of high schoolers who both have friends and are liked?
+SQL correction:
+SELECT DISTINCT name FROM highschooler WHERE id IN (SELECT DISTINCT student_id FROM friend) AND id IN (SELECT DISTINCT student_id FROM likes)
+original correction:
+SELECT DISTINCT name FROM highschooler WHERE id IN (SELECT DISTINCT student_id FROM friend) AND id IN (SELECT DISTINCT student_id FROM likes)
+
+index is 902
+SELECT student_id ,  count(*) FROM Likes GROUP BY student_id
+Count the number of likes for each student id.
+SQL correction:
+SELECT student_id , COUNT(*) FROM Likes GROUP BY student_id
+original correction:
+SELECT student_id , COUNT(*) FROM Likes GROUP BY student_id
+
+index is 903
+SELECT student_id ,  count(*) FROM Likes GROUP BY student_id
+How many likes correspond to each student id?
+SQL correction:
+SELECT student_id ,  COUNT(*) FROM likes GROUP BY student_id
+original correction:
+SELECT student_id ,  COUNT(*) FROM likes GROUP BY student_id
+
+index is 904
+SELECT T2.name ,  count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id
+Show the names of high schoolers who have likes, and numbers of likes for each.
+SQL correction:
+SELECT highschooler.name, count(likes.liked_id) FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY highschooler.name
+original correction:
+SELECT highschooler.name, count(likes.liked_id) FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY highschooler.name
+
+index is 905
+SELECT T2.name ,  count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id
+What are the names of high schoolers who have likes, and how many likes does each have?
+SQL correction:
+SELECT highschooler.name , count(likes.liked_id) FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY highschooler.name
+original correction:
+SELECT highschooler.name , count(likes.liked_id) FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY highschooler.name
+
+index is 906
+SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+What is the name of the high schooler who has the greatest number of likes?
+SQL correction:
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+
+index is 907
+SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+Give the name of the student with the most likes.
+SQL correction:
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+
+index is 908
+SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  2
+Show the names of students who have at least 2 likes.
+SQL correction:
+SELECT name FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY name HAVING count(liked_id) >= 2
+original correction:
+SELECT name FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY name HAVING count(liked_id) >= 2
+
+index is 909
+SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  2
+What are the names of students who have 2 or more likes?
+SQL correction:
+SELECT name FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY name HAVING count(liked_id) >= 2
+original correction:
+SELECT name FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY name HAVING count(liked_id) >= 2
+
+index is 910
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.grade  >  5 GROUP BY T1.student_id HAVING count(*)  >=  2
+Show the names of students who have a grade higher than 5 and have at least 2 friends.
+SQL correction:
+SELECT name FROM highschooler WHERE grade  >  5 AND (SELECT count(*) FROM friend WHERE friend.student_id  =  highschooler.id)  >=  2
+original correction:
+SELECT name FROM highschooler WHERE grade  >  5 AND (SELECT count(*) FROM friend WHERE friend.student_id  =  highschooler.id)  >=  2
+
+index is 911
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.grade  >  5 GROUP BY T1.student_id HAVING count(*)  >=  2
+What are the names of high schoolers who have a grade of over 5 and have 2 or more friends?
+SQL correction:
+SELECT name FROM highschooler JOIN friend ON highschooler.id  =  friend.student_id WHERE grade > 5 GROUP BY name HAVING COUNT(DISTINCT friend.friend_id) >= 2
+original correction:
+SELECT name FROM highschooler JOIN friend ON highschooler.id  =  friend.student_id WHERE grade > 5 GROUP BY name HAVING COUNT(DISTINCT friend.friend_id) >= 2

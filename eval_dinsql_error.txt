@@ -1,0 +1,557 @@
+Number of data samples 1034
+index is 0
+SELECT count(*) FROM singer
+How many singers do we have?
+EASY
+SELECT COUNT(Singer_ID) FROM singer
+SELECT COUNT(*) FROM singer
+index is 1
+SELECT count(*) FROM singer
+What is the total number of singers?
+EASY
+SELECT COUNT(Singer_ID) FROM singer
+SELECT COUNT(*) FROM singer
+index is 2
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+Show name, country, age for all singers ordered by age from the oldest to the youngest.
+EASY
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+SELECT singer.Name, singer.Country, singer.Age  FROM singer  ORDER BY singer.Age DESC
+index is 3
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+What are the names, countries, and ages for every singer in descending order of age?
+EASY
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+SELECT singer.Name, singer.Country, singer.Age FROM singer ORDER BY singer.Age DESC
+index is 4
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'
+What is the average, minimum, and maximum age of all singers from France?
+EASY
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+SELECT SELECT AVG(Age) AS average_age, MIN(Age) AS minimum_age, MAX(Age) AS maximum_age FROM singer WHERE Country = 'France'
+index is 5
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'
+What is the average, minimum, and maximum age for all French singers?
+EASY
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'French'
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'French'
+index is 6
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1
+Show the name and the release year of the song by the youngest singer.
+EASY
+SELECT Name, Song_Name, Song_release_year
+FROM singer
+WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT singer.Name, singer.Song_release_year FROM singer WHERE singer.Age = (SELECT MIN(Age) FROM singer)
+index is 7
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1
+What are the names and release years for all the songs of the youngest singer?
+EASY
+SELECT Name, Song_Name, Song_release_year
+FROM singer
+WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT singer.Name, singer.Song_release_year FROM singer WHERE singer.Age = (SELECT MIN(singer.Age) FROM singer)
+index is 8
+SELECT DISTINCT country FROM singer WHERE age  >  20
+What are all distinct countries where singers above age 20 are from?
+EASY
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+index is 9
+SELECT DISTINCT country FROM singer WHERE age  >  20
+What are  the different countries with singers above age 20?
+EASY
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+index is 10
+SELECT country ,  count(*) FROM singer GROUP BY country
+Show all countries and the number of singers in each country.
+NON-NESTED
+SELECT Country, COUNT(Singer_ID) FROM singer GROUP BY Country
+SELECT singer.Country, COUNT(DISTINCT singer.Singer_ID) FROM singer GROUP BY singer.Country
+index is 11
+SELECT country ,  count(*) FROM singer GROUP BY country
+How many singers are from each country?
+EASY
+SELECT Country, COUNT(Singer_ID) FROM singer GROUP BY Country
+SELECT singer.Country, COUNT(singer.Singer_ID) FROM singer GROUP BY singer.Country
+index is 12
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+List all song names by singers above the average age.
+EASY
+SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)
+SELECT s.Song_Name FROM singer s WHERE s.Age > (SELECT AVG(Age) FROM singer)
+index is 13
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+What are all the song names by singers who are older than average?
+EASY
+SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)
+SELECT s.Song_Name FROM singer s WHERE s.Age > (     SELECT AVG(s2.Age)     FROM singer s2 )
+index is 14
+SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+Show location and name for all stadiums with a capacity between 5000 and 10000.
+EASY
+SELECT location, name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+SELECT stadium.Location, stadium.Name FROM stadium WHERE stadium.Capacity BETWEEN 5000 AND 10000;
+index is 15
+SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+What are the locations and names of all stations with capacity between 5000 and 10000?
+EASY
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+SELECT s.Location, s.Name  FROM stadium s WHERE s.Capacity BETWEEN 5000 AND 10000
+index is 16
+select max(capacity), average from stadium
+What is the maximum capacity and the average of all stadiums ?
+EASY
+SELECT MAX(capacity), AVG(capacity) FROM stadium
+SELECT MAX(Capacity), AVG(Capacity) FROM stadium
+index is 17
+select avg(capacity) ,  max(capacity) from stadium
+What is the average and maximum capacities for all stadiums ?
+EASY
+SELECT AVG(Capacity), MAX(Capacity) FROM stadium
+SELECT AVG(Capacity) AS average_capacity, MAX(Capacity) AS maximum_capacity FROM stadium
+index is 18
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+What is the name and capacity for the stadium with highest average attendance?
+EASY
+SELECT Name, Capacity FROM stadium WHERE Average = (SELECT MAX(Average) FROM stadium)
+SELECT Name, Capacity  FROM stadium  WHERE Average = (SELECT MAX(Average) FROM stadium)
+index is 19
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+What is the name and capacity for the stadium with the highest average attendance?
+EASY
+SELECT Name, Capacity FROM stadium WHERE Average = (SELECT MAX(Average) FROM stadium)
+SELECT stadium.Name, stadium.Capacity FROM stadium WHERE stadium.Average = (SELECT MAX(stadium.Average) FROM stadium)
+index is 20
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts are there in year 2014 or 2015?
+EASY
+SELECT COUNT(*) FROM concert WHERE Year IN (2014, 2015)
+SELECT COUNT(*) FROM concert WHERE Year = 2014 OR Year = 2015
+index is 21
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts occurred in 2014 or 2015?
+EASY
+SELECT COUNT(*) FROM concert WHERE Year IN (2014, 2015)
+SELECT COUNT(DISTINCT concert_ID) FROM concert WHERE Year IN (2014, 2015)
+index is 22
+SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id
+Show the stadium name and the number of concerts in each stadium.
+NON-NESTED
+SELECT stadium.Name, COUNT(concert.concert_ID) AS num_concerts FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID GROUP BY stadium.Name
+SELECT stadium.Name, COUNT(DISTINCT concert.concert_ID) AS num_concerts  FROM stadium  JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID  GROUP BY stadium.Name
+index is 23
+SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id
+For each stadium, how many concerts play there?
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT SELECT stadium.Name, COUNT(DISTINCT concert.concert_ID) AS ConcertCount FROM stadium JOIN concert ON concert.Stadium_ID = stadium.Stadium_ID GROUP BY stadium.Name
+index is 24
+SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1
+Show the stadium name and capacity with most number of concerts in year 2014 or after.
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT SELECT stadium.Name, stadium.Capacity FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year >= 2014 GROUP BY stadium.Name, stadium.Capacity ORDER BY COUNT(concert.concert_ID) DESC LIMIT 1
+index is 25
+select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1
+What is the name and capacity of the stadium with the most concerts after 2013 ?
+NON-NESTED
+SELECT Name, Capacity FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year > 2013 ORDER BY concert.Year DESC LIMIT 1
+SELECT s.Name, s.Capacity FROM stadium AS s JOIN (     SELECT Stadium_ID, COUNT(*) AS num_concerts     FROM concert     WHERE Year > 2013     GROUP BY Stadium_ID ) AS c ON s.Stadium_ID = c.Stadium_ID ORDER BY c.num_concerts DESC LIMIT 1
+index is 26
+SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+Which year has most number of concerts?
+EASY
+SELECT Year, COUNT(concert_ID) FROM concert GROUP BY Year ORDER BY COUNT(concert_ID) DESC LIMIT 1
+SELECT Year, COUNT(concert_ID)  FROM concert  GROUP BY Year  ORDER BY COUNT(concert_ID) DESC  LIMIT 1
+index is 27
+SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+What is the year that had the most concerts?
+EASY
+SELECT Year, COUNT(*) AS concert_count
+FROM concert
+GROUP BY Year
+ORDER BY concert_count DESC
+LIMIT 1
+SELECT Year, COUNT(*) AS concert_count FROM concert GROUP BY Year ORDER BY concert_count DESC LIMIT 1
+index is 28
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+Show the stadium names without any concert.
+NON-NESTED
+SELECT T1.Name FROM stadium AS T1 WHERE NOT EXISTS (SELECT T2.Stadium_ID FROM concert AS T2 WHERE T2.Stadium_ID = T1.Stadium_ID)
+SELECT T1.Name FROM stadium AS T1 LEFT JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Stadium_ID IS NULL
+index is 29
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+What are the names of the stadiums without any concerts?
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)
+index is 30
+SELECT country FROM singer WHERE age  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30
+Show countries where a singer above age 40 and a singer below 30 are from.
+NESTED
+SELECT DISTINCT Country FROM singer WHERE Age > 40 INTERSECT SELECT DISTINCT Country FROM singer WHERE Age < 30
+SELECT DISTINCT Country FROM singer WHERE Age > 40 AND Country IN (SELECT DISTINCT Country FROM singer WHERE Age < 30)
+index is 31
+SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+Show names for all stadiums except for stadiums having a concert in year 2014.
+NON-NESTED
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+SELECT s.Name FROM stadium AS s WHERE s.Stadium_ID NOT IN (SELECT c.Stadium_ID FROM concert AS c WHERE c.Year = 2014)
+index is 32
+SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+What are the names of all stadiums that did not have a concert in 2014?
+NON-NESTED
+SELECT stadium.Name FROM stadium LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year <> 2014 OR concert.Year IS NULL
+SELECT stadium.Name  FROM stadium  LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID  WHERE concert.Year <> 2014 OR concert.Year IS NULL
+index is 33
+SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id
+Show the name and theme for all concerts and the number of singers in each concert.
+NON-NESTED
+
+```sql
+SELECT concert_Name, Theme, COUNT(*) AS singer_count
+FROM concert
+LEFT JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID
+GROUP BY concert_Name, Theme
+```
+SELECT The provided SQLite SQL query for the given question looks correct and does not require any fixes. The query retrieves the name and theme of all concerts and the number of singers in each concert. It performs a left join between the "concert" table and the "singer_in_concert" table on the "concert_ID" column, and then groups the results by concert name and theme while counting the number of records in each group. Therefore, the SQLite SQL query is as follows:  ```sql SELECT concert_Name, Theme, COUNT(*) AS singer_count FROM concert LEFT JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID GROUP BY concert_Name, Theme ```  The query is correctly structured and utilizes the appropriate tables, columns, and join condition.
+index is 34
+select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id
+What are the names , themes , and number of singers for every concert ?
+NON-NESTED
+SELECT concert_Name, Theme, COUNT(*) FROM concert JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID GROUP BY concert_Name, Theme
+SELECT concert.concert_Name, concert.Theme, COUNT(DISTINCT singer_in_concert.Singer_ID)  FROM concert  JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID  JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID  GROUP BY concert.concert_Name, concert.Theme
+index is 35
+SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id
+List singer names and number of concerts for each singer.
+NON-NESTED
+
+```
+SELECT singer.Name, COUNT(singer_in_concert.*)
+FROM singer
+JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID
+GROUP BY singer.Singer_ID
+```
+SELECT ``` singer.Name, COUNT(DISTINCT singer_in_concert.concert_ID) FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID GROUP BY singer.Name ```
+index is 36
+SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id
+What are the names of the singers and number of concerts for each person?
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT To fix the given SQLite SQL query for the question "What are the names of the singers and number of concerts for each person?" using the provided tables, columns, foreign keys, and primary keys, we can use the following fixed SQL query:  ```sql SELECT singer.Name, COUNT(DISTINCT singer_in_concert.concert_ID) AS concerts_count FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID GROUP BY singer.Name; ```  In this fixed SQL query, we select the singer's name from the "singer" table and use a JOIN with the "singer_in_concert" table on the common column "Singer_ID". We then use the COUNT function with DISTINCT on the "concert_ID" column to count the number of unique concerts for each singer. The results are grouped by the singer's name using the GROUP BY clause.
+index is 37
+SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+List all singer names in concerts in year 2014.
+NON-NESTED
+SELECT Name FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE concert.Year = 2014
+SELECT singer.Name FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE concert.Year = 2014;
+index is 38
+SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+What are the names of the singers who performed in a concert in 2014?
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT SELECT singer.Name FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE concert.Year = 2014
+index is 39
+SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'
+what is the name and nation of the singer who have a song having 'Hey' in its name?
+EASY
+SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+SELECT singer.Name, singer.Country  FROM singer  WHERE singer.Song_Name LIKE '%Hey%'
+index is 40
+SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'
+What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?
+EASY
+SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+SELECT singer.Name, singer.Country FROM singer WHERE Song_Name LIKE '%Hey%';
+index is 41
+SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015
+Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015.
+NON-NESTED
+SELECT Name, Location FROM stadium WHERE Stadium_ID IN (SELECT DISTINCT Stadium_ID FROM concert WHERE Year = 2014) AND Stadium_ID IN (SELECT DISTINCT Stadium_ID FROM concert WHERE Year = 2015)
+SELECT stadium.Name, stadium.Location FROM stadium WHERE Stadium_ID IN (SELECT Stadium_ID FROM concert WHERE Year = 2014 INTERSECT SELECT Stadium_ID FROM concert WHERE Year = 2015)
+index is 42
+SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015
+What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?
+NON-NESTED
+
+SELECT stadium.Name, stadium.Location
+FROM stadium
+WHERE stadium.Stadium_ID IN (
+  SELECT c1.Stadium_ID
+  FROM concert c1
+  JOIN concert c2 ON c1.Stadium_ID = c2.Stadium_ID
+  WHERE c1.Year = 2014 AND c2.Year = 2015
+)
+SELECT stadium.Name, stadium.Location FROM stadium WHERE stadium.Stadium_ID IN (   SELECT c1.Stadium_ID   FROM concert c1   JOIN concert c2 ON c1.Stadium_ID = c2.Stadium_ID   WHERE c1.Year = 2014 AND c2.Year = 2015 )
+index is 43
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+Find the number of concerts happened in the stadium with the highest capacity .
+NON-NESTED
+SELECT COUNT(*) FROM concert INNER JOIN stadium ON concert.Stadium_ID = stadium.Stadium_ID WHERE stadium.Capacity = (SELECT MAX(Capacity) FROM stadium)
+SELECT COUNT(*) FROM concert INNER JOIN stadium ON concert.Stadium_ID = stadium.Stadium_ID WHERE stadium.Capacity = (SELECT MAX(Capacity) FROM stadium)
+index is 44
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+What are the number of concerts that occurred in the stadium with the largest capacity ?
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT SELECT COUNT(DISTINCT concert.concert_ID) FROM concert JOIN stadium ON concert.Stadium_ID = stadium.Stadium_ID WHERE stadium.Capacity = (SELECT MAX(Capacity) FROM stadium)
+index is 45
+SELECT count(*) FROM pets WHERE weight  >  10
+Find the number of pets whose weight is heavier than 10.
+EASY
+SELECT COUNT(*) FROM Pets WHERE weight > 10
+SELECT COUNT(*) FROM Pets WHERE weight > 10
+index is 46
+SELECT count(*) FROM pets WHERE weight  >  10
+How many pets have a greater weight than 10?
+EASY
+SELECT COUNT(PetID) FROM Pets WHERE weight > 10
+SELECT COUNT(Pets.PetID) FROM Pets WHERE Pets.weight > 10
+index is 47
+SELECT weight FROM pets ORDER BY pet_age LIMIT 1
+Find the weight of the youngest dog.
+EASY
+SELECT weight FROM Pets ORDER BY pet_age ASC LIMIT 1
+SELECT Pets.weight FROM Pets ORDER BY Pets.pet_age ASC LIMIT 1
+index is 48
+SELECT weight FROM pets ORDER BY pet_age LIMIT 1
+How much does the youngest dog weigh?
+EASY
+SELECT weight FROM Pets ORDER BY pet_age ASC LIMIT 1
+SELECT Pets.weight FROM Pets ORDER BY Pets.pet_age ASC LIMIT 1
+index is 49
+SELECT max(weight) ,  petType FROM pets GROUP BY petType
+Find the maximum weight for each type of pet. List the maximum weight and pet type.
+NON-NESTED
+SELECT PetType, MAX(weight) FROM Pets JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID GROUP BY PetType
+SELECT Pets.PetType, MAX(Pets.weight) FROM Pets INNER JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID GROUP BY Pets.PetType
+index is 50
+SELECT max(weight) ,  petType FROM pets GROUP BY petType
+List the maximum weight and type for each type of pet.
+NON-NESTED
+SELECT MAX(weight) ,  PetType FROM Pets GROUP BY PetType
+SELECT MAX(Pets.weight) ,  Pets.PetType FROM Pets GROUP BY Pets.PetType
+index is 51
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+Find number of pets owned by students who are older than 20.
+NON-NESTED
+SELECT COUNT(DISTINCT Has_Pet.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID WHERE Student.Age > 20
+SELECT COUNT(DISTINCT Has_Pet.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID WHERE Student.Age > 20
+index is 52
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+How many pets are owned by students that have an age greater than 20?
+NON-NESTED
+SELECT COUNT(*) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID WHERE Student.Age > 20
+SELECT COUNT(DISTINCT Has_Pet.PetID)  FROM Has_Pet  JOIN Student ON Has_Pet.StuID = Student.StuID  WHERE Student.Age > 20
+index is 53
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+Find the number of dog pets that are raised by female students (with sex F).
+NON-NESTED
+SELECT COUNT(DISTINCT Has_Pet.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+SELECT COUNT(DISTINCT Pets.PetID)  FROM Has_Pet  JOIN Student ON Has_Pet.StuID = Student.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+index is 54
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+How many dog pets are raised by female students?
+NON-NESTED
+SELECT count(DISTINCT Has_Pet.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+SELECT count(DISTINCT Has_Pet.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+index is 55
+SELECT count(DISTINCT pettype) FROM pets
+Find the number of distinct type of pets.
+EASY
+SELECT COUNT(DISTINCT PetType) FROM Pets
+SELECT COUNT(DISTINCT PetType) FROM Pets
+index is 56
+SELECT count(DISTINCT pettype) FROM pets
+How many different types of pet are there?
+EASY
+SELECT COUNT(DISTINCT PetType) FROM Pets
+SELECT COUNT(DISTINCT PetType) FROM Pets
+index is 57
+SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'
+Find the first name of students who have cat or dog pet.
+NON-NESTED
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' OR Pets.PetType = 'dog'
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType IN ('cat', 'dog')
+index is 58
+SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'
+What are the first names of every student who has a cat or dog as a pet?
+NON-NESTED
+SELECT DISTINCT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' OR Pets.PetType = 'dog'
+SELECT DISTINCT Student.Fname  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType IN ('cat', 'dog')
+index is 59
+select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat' intersect select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog'
+Find the first name of students who have both cat and dog pets .
+NESTED
+SELECT Fname FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'cat')) AND StuID IN (SELECT StuID FROM Has_Pet WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'dog'))
+SELECT Student.Fname FROM Student WHERE StuID IN (     SELECT StuID     FROM Has_Pet     WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'cat') ) AND StuID IN (     SELECT StuID     FROM Has_Pet     WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'dog') )
+index is 60
+SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog'
+What are the students' first names who have both cats and dogs as pets?
+NESTED
+SELECT DISTINCT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' AND Student.StuID IN (SELECT Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog')
+SELECT DISTINCT Student.Fname  FROM Student  JOIN Has_Pet AS HP1 ON Student.StuID = HP1.StuID  JOIN Pets AS P1 ON HP1.PetID = P1.PetID AND P1.PetType = 'cat' JOIN Has_Pet AS HP2 ON Student.StuID = HP2.StuID  JOIN Pets AS P2 ON HP2.PetID = P2.PetID AND P2.PetType = 'dog'
+index is 61
+SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+Find the major and age of students who do not have a cat pet.
+NESTED
+SELECT Major ,  Age FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID = (SELECT PetID FROM Pets WHERE PetType = 'cat'))
+SELECT Student.Major, Student.Age FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType != 'cat' OR Pets.PetType IS NULL
+index is 62
+SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+What major is every student who does not own a cat as a pet, and also how old are they?
+NESTED
+SELECT Major ,  Age FROM student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID = (SELECT PetID FROM Pets WHERE PetType = 'cat'))
+SELECT Major, Age  FROM Student  WHERE StuID NOT IN (     SELECT StuID      FROM Has_Pet      WHERE PetID IN (         SELECT PetID          FROM Pets          WHERE PetType = 'cat'     ) )
+index is 63
+SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+Find the id of students who do not have a cat pet.
+NON-NESTED
+SELECT Student.StuID FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType <> 'cat' OR Pets.PetType IS NULL
+SELECT Student.StuID FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType <> 'cat' OR Pets.PetType IS NULL;
+index is 64
+SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+What are the ids of the students who do not own cats as pets?
+NON-NESTED
+SELECT DISTINCT Student.StuID FROM Student WHERE NOT EXISTS (SELECT * FROM Has_Pet WHERE Has_Pet.StuID = Student.StuID AND Has_Pet.PetType = 'cat')
+SELECT DISTINCT Student.StuID  FROM Student  WHERE Student.StuID NOT IN (SELECT Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat')
+index is 65
+SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+Find the first name and age of students who have a dog but do not have a cat as a pet.
+NON-NESTED
+SELECT Student.Fname, Student.Age FROM Student 
+JOIN Has_Pet ON Student.StuID = Has_Pet.StuID
+JOIN Pets ON Has_Pet.PetID = Pets.PetID
+WHERE Pets.PetType = 'dog' AND Student.StuID NOT IN (
+  SELECT Has_Pet.StuID FROM Has_Pet
+  JOIN Pets ON Has_Pet.PetID = Pets.PetID
+  WHERE Pets.PetType = 'cat'
+)
+SELECT Student.Fname, Student.Age  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog' AND Student.StuID NOT IN (   SELECT Has_Pet.StuID FROM Has_Pet   JOIN Pets ON Has_Pet.PetID = Pets.PetID   WHERE Pets.PetType = 'cat' ) GROUP BY Student.StuID, Student.Fname, Student.Age
+index is 66
+SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+What is the first name of every student who has a dog but does not have a cat?
+NESTED
+SELECT Fname FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet WHERE PetType = 'dog') AND StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetType = 'cat')
+SELECT Student.Fname  FROM Student  WHERE StuID IN (SELECT Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog')  AND StuID NOT IN (SELECT Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat')
+index is 67
+SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1
+Find the type and weight of the youngest pet.
+EASY
+SELECT PetType, weight FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+SELECT Pets.PetType, Pets.weight  FROM Pets  WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+index is 68
+SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1
+What type of pet is the youngest animal, and how much does it weigh?
+EASY
+SELECT PetType, weight
+FROM Pets
+WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+SELECT PetType, MIN(weight) FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+index is 69
+SELECT petid ,  weight FROM pets WHERE pet_age  >  1
+Find the id and weight of all pets whose age is older than 1.
+EASY
+SELECT PetID, weight FROM Pets WHERE pet_age > 1
+SELECT Pets.PetID, Pets.weight FROM Pets WHERE Pets.pet_age > 1
+index is 70
+SELECT petid ,  weight FROM pets WHERE pet_age  >  1
+What is the id and weight of every pet who is older than 1?
+EASY
+SELECT PetID, weight FROM Pets WHERE pet_age > 1
+SELECT Pets.PetID, Pets.weight  FROM Pets  WHERE Pets.pet_age > 1
+index is 71
+SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype
+Find the average and maximum age for each type of pet.
+NON-NESTED
+SQL slicing error
+SELECT
+SELECT Since the provided SQLite SQL query is incomplete, I will provide a fixed version based on the given question and table schema.  Fixed SQLite SQL Query:  SELECT Pets.PetType, AVG(Pets.pet_age) AS average_age, MAX(Pets.pet_age) AS maximum_age FROM Pets GROUP BY Pets.PetType;
+index is 72
+SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype
+What is the average and maximum age for each pet type?
+EASY
+SELECT PetType, AVG(pet_age), MAX(pet_age) FROM Pets GROUP BY PetType
+SELECT PetType, AVG(pet_age), MAX(pet_age) FROM Pets GROUP BY PetType;
+index is 73
+SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype
+Find the average weight for each pet type.
+EASY
+SELECT PetType, AVG(weight) FROM Pets GROUP BY PetType
+SELECT Pets.PetType, AVG(Pets.weight) FROM Pets GROUP BY Pets.PetType
+index is 74
+SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype
+What is the average weight for each type of pet?
+EASY
+SELECT PetType, AVG(weight) FROM Pets GROUP BY PetType
+SELECT PetType, AVG(weight)  FROM Pets  GROUP BY PetType
+index is 75
+SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid
+Find the first name and age of students who have a pet.
+NON-NESTED
+SELECT Student.Fname, Student.Age FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID
+SELECT Student.Fname, Student.Age FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID
+index is 76
+SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid
+What are the different first names and ages of the students who do have pets?
+NON-NESTED
+SELECT DISTINCT T1.Fname ,  T1.Age FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID  =  T2.StuID
+SELECT DISTINCT Student.Fname, Student.Age FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID
+index is 77
+SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith'
+Find the id of the pet owned by student whose last name is ‘Smith’.
+NON-NESTED
+SELECT Pets.PetID FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.LName = 'Smith'
+SELECT Pets.PetID FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.LName = 'Smith';
+index is 78
+SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith'
+What is the id of the pet owned by the student whose last name is 'Smith'?
+NON-NESTED
+SELECT Pets.PetID FROM Pets JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID JOIN Student ON Has_Pet.StuID = Student.StuID WHERE Student.LName = 'Smith'
+SELECT Pets.PetID  FROM Pets  JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID  JOIN Student ON Has_Pet.StuID = Student.StuID  WHERE Student.LName = 'Smith'
+index is 79
+SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid
+Find the number of pets for each student who has any pet and student id.
+NON-NESTED
+SELECT Student.StuID, COUNT(Pets.PetID) FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID GROUP BY Student.StuID
+SELECT Student.StuID, COUNT(DISTINCT Pets.PetID)  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  GROUP BY Student.StuID
+index is 80
+select count(*) ,  t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid group by t1.stuid
+For students who have pets , how many pets does each student have ? list their ids instead of names .
+NON-NESTED
+SELECT Student.StuID, COUNT(Pets.PetID) FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID GROUP BY Student.StuID
+SELECT Student.StuID, COUNT(Has_Pet.PetID) FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID GROUP BY Student.StuID
+index is 81
+SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1
+Find the first name and gender of student who have more than one pet.
+NON-NESTED
+
+```sql
+SELECT Fname, Sex
+FROM Student
+WHERE StuID IN (
+    SELECT StuID
+    FROM Has_Pet
+    GROUP BY StuID
+    HAVING COUNT(PetID) > 1
+)
+```
+SELECT To fix the given SQLite SQL query, let's consider the instructions provided:  ```sql SELECT DISTINCT Student.Fname, Student.Sex FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID GROUP BY Student.StuID HAVING COUNT(Has_Pet.PetID) > 1 ```  Explanation of fixes: 1) Used the correct table names and column names based on the provided schema. 2) Joined the `Student` and `Has_Pet` tables on the corresponding foreign key column. 3) Used `DISTINCT` to ensure unique first name and gender combinations. 4) Grouped by `Student.StuID` to count the number of pets per student. 5) Fixed the `HAVING` clause to compare the count with 1, indicating more than one pet.  The fixed SQLite SQL query will return the first name and gender of students who have more than one pet.
+index is 82
+SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1
+What is the first name and gender of the all the students who have more than one pet?
+NON-NESTED
+SELECT DISTINCT Fname, Sex FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID GROUP BY Student.StuID HAVING COUNT(PetID) > 1
+SELECT First, let's fix the SQL query based on the provided tables, columns, foreign keys, and primary keys:  ```sql SELECT DISTINCT Student.Fname, Student.Sex FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID GROUP BY Student.Fname, Student.Sex HAVING COUNT(Has_Pet.PetID) > 1; ```  The changes made to the original query are as follows:  1) Replaced `Fname` and `Sex` with `Student.Fname` and `Student.Sex` to specify the table names. 2) Added `GROUP BY Student.Fname, Student.Sex` to correctly group the results by first name and gender. 3) Updated `COUNT(PetID)` to `COUNT(Has_Pet.PetID)` to specify the table name.  Now the SQL query is fixed and ready to be executed.
+index is 83
+SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat'
+Find the last name of the student who has a cat that is age 3.
+Slicing error for the classification module

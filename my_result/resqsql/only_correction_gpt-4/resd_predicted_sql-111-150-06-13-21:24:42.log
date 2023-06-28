@@ -1,0 +1,40 @@
+SELECT Accelerate FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE car_names.Model = 'amc hornet sportabout (sw)'
+SELECT cars_data.Accelerate  FROM car_names  JOIN cars_data ON car_names.MakeId = cars_data.Id  JOIN model_list ON car_names.Model = model_list.Model  JOIN car_makers ON model_list.Maker = car_makers.Id  WHERE car_names.Make = 'amc hornet sportabout (sw)'
+SELECT COUNT(DISTINCT car_makers.Id) FROM car_makers  JOIN countries ON car_makers.Country = countries.CountryId  WHERE countries.CountryName = 'France'
+SELECT count(DISTINCT Maker)  FROM car_makers  JOIN countries ON car_makers.Country = countries.CountryId WHERE countries.CountryName = 'France'
+SELECT COUNT(DISTINCT model_list.Model)  FROM countries  JOIN car_makers ON countries.CountryId = car_makers.Country  JOIN model_list ON car_makers.Id = model_list.Maker  WHERE countries.CountryName = 'usa'
+SELECT count(DISTINCT model_list.Model) FROM model_list JOIN car_makers ON model_list.Maker = car_makers.Id JOIN countries ON car_makers.Country = countries.CountryId WHERE countries.CountryName = 'United States'
+SELECT The given SQLite SQL query is correct based on the question.  Here is the query:  ```sql SELECT avg(MPG) FROM cars_data WHERE Cylinders = 4 ```  The question asks for the average miles per gallon (mpg) of the cars with 4 cylinders. This information can be retrieved directly from the 'cars_data' table without needing to join with any other tables. The 'MPG' and 'Cylinders' columns are both available in this table, which allows us to calculate the average MPG for cars with 4 cylinders. Thus, no modifications are necessary for the query.
+SELECT AVG(MPG) FROM cars_data WHERE Cylinders = 4
+SELECT min(Weight) FROM cars_data WHERE Cylinders = 8 AND Year = 1974
+SELECT MIN(Weight) FROM cars_data WHERE Cylinders = 8 AND Year = 1974
+SELECT Maker, Model  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model
+SELECT Maker , Model FROM car_makers JOIN model_list ON car_makers.Id  =  model_list.Maker
+SELECT The SQLite SQL QUERY you provided appears to be correct. It's fetching all the countries that have at least one car maker. There's no adjustment required as it correctly adheres to the guidelines given. Therefore, the FIXED SQL QUERY is the same as the original.  #### SQLite FIXED SQL QUERY ``` SELECT countryname ,  countryid FROM countries WHERE EXISTS (SELECT * FROM car_makers WHERE car_makers.country  =  countries.countryid) ```
+SELECT CountryName, CountryId  FROM countries  WHERE EXISTS (SELECT * FROM car_makers WHERE car_makers.Country = countries.CountryId)
+SELECT count(*) FROM cars_data WHERE Horsepower > 150
+SELECT count(*) FROM cars_data WHERE Horsepower > 150
+SELECT Year, AVG(Weight) FROM cars_data GROUP BY Year
+SELECT Year, AVG(Weight) FROM cars_data GROUP BY Year
+SELECT countries.CountryName  FROM countries  JOIN continents ON countries.Continent = continents.ContId  JOIN car_makers ON countries.CountryId = car_makers.Country  WHERE continents.Continent = 'Europe'  GROUP BY countries.CountryName  HAVING COUNT(DISTINCT car_makers.Id) >= 3
+SELECT countries.CountryName  FROM countries  JOIN continents ON countries.Continent = continents.ContId JOIN car_makers ON countries.CountryId = car_makers.Country WHERE continents.Continent = 'Europe'  GROUP BY countries.CountryName  HAVING COUNT(car_makers.Maker) >= 3
+SELECT max(cars_data.Horsepower) , car_names.Make  FROM cars_data  JOIN car_names  ON cars_data.Id = car_names.MakeId  WHERE cars_data.Cylinders = 3  GROUP BY car_names.Make
+SELECT max(cars_data.Horsepower) ,  car_makers.Maker  FROM cars_data  JOIN car_names ON cars_data.Id  =  car_names.MakeId  JOIN model_list ON car_names.Model  =  model_list.Model  JOIN car_makers ON model_list.Maker  =  car_makers.Id  WHERE cars_data.Cylinders  =  3 GROUP BY car_makers.Maker ORDER BY max(cars_data.Horsepower) DESC LIMIT 1
+SELECT The model name is missing in the original SQLite SQL QUERY, the query needs to join the tables properly to retrieve the model name. The Fixed SQL query is as follows:  ```sql SELECT model_list.Model  FROM cars_data  JOIN car_names ON cars_data.id = car_names.MakeId  JOIN model_list ON car_names.Model = model_list.Model  WHERE cars_data.MPG = (SELECT max(MPG) FROM cars_data) ```
+SELECT car_names.Model  FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  ORDER BY cars_data.MPG DESC  LIMIT 1
+SELECT avg(Horsepower) FROM cars_data WHERE Year < 1980
+SELECT avg(Horsepower) FROM cars_data WHERE Year  <  1980
+SELECT avg(cars_data.Edispl) FROM cars_data  INNER JOIN car_names ON car_names.MakeId = cars_data.Id  INNER JOIN model_list ON model_list.Model = car_names.Model WHERE model_list.Maker = 'volvo'
+SELECT avg(cars_data.Edispl)  FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  JOIN model_list ON car_names.Model = model_list.Model  JOIN car_makers ON model_list.Maker = car_makers.Id  WHERE car_makers.Maker = 'volvo'
+SELECT MAX(Accelerate) ,  Cylinders FROM cars_data GROUP BY Cylinders
+SELECT Cylinders, MAX(Accelerate) FROM cars_data GROUP BY Cylinders
+SELECT Model  FROM car_names  GROUP BY Model  ORDER BY COUNT(DISTINCT MakeId) DESC  LIMIT 1
+SELECT Model FROM model_list GROUP BY Model ORDER BY COUNT(*) DESC LIMIT 1
+SELECT count(DISTINCT id) FROM cars_data WHERE Cylinders > 4
+SELECT COUNT(*) FROM cars_data WHERE Cylinders > 4
+SELECT count(*) FROM cars_data WHERE Year = 1980
+SELECT count(*) FROM cars_data WHERE Year = 1980
+SELECT count(DISTINCT model_list.Model)  FROM model_list  JOIN car_makers ON model_list.Maker = car_makers.Id  WHERE car_makers.FullName = 'American Motor Company'
+SELECT count(model_list.Model)  FROM model_list  JOIN car_makers  ON model_list.Maker = car_makers.Id  WHERE car_makers.FullName = 'American Motor Company'
+SELECT car_makers.FullName, car_makers.Id FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.FullName, car_makers.Id HAVING COUNT(DISTINCT model_list.Model) > 3
+SELECT car_makers.Maker, car_makers.Id FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.Maker, car_makers.Id HAVING COUNT(DISTINCT model_list.Model) > 3

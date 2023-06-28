@@ -1,0 +1,75 @@
+SELECT MAX(Capacity) , AVG(Capacity) FROM stadium
+SELECT concert.concert_Name , concert.Theme , COUNT(singer_in_concert.Singer_ID)  FROM concert  JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID  GROUP BY concert.concert_Name , concert.Theme
+SELECT count(Pets.PetID)  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+SELECT StuID FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE PetType = 'cat')
+SELECT Fname, Sex FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  GROUP BY Student.StuID  HAVING COUNT(Has_Pet.PetID) > 1
+SELECT The given SQLite SQL query appears to be correct based on the provided schema and the requirement in the question. It is correctly joining the tables based on the provided foreign keys and filtering the result based on the pet type and pet age. Therefore, the fixed SQLite SQL query would be the same as the given query:  ```sql SELECT lname FROM student JOIN has_pet ON student.StuID = has_pet.StuID JOIN pets ON has_pet.PetID = pets.PetID WHERE pets.PetType = 'cat' AND pets.pet_age = 3 ```
+SELECT DISTINCT car_names.Model  FROM car_names  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year > 1980
+SELECT countries.CountryName  FROM countries  JOIN car_makers  ON countries.CountryId = car_makers.Country  JOIN continents  ON countries.Continent = continents.ContId  WHERE continents.Continent = 'Europe'  GROUP BY countries.CountryName  HAVING COUNT(DISTINCT car_makers.Id) >= 3
+SELECT AVG(cars_data.Edispl)  FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  JOIN model_list ON car_names.Model = model_list.Model  JOIN car_makers ON model_list.Maker = car_makers.Id  WHERE car_makers.Maker = 'volvo'
+SELECT DISTINCT Year FROM cars_data WHERE (Weight  <  4000 AND Weight  >  3000)
+SELECT count(*) FROM cars_data WHERE Cylinders > 6
+SELECT car_names.Model FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Cylinders = 4  AND cars_data.Horsepower = (     SELECT MAX(cars_data.Horsepower)      FROM cars_data      WHERE cars_data.Cylinders = 4 )
+SELECT count(*) FROM flights
+SELECT count(*) FROM flights WHERE SourceAirport = 'APG'
+SELECT COUNT(*) FROM flights WHERE DestAirport = 'ATO'
+SELECT count(*)  FROM flights  JOIN airports  ON flights.DestAirport = airports.AirportCode  WHERE airports.City = "Aberdeen"
+SELECT The abbreviation of the airline with the fewest flights and the country it is in can be determined by the query. However, there is an issue in your original query where you are joining `flights` and `airlines` tables using `flights.airline` and `airlines.uid`, whereas based on the information provided, it seems that the common column should be `airline` in both tables.  Also, the subquery in the HAVING clause is used to get the airline with the minimum count of flights but it is missing a join with the airlines table, which is needed to connect the flights and airlines.  Here's how the corrected SQLite SQL QUERY might look:  ```sql SELECT airlines.Abbreviation, airlines.Country  FROM flights  JOIN airlines ON flights.Airline = airlines.Airline  GROUP BY airlines.Abbreviation, airlines.Country  HAVING COUNT(*) = (     SELECT MIN(flight_counts.count)     FROM (         SELECT flights.Airline, COUNT(*) as count          FROM flights          GROUP BY flights.Airline     ) as flight_counts ) ``` This query first groups the flights by airline and counts them. Then, it selects the airline with the minimum count. Finally, it joins with the airlines table to get the abbreviation and country of the airline with the minimum number of flights. Note that we are still grouping by two columns (`airlines.Abbreviation` and `airlines.Country`), since the question specifically asks for the airline abbreviation and country.
+SELECT count(*) FROM flights WHERE DestAirport IN (SELECT AirportCode FROM airports WHERE City IN ('Aberdeen', 'Abilene'))
+SELECT AirportName FROM airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM flights UNION SELECT DestAirport FROM flights)
+SELECT City, COUNT(Employee_ID) FROM employee GROUP BY City
+SELECT City FROM employee WHERE Age < 30 GROUP BY City HAVING COUNT(Employee_ID) > 1
+SELECT Manager_name, District FROM shop WHERE Number_products = (SELECT MAX(Number_products) FROM shop)
+SELECT employee.Name  FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID GROUP BY employee.Name ORDER BY COUNT(evaluation.Employee_ID) DESC LIMIT 1
+SELECT sum(bonus) FROM evaluation
+SELECT Document_ID ,  Document_Name ,  Document_Description FROM Documents
+SELECT count(DISTINCT Documents.Template_ID) FROM Documents
+SELECT T.Template_ID , T.Template_Type_Code  FROM Templates T  INNER JOIN Documents D ON D.Template_ID = T.Template_ID GROUP BY T.Template_ID, T.Template_Type_Code ORDER BY COUNT(D.Template_ID) DESC LIMIT 1
+SELECT Template_ID FROM Templates WHERE Template_Type_Code  =  'PP' OR Template_Type_Code  =  'PPT'
+SELECT Template_Type_Code  FROM Templates  GROUP BY Template_Type_Code  HAVING COUNT(Template_ID) < 3
+SELECT MIN(Templates.Version_Number) AS Lowest_Version_Number, Templates.Template_Type_Code FROM Templates INNER JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code GROUP BY Templates.Template_Type_Code ORDER BY Lowest_Version_Number ASC LIMIT 1
+SELECT D.Document_Name  FROM Documents D INNER JOIN Templates T  ON D.Template_ID = T.Template_ID WHERE T.Template_Type_Code = 'BK'
+SELECT T.Template_Type_Code FROM Templates T JOIN Documents D ON D.Template_ID = T.Template_ID GROUP BY T.Template_Type_Code ORDER BY COUNT(*) DESC LIMIT 1
+SELECT template_type_code  FROM Ref_Template_Types  WHERE template_type_code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Documents))
+SELECT DISTINCT Ref_Template_Types.Template_Type_Description FROM Templates INNER JOIN Documents ON Templates.Template_ID = Documents.Template_ID INNER JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code
+SELECT documents.Document_ID ,  documents.Document_Name FROM Documents JOIN Paragraphs ON Documents.Document_ID  =  Paragraphs.Document_ID GROUP BY Documents.Document_ID, Documents.Document_Name ORDER BY count(*) DESC LIMIT 1
+SELECT Hometown, COUNT(*) AS frequency  FROM teacher  GROUP BY Hometown  ORDER BY frequency DESC  LIMIT 1
+SELECT Hometown FROM teacher GROUP BY Hometown HAVING COUNT(DISTINCT Teacher_ID) >= 2
+SELECT Name FROM teacher WHERE Teacher_ID NOT IN (SELECT Teacher_ID FROM course_arrange)
+SELECT visitor.ID, visitor.Name, visitor.Age  FROM visitor  JOIN visit  ON visitor.ID = visit.visitor_ID  GROUP BY visitor.ID  HAVING COUNT(visit.Museum_ID) > 1
+SELECT Name FROM museum WHERE NOT EXISTS (SELECT * FROM visit WHERE museum.Museum_ID = visit.Museum_ID)
+SELECT visitor.Name, visitor.Age FROM visitor JOIN visit ON visitor.ID = visit.visitor_ID ORDER BY visit.Num_of_Ticket DESC LIMIT 1
+SELECT count(DISTINCT player_id) FROM players
+SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(match_num) > 10
+SELECT DISTINCT p.first_name, p.country_code  FROM players p INNER JOIN matches m1 ON p.player_id = m1.winner_id  INNER JOIN matches m2 ON p.player_id = m2.winner_id WHERE m1.tourney_name = 'Australian Open' AND m2.tourney_name = 'WTA Championships'
+SELECT first_name, country_code  FROM players  INNER JOIN rankings  ON players.player_id = rankings.player_id  ORDER BY rankings.tours DESC  LIMIT 1
+SELECT The provided SQL query looks correct as it selects the names of the winner and loser who played the longest match in terms of minutes. Here, it assumes that there's only one match with the maximum minutes. If there's a possibility of multiple matches having the same maximum minutes, you should use `IN` instead of `=`.  However, considering the foreign keys and primary keys provided, if you want to get the information from the 'players' table instead of the 'matches' table, then we need to modify the query to join the tables. Here's how you can do it:  ```sql SELECT win.first_name || ' ' || win.last_name AS winner_name, lose.first_name || ' ' || lose.last_name AS loser_name FROM matches JOIN players AS win ON matches.winner_id = win.player_id JOIN players AS lose ON matches.loser_id = lose.player_id WHERE minutes  =  (SELECT max(minutes) FROM matches) ```  This query will return the full names of the winner and loser (by joining their first name and last name) who played the longest match. It joins the 'matches' table with the 'players' table twice, once for the winner and once for the loser. The `||` operator is used to concatenate the first name and the last name.
+SELECT count(*) FROM battle WHERE id NOT IN (SELECT lost_in_battle FROM ship WHERE tonnage = 225)
+SELECT course_description FROM Courses WHERE course_name LIKE '%math%'
+SELECT Semesters.semester_name, Semesters.semester_id  FROM Semesters  JOIN Student_Enrolment ON Semesters.semester_id = Student_Enrolment.semester_id  GROUP BY Semesters.semester_id  ORDER BY COUNT(Student_Enrolment.student_id) DESC  LIMIT 1
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+SELECT The provided SQL query appears to be correctly written based on the instructions given. It correctly joins the `Degree_Programs` and `Student_Enrolment` tables on the `degree_program_id` field, groups by the `degree_summary_name` (the name of the program), and orders by the count of each `degree_summary_name` in descending order. This allows the query to find the degree program with the most students enrolled. The `LIMIT 1` at the end ensures that only the most popular program is returned. Therefore, the fixed SQL query remains the same as the original:  ```sql SELECT degree_summary_name  FROM Degree_Programs  JOIN Student_Enrolment  ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id  GROUP BY degree_summary_name  ORDER BY count(*) DESC  LIMIT 1 ```
+SELECT first_name, middle_name, last_name, student_id, count(student_enrolment_id) AS num_enrollments FROM Students JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id GROUP BY Students.student_id ORDER BY num_enrollments DESC LIMIT 1
+SELECT course_name  FROM Courses  JOIN Student_Enrolment_Courses  ON Courses.course_id = Student_Enrolment_Courses.course_id  GROUP BY course_name  ORDER BY COUNT(*) DESC  LIMIT 1
+SELECT cell_mobile_number FROM Students WHERE first_name = 'Timmothy' AND last_name = 'Ward'
+SELECT first_name FROM Students WHERE permanent_address_id != current_address_id
+SELECT count(*) FROM Transcripts
+SELECT * FROM Students ORDER BY last_name DESC
+SELECT Country ,  COUNT(*) FROM TV_Channel GROUP BY Country ORDER BY COUNT(*) DESC LIMIT 1
+SELECT Weekly_Rank FROM TV_series WHERE Episode = "A Love of a Lifetime"
+SELECT DISTINCT Country FROM TV_Channel  WHERE id NOT IN      (SELECT Channel FROM Cartoon WHERE Written_by = 'Todd Casey')
+SELECT series_name, country  FROM TV_Channel  JOIN Cartoon ON TV_Channel.id = Cartoon.Channel  WHERE Cartoon.Directed_by IN ('Ben Jones', 'Michael Chang')  GROUP BY series_name, country
+SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1
+SELECT COUNT(DISTINCT nationality) FROM people
+SELECT Language  FROM countrylanguage  WHERE CountryCode = (SELECT Code FROM country WHERE Name = 'Aruba')  AND Percentage = (     SELECT MAX(Percentage)      FROM countrylanguage      WHERE CountryCode = (SELECT Code FROM country WHERE Name = 'Aruba') )
+SELECT avg(LifeExpectancy) FROM country WHERE GovernmentForm LIKE '%Republic%' AND Continent = 'Africa'
+SELECT SUM(Population) FROM city WHERE District = 'Gelderland'
+SELECT count(DISTINCT language) FROM countrylanguage
+SELECT country.Continent  FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  GROUP BY country.Continent  ORDER BY COUNT(DISTINCT countrylanguage.Language) DESC  LIMIT 1
+SELECT DISTINCT country.Name FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE (countrylanguage.Language = 'English' OR countrylanguage.Language = 'Dutch') AND countrylanguage.IsOfficial = 'T'
+SELECT DISTINCT Name FROM country WHERE Code IN (SELECT CountryCode FROM countrylanguage WHERE Language IN ('English', 'Dutch') AND IsOfficial = 'T')
+SELECT DISTINCT language FROM countrylanguage WHERE countrycode IN (SELECT code FROM country WHERE governmentform = 'Republic') GROUP BY language HAVING count(*) = 1
+SELECT city.Name, city.Population FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON countrylanguage.CountryCode = country.Code  WHERE countrylanguage.Language = 'English'  ORDER BY city.Population DESC  LIMIT 1;
+SELECT The SQLite SQL QUERY provided appears to be correct. It's intended to find the countries that have a larger surface area than any country in Europe. It does this by comparing the surface area of each country to the maximum surface area of any country in Europe.   Therefore, the FIXED SQL QUERY would remain unchanged:  ```SQL SELECT DISTINCT name FROM country WHERE surfacearea > (SELECT max(surfacearea) FROM country WHERE continent = 'Europe') ```
+SELECT DISTINCT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.Continent = 'Europe'  AND (countrylanguage.Language <> 'English' OR countrylanguage.IsOfficial = 'F')
+SELECT DISTINCT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.Continent = 'Asia' AND countrylanguage.Language = 'Chinese' AND countrylanguage.IsOfficial = 'T'

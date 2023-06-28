@@ -1,0 +1,19 @@
+#### For the given question, use the provided tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+#### Use the following instructions for fixing the SQL QUERY:
+1) Use the database values that are explicitly mentioned in the question.
+2) Pay attention to the columns that are used for the JOIN by using the Foreign_keys.
+3) Use DESC and DISTINCT when needed.
+4) Pay attention to the columns that are used for the GROUP BY statement when using SUM, AVG, MAX, MIN and COUNT.
+5) Pay attention to the columns that are used for the SELECT statement.
+6) Only change the GROUP BY clause when necessary (Avoid redundant columns in GROUP BY).
+7) Use GROUP BY on one column only.
+
+Table singer, columns = [*,Singer_ID,Name,Birth_Year,Net_Worth_Millions,Citizenship]
+Table song, columns = [*,Song_ID,Title,Singer_ID,Sales,Highest_Position]
+Foreign_keys = [song.Singer_ID = singer.Singer_ID]
+Primary_keys = [singer.Singer_ID,song.Song_ID]
+#### Question: For each citizenship, what is the maximum net worth?
+#### SQLite SQL QUERY
+SELECT max(net_worth_millions) ,  citizenship FROM singer GROUP BY citizenship
+#### SQLite FIXED SQL QUERY
+SELECT

@@ -1,0 +1,24 @@
+SELECT Year FROM concert GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)
+SELECT DISTINCT country  FROM singer  WHERE age > 40  UNION  SELECT DISTINCT country  FROM singer  WHERE age < 30
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+SELECT DISTINCT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+SELECT concert.concert_Name, concert.Theme, COUNT(singer_in_concert.Singer_ID)  FROM concert  JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID  GROUP BY concert.concert_ID
+SELECT T1.concert_Name, T1.Theme, COUNT(T2.Singer_ID)  FROM concert AS T1  JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID  GROUP BY T1.concert_ID
+SELECT T2.Name, COUNT(*)  FROM singer_in_concert AS T1  JOIN singer AS T2  ON T1.Singer_ID = T2.Singer_ID  GROUP BY T2.Name
+SELECT singer.Name, COUNT(singer_in_concert.concert_ID)  FROM singer_in_concert  JOIN singer ON singer.Singer_ID = singer_in_concert.Singer_ID  GROUP BY singer.Name
+SELECT DISTINCT T3.Name FROM singer_in_concert AS T1  JOIN concert AS T2 ON T1.concert_id = T2.concert_id  JOIN singer AS T3 ON T1.singer_id = T3.singer_id  WHERE T2.Year = 2014
+SELECT DISTINCT singer.Name  FROM singer_in_concert  JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID  JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID  WHERE concert.Year = 2014
+SELECT Name ,  Country FROM singer WHERE Song_Name LIKE '%Hey%'
+SELECT DISTINCT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+SELECT DISTINCT stadium.Name, stadium.Location  FROM concert  JOIN stadium ON concert.Stadium_ID = stadium.Stadium_ID  WHERE concert.Year IN (2014, 2015) GROUP BY stadium.Stadium_ID HAVING COUNT(DISTINCT concert.Year) = 2
+SELECT DISTINCT T1.Name, T1.Location  FROM stadium AS T1  JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID  WHERE T2.Year IN (2014, 2015) GROUP BY T1.Stadium_ID HAVING COUNT(DISTINCT T2.Year) = 2
+SELECT COUNT(DISTINCT concert.concert_ID)  FROM concert  WHERE concert.Stadium_ID = (SELECT stadium.Stadium_ID FROM stadium WHERE stadium.Capacity = (SELECT MAX(Capacity) FROM stadium))
+SELECT COUNT(DISTINCT c.concert_ID)  FROM concert c JOIN stadium s ON c.Stadium_ID = s.Stadium_ID WHERE s.Capacity = (     SELECT MAX(Capacity)      FROM stadium )
+SELECT count(*) FROM Pets WHERE weight  >  10
+SELECT count(*) FROM Pets WHERE weight > 10
+SELECT weight FROM Pets WHERE PetType = 'dog' AND pet_age = (SELECT MIN(pet_age) FROM Pets WHERE PetType = 'dog')
+SELECT min(Pets.weight)  FROM Pets  JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID  WHERE Pets.PetType = 'dog'  AND Pets.pet_age = (SELECT min(pet_age) FROM Pets WHERE PetType = 'dog')
+SELECT MAX(weight) ,  PetType FROM Pets GROUP BY PetType
+SELECT MAX(weight), PetType FROM Pets GROUP BY PetType

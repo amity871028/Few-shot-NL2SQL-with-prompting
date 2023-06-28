@@ -1,0 +1,160 @@
+
+index is 91
+SELECT count(*) FROM COUNTRIES;
+How many countries are listed?
+schema_links:
+How many countries are listed? | countries : countries.countryname , countries.countryid , countries.continent , countries.* | continents : continents.continent , continents.contid , continents.* | car_names : car_names.model , car_names.make , car_names.makeid , car_names.* | cars_data : cars_data.id , cars_data.cylinders , cars_data.horsepower , cars_data.weight , cars_data.accelerate , cars_data.*
+natsql and SQL generation:
+select count ( distinct _ ) from _ | select count ( distinct countries.countryname ) from countries
+SQL = SELECT count(DISTINCT countryname) FROM countries
+natsql:
+select count ( distinct _ ) from _ | select count ( distinct countries.countryname ) from countries
+
+SQL:
+SELECT count(DISTINCT countryname) FROM countries
+self correction:
+SELECT count(DISTINCT CountryName) FROM countries
+
+index is 92
+SELECT count(*) FROM COUNTRIES;
+How many countries exist?
+schema_links:
+How many countries exist? | countries : countries.countryname , countries.countryid , countries.continent , countries.* | continents : continents.continent , continents.contid , continents.* | cars_data : cars_data.id , cars_data.cylinders , cars_data.horsepower , cars_data.weight , cars_data.accelerate , cars_data.* | car_makers : car_makers.id , car_makers.maker , car_makers.country , car_makers.fullname , car_makers.*
+natsql and SQL generation:
+select count ( _ ) from _ | select count ( countries.countryname ) from countries
+SQL = SELECT COUNT(*) FROM countries
+natsql:
+select count ( _ ) from _ | select count ( countries.countryname ) from countries
+
+SQL:
+SELECT COUNT(*) FROM countries
+self correction:
+SELECT COUNT(*) FROM countries
+
+index is 93
+SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;
+How many models does each car maker produce? List maker full name, id and the number.
+schema_links:
+How many models does each car maker produce? List maker full name, id and the number. | car_makers : car_makers.fullname , car_makers.id , car_makers.maker , car_makers.country , car_makers.* | model_list : model_list.model , model_list.maker , model_list.modelid , model_list.* | car_names : car_names.model , car_names.make , car_names.makeid , car_names.* | cars_data : cars_data.id , cars_data.cylinders , cars_data.horsepower , cars_data.weight , cars_data.accelerate , cars_data.*
+natsql and SQL generation:
+select @.@ , @.@ , count ( @.@ ) from @ join @ on @.@ = @.@ group by @.@ , @.@ | select car_makers.FullName , car_makers.Id , count(model_list.ModelId) from car_makers join model_list on car_makers.Id = model_list.Maker group by car_makers.FullName , car_makers.Id
+SQL = SELECT car_makers.FullName ,  car_makers.Id ,  COUNT(model_list.ModelId) FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.FullName ,  car_makers.Id
+natsql:
+select @.@ , @.@ , count ( @.@ ) from @ join @ on @.@ = @.@ group by @.@ , @.@ | select car_makers.FullName , car_makers.Id , count(model_list.ModelId) from car_makers join model_list on car_makers.Id = model_list.Maker group by car_makers.FullName , car_makers.Id
+
+SQL:
+SELECT car_makers.FullName ,  car_makers.Id ,  COUNT(model_list.ModelId) FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.FullName ,  car_makers.Id
+self correction:
+SELECT car_makers.FullName, car_makers.Id, COUNT(model_list.Model)  FROM car_makers  JOIN model_list  ON car_makers.Id = model_list.Maker  GROUP BY car_makers.Id
+
+index is 94
+SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;
+What is the full name of each car maker, along with its id and how many models it produces?
+schema_links:
+What is the full name of each car maker, along with its id and how many models it produces? | car_makers : car_makers.fullname , car_makers.id , car_makers.maker , car_makers.country , car_makers.* | model_list : model_list.model , model_list.maker , model_list.modelid , model_list.* | car_names : car_names.makeid , car_names.model , car_names.make , car_names.* | cars_data : cars_data.id , cars_data.cylinders , cars_data.horsepower , cars_data.weight , cars_data.accelerate , cars_data.*
+natsql and SQL generation:
+select _ , _ , count ( _ ) from _ group by _ | select car_makers.fullname , car_makers.id , count ( model_list.* ) from car_makers join model_list on car_makers.id = model_list.maker group by car_makers.fullname, car_makers.id
+SQL = SELECT fullname ,  id ,  count(*) FROM car_makers JOIN model_list ON car_makers.id  =  model_list.maker GROUP BY fullname ,  id
+natsql:
+select _ , _ , count ( _ ) from _ group by _ | select car_makers.fullname , car_makers.id , count ( model_list.* ) from car_makers join model_list on car_makers.id = model_list.maker group by car_makers.fullname, car_makers.id
+
+SQL:
+SELECT fullname ,  id ,  count(*) FROM car_makers JOIN model_list ON car_makers.id  =  model_list.maker GROUP BY fullname ,  id
+self correction:
+SELECT car_makers.FullName, car_makers.Id, COUNT(model_list.Model)  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  GROUP BY car_makers.Id, car_makers.FullName
+
+index is 95
+SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;
+Which model of the car has the minimum horsepower?
+schema_links:
+Which model of the car has the minimum horsepower? | cars_data : cars_data.horsepower , cars_data.id , cars_data.weight , cars_data.cylinders , cars_data.accelerate , cars_data.* | model_list : model_list.model , model_list.maker , model_list.modelid , model_list.* | car_names : car_names.model , car_names.make , car_names.makeid , car_names.* | car_makers : car_makers.id , car_makers.maker , car_makers.country , car_makers.fullname , car_makers.*
+natsql and SQL generation:
+select _ from _ where _ = min ( _ ) | select car_names.model from cars_data join car_names on cars_data.id = car_names.makeid where cars_data.horsepower = (select min(horsepower) from cars_data)
+SQL = SELECT model FROM cars_data JOIN car_names ON cars_data.id = car_names.makeid WHERE horsepower  =  (SELECT min(horsepower) FROM cars_data)
+natsql:
+select _ from _ where _ = min ( _ ) | select car_names.model from cars_data join car_names on cars_data.id = car_names.makeid where cars_data.horsepower = (select min(horsepower) from cars_data)
+
+SQL:
+SELECT model FROM cars_data JOIN car_names ON cars_data.id = car_names.makeid WHERE horsepower  =  (SELECT min(horsepower) FROM cars_data)
+self correction:
+SELECT car_names.Model FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Horsepower  =  (SELECT min(Horsepower) FROM cars_data)
+
+index is 96
+SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;
+What is the model of the car with the smallest amount of horsepower?
+schema_links:
+What is the model of the car with the smallest amount of horsepower? | cars_data : cars_data.horsepower , cars_data.id , cars_data.cylinders , cars_data.weight , cars_data.accelerate , cars_data.* | model_list : model_list.model , model_list.modelid , model_list.maker , model_list.* | car_names : car_names.model , car_names.make , car_names.makeid , car_names.* | car_makers : car_makers.maker , car_makers.id , car_makers.country , car_makers.fullname , car_makers.*
+natsql and SQL generation:
+select _ from _ where @.@ = min ( _ ) | select model_list.model from cars_data join car_names on cars_data.id = car_names.makeid join model_list on car_names.model = model_list.model where cars_data.horsepower = min ( cars_data.horsepower )
+SQL = SELECT model FROM cars_data JOIN car_names ON cars_data.id = car_names.makeid JOIN model_list ON car_names.model = model_list.model WHERE horsepower = (SELECT min(horsepower) FROM cars_data)
+natsql:
+select _ from _ where @.@ = min ( _ ) | select model_list.model from cars_data join car_names on cars_data.id = car_names.makeid join model_list on car_names.model = model_list.model where cars_data.horsepower = min ( cars_data.horsepower )
+
+SQL:
+SELECT model FROM cars_data JOIN car_names ON cars_data.id = car_names.makeid JOIN model_list ON car_names.model = model_list.model WHERE horsepower = (SELECT min(horsepower) FROM cars_data)
+self correction:
+SELECT car_names.Model FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Horsepower = (SELECT MIN(Horsepower) FROM cars_data)
+
+index is 97
+SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)
+Find the model of the car whose weight is below the average weight.
+schema_links:
+Find the model of the car whose weight is below the average weight. | cars_data : cars_data.weight , cars_data.id , cars_data.cylinders , cars_data.horsepower , cars_data.accelerate , cars_data.* | model_list : model_list.model , model_list.modelid , model_list.maker , model_list.* | car_names : car_names.model , car_names.make , car_names.makeid , car_names.* | car_makers : car_makers.id , car_makers.maker , car_makers.country , car_makers.fullname , car_makers.*
+natsql and SQL generation:
+select _ from _ where _ < avg ( _ ) | select car_names.model from cars_data, car_names where cars_data.weight < (select avg(weight) from cars_data)
+SQL = SELECT model FROM car_names WHERE MakeId  IN  (SELECT MakeId FROM cars_data WHERE Weight  <  (SELECT avg(Weight) FROM cars_data))
+natsql:
+select _ from _ where _ < avg ( _ ) | select car_names.model from cars_data, car_names where cars_data.weight < (select avg(weight) from cars_data)
+
+SQL:
+SELECT model FROM car_names WHERE MakeId  IN  (SELECT MakeId FROM cars_data WHERE Weight  <  (SELECT avg(Weight) FROM cars_data))
+self correction:
+SELECT Model FROM car_names WHERE MakeId IN (SELECT Id FROM cars_data WHERE Weight < (SELECT AVG(Weight) FROM cars_data))
+
+index is 98
+SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)
+What is the model for the car with a weight smaller than the average?
+schema_links:
+What is the model for the car with a weight smaller than the average? | cars_data : cars_data.weight , cars_data.id , cars_data.year , cars_data.mpg , cars_data.cylinders , cars_data.* | model_list : model_list.model , model_list.modelid , model_list.maker , model_list.* | car_names : car_names.model , car_names.make , car_names.makeid , car_names.* | car_makers : car_makers.maker , car_makers.country , car_makers.id , car_makers.fullname , car_makers.*
+natsql and SQL generation:
+select _ from _ where @.@ < avg ( _ ) | select model_list.model from cars_data where @.@ < avg ( cars_data.weight )
+SQL = SELECT T3.model FROM cars_data AS T1 JOIN car_names AS T2 ON T1.id  =  T2.makeid JOIN model_list AS T3 ON T2.model  =  T3.model WHERE T1.weight  <  (SELECT avg(weight) FROM cars_data)
+natsql:
+select _ from _ where @.@ < avg ( _ ) | select model_list.model from cars_data where @.@ < avg ( cars_data.weight )
+
+SQL:
+SELECT T3.model FROM cars_data AS T1 JOIN car_names AS T2 ON T1.id  =  T2.makeid JOIN model_list AS T3 ON T2.model  =  T3.model WHERE T1.weight  <  (SELECT avg(weight) FROM cars_data)
+self correction:
+SELECT T3.Model  FROM cars_data AS T1  JOIN car_names AS T2 ON T1.Id = T2.MakeId  JOIN model_list AS T3 ON T2.Model = T3.Model  WHERE T1.Weight < (SELECT AVG(Weight) FROM cars_data)
+
+index is 99
+SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';
+Find the name of the makers that produced some cars in the year of 1970?
+schema_links:
+Find the name of the makers that produced some cars in the year of 1970? | car_makers : car_makers.fullname , car_makers.maker , car_makers.country , car_makers.id , car_makers.* | cars_data : cars_data.year , cars_data.horsepower , cars_data.weight , cars_data.id , cars_data.cylinders , cars_data.* | car_names : car_names.make , car_names.model , car_names.makeid , car_names.* | model_list : model_list.model , model_list.maker , model_list.modelid , model_list.*
+natsql and SQL generation:
+select distinct _ from _ where _ | select distinct car_makers.maker from car_makers where exists (select * from cars_data where cars_data.id = car_names.makeid and cars_data.year = 1970)
+SQL = SELECT DISTINCT maker FROM car_makers WHERE EXISTS (SELECT * FROM cars_data JOIN car_names ON cars_data.id = car_names.makeid WHERE cars_data.year = 1970)
+natsql:
+select distinct _ from _ where _ | select distinct car_makers.maker from car_makers where exists (select * from cars_data where cars_data.id = car_names.makeid and cars_data.year = 1970)
+
+SQL:
+SELECT DISTINCT maker FROM car_makers WHERE EXISTS (SELECT * FROM cars_data JOIN car_names ON cars_data.id = car_names.makeid WHERE cars_data.year = 1970)
+self correction:
+SELECT DISTINCT car_makers.Maker  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year = 1970
+
+index is 100
+SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';
+What is the name of the different car makers who produced a car in 1970?
+schema_links:
+What is the name of the different car makers who produced a car in 1970? | car_makers : car_makers.fullname , car_makers.maker , car_makers.country , car_makers.id , car_makers.* | cars_data : cars_data.year , cars_data.horsepower , cars_data.weight , cars_data.id , cars_data.cylinders , cars_data.* | car_names : car_names.make , car_names.model , car_names.makeid , car_names.* | model_list : model_list.model , model_list.maker , model_list.modelid , model_list.*
+natsql and SQL generation:
+select distinct _ from _ where _ | select distinct car_makers.maker from car_makers join cars_data on car_makers.id = cars_data.id where cars_data.year = 1970
+SQL = SELECT DISTINCT maker FROM car_makers JOIN cars_data ON car_makers.id = cars_data.id WHERE cars_data.year = 1970
+natsql:
+select distinct _ from _ where _ | select distinct car_makers.maker from car_makers join cars_data on car_makers.id = cars_data.id where cars_data.year = 1970
+
+SQL:
+SELECT DISTINCT maker FROM car_makers JOIN cars_data ON car_makers.id = cars_data.id WHERE cars_data.year = 1970
+self correction:
+SELECT DISTINCT car_makers.Maker  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year = 1970

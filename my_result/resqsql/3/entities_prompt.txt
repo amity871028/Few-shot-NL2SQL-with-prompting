@@ -1,0 +1,57 @@
+#### For the given question, use the provided cell values, tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+#### Use the following instructions for fixing the SQL QUERY:
+1) Fix it if entities are similar with cell value below 
+2) Use the same rules if cell value below are all lower case or upper case or other rules.
+Table concert, columns = [*,concert_ID,concert_Name,Theme,Stadium_ID,Year]
+Table singer, columns = [*,Singer_ID,Name,Country,Song_Name,Song_release_year,Age,Is_male]
+Table singer_in_concert, columns = [*,concert_ID,Singer_ID]
+Table stadium, columns = [*,Stadium_ID,Location,Name,Capacity,Highest,Lowest,Average]
+Foreign_keys = [concert.Stadium_ID = stadium.Stadium_ID,singer_in_concert.Singer_ID = singer.Singer_ID,singer_in_concert.concert_ID = concert.concert_ID]
+Primary_keys = [stadium.Stadium_ID,singer.Singer_ID,concert.concert_ID,singer_in_concert.concert_ID]
+
+column = [country]
+cell value includes [Netherlands, United States, France]
+#### Question: What is the average, minimum, and maximum age of all singers from France?
+#### SQLite SQL QUERY
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+#### SQLite FIXED SQL QUERY
+SELECT
+
+#### For the given question, use the provided cell values, tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+#### Use the following instructions for fixing the SQL QUERY:
+1) Fix it if entities are similar with cell value below 
+2) Use the same rules if cell value below are all lower case or upper case or other rules.
+Table concert, columns = [*,concert_ID,concert_Name,Theme,Stadium_ID,Year]
+Table singer, columns = [*,Singer_ID,Name,Country,Song_Name,Song_release_year,Age,Is_male]
+Table singer_in_concert, columns = [*,concert_ID,Singer_ID]
+Table stadium, columns = [*,Stadium_ID,Location,Name,Capacity,Highest,Lowest,Average]
+Foreign_keys = [concert.Stadium_ID = stadium.Stadium_ID,singer_in_concert.Singer_ID = singer.Singer_ID,singer_in_concert.concert_ID = concert.concert_ID]
+Primary_keys = [stadium.Stadium_ID,singer.Singer_ID,concert.concert_ID,singer_in_concert.concert_ID]
+
+column = [country]
+cell value includes [Netherlands, United States, France]
+#### Question: What is the average, minimum, and maximum age for all French singers?
+#### SQLite SQL QUERY
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+#### SQLite FIXED SQL QUERY
+SELECT
+
+#### For the given question, use the provided cell values, tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+#### Use the following instructions for fixing the SQL QUERY:
+1) Fix it if entities are similar with cell value below 
+2) Use the same rules if cell value below are all lower case or upper case or other rules.
+Table concert, columns = [*,concert_ID,concert_Name,Theme,Stadium_ID,Year]
+Table singer, columns = [*,Singer_ID,Name,Country,Song_Name,Song_release_year,Age,Is_male]
+Table singer_in_concert, columns = [*,concert_ID,Singer_ID]
+Table stadium, columns = [*,Stadium_ID,Location,Name,Capacity,Highest,Lowest,Average]
+Foreign_keys = [concert.Stadium_ID = stadium.Stadium_ID,singer_in_concert.Singer_ID = singer.Singer_ID,singer_in_concert.concert_ID = concert.concert_ID]
+Primary_keys = [stadium.Stadium_ID,singer.Singer_ID,concert.concert_ID,singer_in_concert.concert_ID]
+
+column = [song_name]
+cell value includes [You, Dangerous, Hey Oh, Sun, Gentleman, Love]
+#### Question: what is the name and nation of the singer who have a song having 'Hey' in its name?
+#### SQLite SQL QUERY
+SELECT singer.Name, singer.Country FROM singer WHERE singer.Song_Name LIKE '%Hey%'
+#### SQLite FIXED SQL QUERY
+SELECT
+

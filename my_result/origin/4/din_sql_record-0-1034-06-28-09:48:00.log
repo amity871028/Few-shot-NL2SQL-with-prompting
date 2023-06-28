@@ -1,0 +1,4 @@
+
+index is 0
+SELECT count(*) FROM singer
+How many singers do we have?

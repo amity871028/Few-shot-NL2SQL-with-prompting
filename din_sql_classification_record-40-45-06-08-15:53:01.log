@@ -1,0 +1,69 @@
+
+index is 40
+SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'
+What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?
+schema_links:
+[singer.Name, singer.Country, singer.Song_Name, 'Hey']
+classification:
+The question is "What is the name and country of origin of every [singer] who has a song with the word 'Hey' in its title?". [singer] matches table = [singer]. So, tables = [singer] which number of tables = 1. So, predict EASY or NESTED.
+Plus, from the question, "every singer who has a song with the word 'Hey' in its title" matches nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN). So, predict NESTED.
+So, first step, classification is EASY or NESTED, and second step, classification is NESTED. Finally, the SQL query can be classified as "NESTED".
+Label: "NESTED"
+
+index is 41
+SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015
+Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015.
+schema_links:
+[stadium.Name, stadium.Location, concert.Year, concert.Stadium_ID = stadium.Stadium_ID, 2014, 2015]
+classification:
+The question is "Find the name and location of the [stadiums] which some concerts happened in the years of both 2014 and 2015.". [stadiums] matches table = [stadium]. So, tables = [stadium] which number of tables = 1. So, predict EASY or NESTED.
+Plus, from the question, "Find the years of concerts" matches nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN). So, predict NESTED.
+So, the first step classification is EASY or NESTED, and the second step classification is NESTED. Finally, the SQL query can be classified as "NESTED".
+Label: "NESTED"
+
+index is 42
+SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015
+What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?
+schema_links:
+[stadium.Name, stadium.Location, concert.Stadium_ID = stadium.Stadium_ID, concert.Year, 2014, 2015]
+classification:
+The question is "What are the names and locations of the [stadiums] that had [concerts] that occurred in both 2014 and 2015?". [stadiums] matches table = [stadium]. [concerts] matches table = [concert]. tables = [stadium, concert] are connected by table = [concert]. So, tables = [stadium, concert] which number of tables >= 1. So, predict NON-NESTED or NESTED.
+Plus, from the question, "concerts that occurred in both 2014 and 2015" matches nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN). So, predict NESTED.
+So, the first step classification is NON-NESTED or NESTED, and the second step classification is NESTED. Finally, the SQL query can be classified as "NESTED".
+Label: "NESTED"
+
+index is 43
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+Find the number of concerts happened in the stadium with the highest capacity .
+schema_links:
+[concert.concert_ID,concert.Stadium_ID = stadium.Stadium_ID,stadium.Capacity]
+classification:
+The question is "Find the number of [concerts] happened in the stadium with the [highest capacity]." [concerts] matches table = [concert]. [highest capacity] matches table = [stadium]. tables = [concert, stadium] are connected by table = [concert.Stadium_ID = stadium.Stadium_ID]. So, tables = [concert, stadium] which number of tables >= 1. So, predict NON-NESTED or NESTED.
+
+Plus, from the question, no sentence matches nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN). So, predict EASY or NON-NESTED.
+
+So, first step, classification is NON-NESTED or NESTED, and second step, classification is EASY or NON-NESTED. Finally, the SQL query can be classified as "NON-NESTED".
+
+Label: "NON-NESTED"
+
+index is 44
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+What are the number of concerts that occurred in the stadium with the largest capacity ?
+schema_links:
+[COUNT(concert.concert_ID),stadium.Capacity,concert.Stadium_ID = stadium.Stadium_ID]
+classification:
+The question is "What are the number of [concerts] that occurred in the stadium with the largest capacity?". [concerts] matches table = [concert]. So, tables = [concert] which number of tables = 1. So, predict EASY or NESTED.
+Plus, from the question, "the stadium with the largest capacity" requires finding the maximum value of the "capacity" column in the [stadium] table. This involves a subquery to retrieve the maximum capacity. Therefore, it matches nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN). So, predict NESTED.
+So, first step, classification is EASY or NESTED, and second step, classification is NESTED. Finally, the SQL query can be classified as "NESTED".
+Label: "NESTED"
+
+index is 45
+SELECT count(*) FROM pets WHERE weight  >  10
+Find the number of pets whose weight is heavier than 10.
+schema_links:
+[COUNT(Pets.PetID),Pets.weight,10]
+classification:
+The question is "Find the number of pets whose weight is heavier than 10.". [pets] matches table = [pets]. So, tables = [pets] which number of tables = 1. So, predict EASY or NESTED.
+Plus, from the question, no sentence matches nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN). So, predict EASY or NON-NESTED.
+So, the SQL query can be classified as "EASY".
+Label: "EASY"

@@ -1,0 +1,59 @@
+# Use the the schema links and natsql to generate sql queries for each of the questions.
+Table advisor, columns = [*,s_ID,i_ID]
+Table classroom, columns = [*,building,room_number,capacity]
+Table course, columns = [*,course_id,title,dept_name,credits]
+Table department, columns = [*,dept_name,building,budget]
+Table instructor, columns = [*,ID,name,dept_name,salary]
+Table prereq, columns = [*,course_id,prereq_id]
+Table section, columns = [*,course_id,sec_id,semester,year,building,room_number,time_slot_id]
+Table student, columns = [*,ID,name,dept_name,tot_cred]
+Table takes, columns = [*,ID,course_id,sec_id,semester,year,grade]
+Table teaches, columns = [*,ID,course_id,sec_id,semester,year]
+Table time_slot, columns = [*,time_slot_id,day,start_hr,start_min,end_hr,end_min]
+Foreign_keys = [course.dept_name = department.dept_name,instructor.dept_name = department.dept_name,section.building = classroom.building,section.room_number = classroom.room_number,section.course_id = course.course_id,teaches.ID = instructor.ID,teaches.course_id = section.course_id,teaches.sec_id = section.sec_id,teaches.semester = section.semester,teaches.year = section.year,student.dept_name = department.dept_name,takes.ID = student.ID,takes.course_id = section.course_id,takes.sec_id = section.sec_id,takes.semester = section.semester,takes.year = section.year,advisor.s_ID = student.ID,advisor.i_ID = instructor.ID,prereq.prereq_id = course.course_id,prereq.course_id = course.course_id]
+Table concert, columns = [*,concert_ID,concert_Name,Theme,Stadium_ID,Year]
+Table singer, columns = [*,Singer_ID,Name,Country,Song_Name,Song_release_year,Age,Is_male]
+Table singer_in_concert, columns = [*,concert_ID,Singer_ID]
+Table stadium, columns = [*,Stadium_ID,Location,Name,Capacity,Highest,Lowest,Average]
+Foreign_keys = [concert.Stadium_ID = stadium.Stadium_ID,singer_in_concert.Singer_ID = singer.Singer_ID,singer_in_concert.concert_ID = concert.concert_ID]
+
+
+input = Find the buildings which have rooms with capacity more than 50. | classroom : classroom.building , classroom.capacity , classroom.room_number , classroom.* | department : department.budget , department.building , department.dept_name , department.* | student : student.dept_name , student.id , student.tot_cred , student.name , student.* | advisor : advisor.s_id , advisor.i_id , advisor.*
+natsql = select distinct _ from _ where _ | select distinct classroom.building from classroom where classroom.capacity > 50
+SQL = SELECT DISTINCT building FROM classroom WHERE capacity  >  50
+
+input = What is the name of the department with the most credits? | course : course.dept_name , course.credits , course.title , course.course_id , course.* | prereq : prereq.prereq_id , prereq.course_id , prereq.* | section : section.sec_id , section.year , section.room_number , section.course_id , section.time_slot_id , section.* | takes : takes.semester , takes.id , takes.grade , takes.year , takes.course_id , takes.*
+natsql = select _ from _ group by _ order by sum ( _ ) desc limit _  | select course.dept_name from course group by course.dept_name order by sum ( course.credits ) desc limit 1
+SQL = SELECT dept_name FROM course GROUP BY dept_name ORDER BY sum(credits) DESC LIMIT 1
+
+input = What are the names and average salaries for departments with average salary higher than 42000? | instructor : instructor.name , instructor.dept_name , instructor.id , instructor.salary , instructor.* | teaches : teaches.course_id , teaches.sec_id , teaches.id , teaches.semester , teaches.year , teaches.* | time_slot : time_slot.end_min , time_slot.end_hr , time_slot.start_hr , time_slot.day , time_slot.start_min , time_slot.* | prereq : prereq.course_id , prereq.prereq_id , prereq.*"
+natsql = select _ , avg ( _ ) from _ where avg ( _ ) > _ group by _ | select instructor.dept_name , avg ( instructor.salary ) from instructor where avg ( instructor.salary ) > 42000 group by instructor.dept_name
+SQL = SELECT dept_name ,  AVG (salary) FROM instructor GROUP BY dept_name HAVING AVG (salary)  >  42000
+
+input = What is the name and building of the departments whose budget is more than the average budget? | department : department.dept_name , department.budget , department.building , department.* | takes : takes.sec_id , takes.year , takes.grade , takes.id , takes.course_id , takes.* | time_slot : time_slot.day , time_slot.time_slot_id , time_slot.start_min , time_slot.start_hr , time_slot.end_min , time_slot.* | instructor : instructor.name , instructor.dept_name , instructor.salary , instructor.id , instructor.*
+natsql = select _ from _ where @.@ > avg ( _ ) | select department.dept_name , department.building from department where @.@ > avg ( department.budget )
+SQL = SELECT dept_name ,  building FROM department WHERE budget  >  (SELECT avg(budget) FROM department)
+
+input = Find the total number of students and total number of instructors for each department. | department : department.dept_name , department.budget , department.building , department.* | instructor : instructor.name , instructor.salary , instructor.id , instructor.dept_name , instructor.* | student : student.id , student.name , student.dept_name , student.tot_cred , student.* | takes : takes.year , takes.semester , takes.grade , takes.course_id , takes.sec_id , takes.*
+natsql = select count ( distinct _ ) , count ( distinct _ ) , _ from _ group by _ | select count ( distinct student.id ) , count ( distinct instructor.id ) , department.dept_name from department group by instructor.dept_name
+SQL = SELECT count(DISTINCT T2.id) ,  count(DISTINCT T3.id) ,  T3.dept_name FROM department AS T1 JOIN student AS T2 ON T1.dept_name  =  T2.dept_name JOIN instructor AS T3 ON T1.dept_name  =  T3.dept_name GROUP BY T3.dept_name
+
+input = Find the name of students who took any class in the years of 2009 and 2010. | student : student.name , student.tot_cred , student.id , student.dept_name , student.* | takes : takes.year , takes.sec_id , takes.grade , takes.semester , takes.id , takes.* | time_slot : time_slot.end_hr , time_slot.day , time_slot.start_hr , time_slot.start_min , time_slot.end_min , time_slot.* | section : section.year , section.sec_id , section.time_slot_id , section.room_number , section.course_id , section.*
+natsql = select distinct _ from _ where _  | select distinct student.name from student where takes.year = 2009 or takes.year = 2010
+SQL = SELECT DISTINCT T1.name FROM student AS T1 JOIN takes AS T2 ON T1.id  =  T2.id WHERE YEAR  =  2009 OR YEAR  =  2010
+
+input = Find the name and building of the department with the highest budget. | department : department.dept_name , department.building , department.budget , department.* | time_slot : time_slot.time_slot_id , time_slot.day , time_slot.end_min , time_slot.start_hr , time_slot.end_hr , time_slot.* | takes : takes.year , takes.grade , takes.id , takes.semester , takes.sec_id , takes.* | classroom : classroom.room_number , classroom.capacity , classroom.building , classroom.*
+natsql = select _ from _ order by _ desc limit _ | select department.dept_name , department.building from department order by department.budget desc limit 1
+SQL = SELECT dept_name ,  building FROM department ORDER BY budget DESC LIMIT 1
+
+input = Give the title and credits for the course that is taught in the classroom with the greatest capacity. | classroom : classroom.capacity , classroom.building , classroom.room_number , classroom.* | course : course.dept_name , course.title , course.credits , course.course_id , course.* | department : department.dept_name , department.building , department.budget , department.* | advisor : advisor.s_id , advisor.i_id , advisor.*
+natsql = select _ from _ where @.@ = max ( _ ) | select course.title , course.credits from classroom where @.@ = max ( classroom.capacity )
+SQL = SELECT T3.title ,  T3.credits FROM classroom AS T1 JOIN SECTION AS T2 ON T1.building  =  T2.building AND T1.room_number  =  T2.room_number JOIN course AS T3 ON T2.course_id  =  T3.course_id WHERE T1.capacity  =  (SELECT max(capacity) FROM classroom)
+
+input = Find the title of the course that is offered by more than one department. | course : course.title , course.credits , course.dept_name , course.course_id , course.* | takes : takes.semester , takes.course_id , takes.sec_id , takes.year , takes.grade , takes.* | section : section.course_id , section.sec_id , section.time_slot_id , section.semester , section.year , section.* | teaches : teaches.semester , teaches.year , teaches.id , teaches.sec_id , teaches.course_id , teaches.*
+natsql = select _ from _ where count ( _ ) > _ group by _ | select course.title from course where count ( course.* ) > 1 group by course.title
+SQL = SELECT title FROM course GROUP BY title HAVING count(*)  >  1
+
+input = How many singers do we have? | singer : singer.singer_id , singer.name , singer.country , singer.song_name , singer.song_release_year , singer.* | stadium : stadium.capacity , stadium.location , stadium.name , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.singer_id , singer_in_concert.concert_id , singer_in_concert.*
+natsql = select count ( _ ) from _
+SQL = 

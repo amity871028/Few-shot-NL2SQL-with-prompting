@@ -1,0 +1,11 @@
+
+index is 121
+SELECT Maker ,  Model FROM MODEL_LIST;
+What are all the makers and models?
+schema_links:
+[car_makers.Maker,model_list.Model,car_makers.Id = model_list.Maker]
+COMPLEX
+SQL generation:
+SELECT car_makers.Maker, model_list.Model FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker
+self correction:
+SELECT car_makers.Maker, model_list.Model  FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker

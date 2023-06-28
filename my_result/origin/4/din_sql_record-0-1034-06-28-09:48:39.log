@@ -1,0 +1,1258 @@
+
+index is 0
+SELECT count(*) FROM singer
+How many singers do we have?
+schema_links:
+[COUNT(singer.Singer_ID)]
+classification:
+The SQL query for the question "How many singers do we have?" needs the table [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [COUNT(singer.Singer_ID)].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(Singer_ID) FROM singer
+self correction:
+SELECT COUNT(DISTINCT Singer_ID) FROM singer
+
+index is 1
+SELECT count(*) FROM singer
+What is the total number of singers?
+schema_links:
+[singer.Singer_ID]
+classification:
+The SQL query for the question "What is the total number of singers?" needs the table [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(*) FROM singer
+self correction:
+SELECT COUNT(Singer_ID) FROM singer
+
+index is 2
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+Show name, country, age for all singers ordered by age from the oldest to the youngest.
+schema_links:
+[singer.Name, singer.Country, singer.Age, ORDER BY singer.Age DESC]
+classification:
+The SQL query for the question "Show name, country, age for all singers ordered by age from the oldest to the youngest" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+self correction:
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+
+index is 3
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+What are the names, countries, and ages for every singer in descending order of age?
+schema_links:
+[singer.Name, singer.Country, singer.Age]
+classification:
+The SQL query for the question "What are the names, countries, and ages for every singer in descending order of age?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+self correction:
+SELECT singer.Name, singer.Country, singer.Age FROM singer ORDER BY singer.Age DESC
+
+index is 4
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'
+What is the average, minimum, and maximum age of all singers from France?
+schema_links:
+[singer.Age, singer.Country, 'France']
+classification:
+The SQL query for the question "What is the average, minimum, and maximum age of all singers from France?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+self correction:
+SELECT AVG(Age) AS Average_Age, MIN(Age) AS Minimum_Age, MAX(Age) AS Maximum_Age  FROM singer  WHERE Country = 'France'
+
+index is 5
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'
+What is the average, minimum, and maximum age for all French singers?
+schema_links:
+[singer.Age, singer.Country, 'French']
+classification:
+The SQL query for the question "What is the average, minimum, and maximum age for all French singers?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'French'
+self correction:
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+
+index is 6
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1
+Show the name and the release year of the song by the youngest singer.
+schema_links:
+[singer.Song_Name, singer.Song_release_year, singer.Age]
+classification:
+The SQL query for the question "Show the name and the release year of the song by the youngest singer." needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Song_Name, Song_release_year
+FROM singer
+WHERE Age = (SELECT MIN(Age) FROM singer)
+self correction:
+SELECT Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+
+index is 7
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1
+What are the names and release years for all the songs of the youngest singer?
+schema_links:
+[singer.Song_Name, singer.Song_release_year]
+classification:
+The SQL query for the question "What are the names and release years for all the songs of the youngest singer?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Song_Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+self correction:
+SELECT s.Song_Name, s.Song_release_year FROM singer s WHERE s.Age = (   SELECT MIN(Age)   FROM singer )
+
+index is 8
+SELECT DISTINCT country FROM singer WHERE age  >  20
+What are all distinct countries where singers above age 20 are from?
+schema_links:
+[singer.Country,singer.Age,20]
+classification:
+The SQL query for the question "What are all distinct countries where singers above age 20 are from?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+self correction:
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+
+index is 9
+SELECT DISTINCT country FROM singer WHERE age  >  20
+What are  the different countries with singers above age 20?
+schema_links:
+[singer.Country, singer.Age, 20]
+classification:
+The SQL query for the question "What are the different countries with singers above age 20?" needs the table [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+self correction:
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+
+index is 10
+SELECT country ,  count(*) FROM singer GROUP BY country
+Show all countries and the number of singers in each country.
+schema_links:
+[singer.Country]
+classification:
+The SQL query for the question "Show all countries and the number of singers in each country" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Country, COUNT(*) FROM singer GROUP BY Country
+self correction:
+SELECT Country, COUNT(*) AS Singer_Count FROM singer GROUP BY Country
+
+index is 11
+SELECT country ,  count(*) FROM singer GROUP BY country
+How many singers are from each country?
+Slicing error for the schema_linking module
+schema_links:
+[]
+classification:
+The SQL query for the question "How many singers are from each country?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Country, COUNT(*) FROM singer GROUP BY Country
+self correction:
+SELECT Country, COUNT(*) AS Singer_Count FROM singer GROUP BY Country
+
+index is 12
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+List all song names by singers above the average age.
+schema_links:
+[singer.Song_Name, singer.Age, average age]
+classification:
+The SQL query for the question "List all song names by singers above the average age." needs these tables = [singer], so we don't need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What is the average age of singers?"].
+So, we don't need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Song_Name FROM singer WHERE Age > (SELECT avg(Age) FROM singer)
+self correction:
+SELECT singer.Song_Name FROM singer WHERE singer.Age > (SELECT AVG(singer.Age) FROM singer)
+
+index is 13
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+What are all the song names by singers who are older than average?
+schema_links:
+[singer.Song_Name, singer.Age, average]
+classification:
+The SQL query for the question "What are all the song names by singers who are older than average?" needs these tables = [singer], so we don't need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What is the average age of the singers"].
+So, we don't need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Song_Name FROM singer WHERE Age > (SELECT avg(Age) FROM singer)
+self correction:
+SELECT singer.Song_Name FROM singer WHERE singer.Age > (SELECT AVG(singer.Age) FROM singer)
+
+index is 14
+SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+Show location and name for all stadiums with a capacity between 5000 and 10000.
+schema_links:
+[stadium.Location, stadium.Name, stadium.Capacity, 5000, 10000]
+classification:
+The SQL query for the question "Show location and name for all stadiums with a capacity between 5000 and 10000" needs these tables = [stadium], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+self correction:
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+
+index is 15
+SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+What are the locations and names of all stations with capacity between 5000 and 10000?
+schema_links:
+[stadium.Location, stadium.Name, stadium.Capacity, 5000, 10000]
+classification:
+The SQL query for the question "What are the locations and names of all stations with capacity between 5000 and 10000?" needs the table [stadium], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["locations and names of all stations with capacity between 5000 and 10000"].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+self correction:
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000;
+
+index is 16
+select max(capacity), average from stadium
+What is the maximum capacity and the average of all stadiums ?
+schema_links:
+[stadium.Capacity,stadium.Average]
+classification:
+The SQL query for the question "What is the maximum capacity and the average of all stadiums?" needs these tables = [stadium], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT MAX(Capacity), AVG(Capacity) FROM stadium
+self correction:
+SELECT MAX(Capacity), AVG(Capacity) FROM stadium
+
+index is 17
+select avg(capacity) ,  max(capacity) from stadium
+What is the average and maximum capacities for all stadiums ?
+schema_links:
+[stadium.Capacity]
+classification:
+The SQL query for the question "What is the average and maximum capacities for all stadiums?" needs these tables = [stadium], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT AVG(Capacity), MAX(Capacity) FROM stadium
+self correction:
+SELECT AVG(Capacity) AS Average_Capacity, MAX(Capacity) AS Maximum_Capacity FROM stadium
+
+index is 18
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+What is the name and capacity for the stadium with highest average attendance?
+Slicing error for the schema_linking module
+schema_links:
+[]
+classification:
+The SQL query for the question "What is the name and capacity for the stadium with the highest average attendance?" needs these tables = [stadium], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Name, Capacity FROM stadium WHERE Average = (SELECT MAX(Average) FROM stadium)
+self correction:
+SELECT Name, Capacity FROM stadium WHERE Average = (SELECT MAX(Average) FROM stadium)
+
+index is 19
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+What is the name and capacity for the stadium with the highest average attendance?
+schema_links:
+[stadium.Name, stadium.Capacity, stadium.Highest, stadium.Lowest, stadium.Average]
+classification:
+The SQL query for the question "What is the name and capacity for the stadium with the highest average attendance?" needs these tables = [stadium], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Name, Capacity FROM stadium WHERE Average = (SELECT MAX(Average) FROM stadium)
+self correction:
+SELECT Name, Capacity  FROM stadium  WHERE Average = (     SELECT MAX(Average)      FROM stadium )
+
+index is 20
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts are there in year 2014 or 2015?
+schema_links:
+[COUNT(concert.concert_ID), concert.Year, 2014, 2015]
+classification:
+The SQL query for the question "How many concerts are there in year 2014 or 2015?" needs the table [concert], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+self correction:
+SELECT COUNT(concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+
+index is 21
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts occurred in 2014 or 2015?
+schema_links:
+[concert.*, concert.Year, 2014, 2015]
+classification:
+The SQL query for the question "How many concerts occurred in 2014 or 2015?" needs the table [concert], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(*) FROM concert WHERE Year = 2014 OR Year = 2015
+self correction:
+SELECT COUNT(DISTINCT concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+
+index is 22
+SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id
+Show the stadium name and the number of concerts in each stadium.
+schema_links:
+[stadium.Name, COUNT(concert.concert_ID), concert.Stadium_ID = stadium.Stadium_ID]
+classification:
+The SQL query for the question "Show the stadium name and the number of concerts in each stadium" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT stadium.Name, COUNT(concert.concert_ID) FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID GROUP BY stadium.Name
+self correction:
+SELECT stadium.Name, COUNT(concert.concert_ID)  FROM stadium  JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID  GROUP BY stadium.Name
+
+index is 23
+SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id
+For each stadium, how many concerts play there?
+schema_links:
+[stadium.Stadium_ID, concert.Stadium_ID]
+classification:
+The SQL query for the question "For each stadium, how many concerts play there?" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT T1.Name, COUNT(T2.concert_ID) FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID GROUP BY T1.Stadium_ID
+self correction:
+SELECT T1.Name, COUNT(T2.concert_ID)  FROM stadium AS T1  JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID  GROUP BY T1.Name
+
+index is 24
+SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1
+Show the stadium name and capacity with most number of concerts in year 2014 or after.
+schema_links:
+[stadium.Name, stadium.Capacity, concert.concert_ID, concert.Year, concert.Stadium_ID = stadium.Stadium_ID, concert.Year >= 2014]
+classification:
+The SQL query for the question "Show the stadium name and capacity with the most number of concerts in year 2014 or after" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+
+SELECT T1.Name, T1.Capacity
+FROM stadium AS T1
+WHERE T1.Stadium_ID IN (
+    SELECT T2.Stadium_ID
+    FROM concert AS T2
+    WHERE T2.Year >= 2014
+    GROUP BY T2.Stadium_ID
+    HAVING COUNT(*) = (
+        SELECT MAX(concert_count)
+        FROM (
+            SELECT COUNT(*) AS concert_count
+            FROM concert AS T3
+            WHERE T3.Year >= 2014
+            GROUP BY T3.Stadium_ID
+        ) AS counts
+    )
+)
+self correction:
+SELECT T1.Name, T1.Capacity FROM stadium AS T1 WHERE T1.Stadium_ID IN (     SELECT T2.Stadium_ID     FROM concert AS T2     WHERE T2.Year >= 2014     GROUP BY T2.Stadium_ID     HAVING COUNT(*) = (         SELECT MAX(concert_count)         FROM (             SELECT COUNT(*) AS concert_count             FROM concert AS T3             WHERE T3.Year >= 2014             GROUP BY T3.Stadium_ID         ) AS counts     ) )
+
+index is 25
+select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1
+What is the name and capacity of the stadium with the most concerts after 2013 ?
+schema_links:
+[stadium.Name, stadium.Capacity, concert.Stadium_ID = stadium.Stadium_ID, concert.Year, 2013]
+classification:
+The SQL query for the question "What is the name and capacity of the stadium with the most concerts after 2013?" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT Name, Capacity FROM stadium WHERE Stadium_ID = (SELECT Stadium_ID FROM concert WHERE Year > 2013 GROUP BY Stadium_ID ORDER BY count(*) DESC LIMIT 1)
+self correction:
+SELECT Name, Capacity  FROM stadium  WHERE Stadium_ID = (     SELECT Stadium_ID      FROM concert      WHERE Year > 2013      GROUP BY Stadium_ID      ORDER BY COUNT(*) DESC      LIMIT 1 )
+
+index is 26
+SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+Which year has most number of concerts?
+schema_links:
+[concert.Year,concert.concert_ID]
+classification:
+The SQL query for the question "Which year has the most number of concerts?" needs these tables = [concert], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Year, COUNT(*) AS num_concerts FROM concert GROUP BY Year ORDER BY num_concerts DESC LIMIT 1
+self correction:
+SELECT Year, COUNT(*) AS num_concerts FROM concert GROUP BY Year ORDER BY num_concerts DESC LIMIT 1
+
+index is 27
+SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+What is the year that had the most concerts?
+schema_links:
+[concert.Year]
+classification:
+The SQL query for the question "What is the year that had the most concerts?" needs the table [concert], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Year FROM concert GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1
+self correction:
+SELECT Year, COUNT(*) AS Concert_Count FROM concert GROUP BY Year ORDER BY Concert_Count DESC LIMIT 1
+
+index is 28
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+Show the stadium names without any concert.
+schema_links:
+[stadium.Name, concert.Stadium_ID = stadium.Stadium_ID]
+classification:
+The SQL query for the question "Show the stadium names without any concert" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL slicing error
+SQL generation:
+SELECT
+self correction:
+SELECT SELECT stadium.Name FROM stadium LEFT JOIN concert ON concert.Stadium_ID = stadium.Stadium_ID WHERE concert.concert_ID IS NULL;
+
+index is 29
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+What are the names of the stadiums without any concerts?
+schema_links:
+[stadium.Name, concert.Stadium_ID = stadium.Stadium_ID]
+classification:
+The SQL query for the question "What are the names of the stadiums without any concerts?" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT Name FROM stadium LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Stadium_ID IS NULL
+self correction:
+SELECT Name FROM stadium LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Stadium_ID IS NULL
+
+index is 30
+SELECT country FROM singer WHERE age  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30
+Show countries where a singer above age 40 and a singer below 30 are from.
+Slicing error for the schema_linking module
+schema_links:
+[]
+classification:
+The SQL query for the question "Show countries where a singer above age 40 and a singer below 30 are from" needs these tables = [singer], so we don't need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the countries of singers above age 40?", "What are the countries of singers below age 30?"].
+So, we don't need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Country FROM singer WHERE Age > 40 UNION SELECT Country FROM singer WHERE Age < 30
+self correction:
+SELECT Country FROM singer WHERE Age > 40 UNION SELECT Country FROM singer WHERE Age < 30
+
+index is 31
+SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+Show names for all stadiums except for stadiums having a concert in year 2014.
+schema_links:
+[stadium.Name,concert.Year,concert.Stadium_ID = stadium.Stadium_ID,2014]
+classification:
+The SQL query for the question "Show names for all stadiums except for stadiums having a concert in year 2014." needs these tables = [stadium, concert], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the stadiums having a concert in year 2014?"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+self correction:
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+
+index is 32
+SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+What are the names of all stadiums that did not have a concert in 2014?
+schema_links:
+[stadium.Name,concert.Stadium_ID = stadium.Stadium_ID,concert.Year,2014]
+classification:
+The SQL query for the question "What are the names of all stadiums that did not have a concert in 2014?" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+self correction:
+SELECT Name FROM stadium LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year IS NULL OR concert.Year <> 2014
+
+index is 33
+SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id
+Show the name and theme for all concerts and the number of singers in each concert.
+schema_links:
+[concert.concert_Name, concert.Theme, singer_in_concert.concert_ID]
+classification:
+The SQL query for the question "Show the name and theme for all concerts and the number of singers in each concert" needs these tables = [concert, singer_in_concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+
+```
+SELECT concert_Name, Theme, COUNT(Singer_ID) AS num_singers
+FROM concert
+LEFT JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID
+GROUP BY concert_Name, Theme;
+```
+
+This query will retrieve the name and theme of all concerts along with the number of singers in each concert.
+self correction:
+SELECT concert.concert_Name, concert.Theme, COUNT(singer_in_concert.Singer_ID) AS num_singers FROM concert LEFT JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID GROUP BY concert.concert_Name, concert.Theme;
+
+index is 34
+select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id
+What are the names , themes , and number of singers for every concert ?
+Slicing error for the schema_linking module
+schema_links:
+[]
+classification:
+The SQL query for the question "What are the names, themes, and number of singers for every concert?" needs these tables = [concert, singer_in_concert, singer], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+
+SELECT concert_Name, Theme, COUNT(Singer_ID) 
+FROM concert
+JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID
+GROUP BY concert.concert_ID, concert_Name, Theme
+self correction:
+SELECT concert_Name, Theme, COUNT(Singer_ID)  FROM concert JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID GROUP BY concert.concert_ID, concert_Name, Theme
+
+index is 35
+SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id
+List singer names and number of concerts for each singer.
+schema_links:
+[singer.Name, COUNT(singer_in_concert.concert_ID), singer.Singer_ID = singer_in_concert.Singer_ID]
+classification:
+The SQL query for the question "List singer names and number of concerts for each singer" needs these tables = [singer, singer_in_concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+
+```
+SELECT Name, COUNT(concert_ID)
+FROM singer
+JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID
+GROUP BY singer.Singer_ID
+```
+self correction:
+SELECT singer.Name, COUNT(singer_in_concert.concert_ID) FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID GROUP BY singer.Singer_ID
+
+index is 36
+SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id
+What are the names of the singers and number of concerts for each person?
+schema_links:
+[singer.Name, singer_in_concert.*, COUNT(concert.concert_ID)]
+classification:
+The SQL query for the question "What are the names of the singers and number of concerts for each person?" needs these tables = [singer, singer_in_concert, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT Name, COUNT(concert_ID) FROM singer JOIN singer_in_concert USING (Singer_ID) GROUP BY Singer_ID
+self correction:
+SELECT Name, COUNT(concert_ID)  FROM singer  JOIN singer_in_concert USING (Singer_ID)  GROUP BY Name
+
+index is 37
+SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+List all singer names in concerts in year 2014.
+schema_links:
+[singer.Name, singer_in_concert.*, concert.Year, singer_in_concert.Singer_ID = singer.Singer_ID, singer_in_concert.concert_ID = concert.concert_ID, 2014]
+classification:
+The SQL query for the question "List all singer names in concerts in year 2014." needs these tables = [singer, singer_in_concert, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["singer.Name"].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT Name FROM singer 
+     JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID 
+     JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID 
+     WHERE concert.Year = 2014
+self correction:
+SELECT Name  FROM singer  JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID  JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID  WHERE concert.Year = 2014
+
+index is 38
+SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+What are the names of the singers who performed in a concert in 2014?
+schema_links:
+[singer.Name, singer.Singer_ID = singer_in_concert.Singer_ID, concert.concert_ID = singer_in_concert.concert_ID, concert.Year, 2014]
+classification:
+The SQL query for the question "What are the names of the singers who performed in a concert in 2014?" needs these tables = [singer, singer_in_concert, concert], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT DISTINCT Name FROM singer JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID WHERE concert.Year = 2014
+self correction:
+SELECT Name  FROM singer  JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID  JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID  WHERE concert.Year = 2014
+
+index is 39
+SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'
+what is the name and nation of the singer who have a song having 'Hey' in its name?
+schema_links:
+[singer.Name, singer.Country, singer.Song_Name, 'Hey']
+classification:
+The SQL query for the question "What is the name and nation of the singer who has a song with 'Hey' in its name?" needs these tables = [singer], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+self correction:
+SELECT singer.Name, singer.Country FROM singer WHERE singer.Song_Name LIKE '%Hey%'
+
+index is 40
+SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'
+What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?
+schema_links:
+[singer.Name, singer.Country, singer.Song_Name, 'Hey']
+classification:
+The SQL query for the question "What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?" needs these tables = [singer], so we don't need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'
+self correction:
+SELECT singer.Name, singer.Country FROM singer WHERE singer.Song_Name LIKE '%Hey%'
+
+index is 41
+SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015
+Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015.
+schema_links:
+[stadium.Name, stadium.Location, concert.Stadium_ID = stadium.Stadium_ID, concert.Year, 2014, 2015]
+classification:
+The SQL query for the question "Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the stadiums where concerts happened in 2014?", "What are the stadiums where concerts happened in 2015?"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT DISTINCT T1.Name, T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Year = 2014 AND T2.Year = 2015.
+self correction:
+SELECT T1.Name, T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Year = 2014 OR T2.Year = 2015 GROUP BY T1.Name, T1.Location;
+
+index is 42
+SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015
+What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?
+schema_links:
+[stadium.Name, stadium.Location, concert.Stadium_ID = stadium.Stadium_ID, concert.Year, 2014, 2015]
+classification:
+The SQL query for the question "What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?" needs these tables = [stadium, concert], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the names and locations of the stadiums that had concerts in 2014?", "What are the names and locations of the stadiums that had concerts in 2015?"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Name, Location FROM stadium WHERE Stadium_ID IN (SELECT Stadium_ID FROM concert WHERE Year = 2014) AND Stadium_ID IN (SELECT Stadium_ID FROM concert WHERE Year = 2015)
+self correction:
+SELECT Name, Location  FROM stadium  WHERE Stadium_ID IN (     SELECT Stadium_ID      FROM concert      WHERE Year = 2014 )  AND Stadium_ID IN (     SELECT Stadium_ID      FROM concert      WHERE Year = 2015 )
+
+index is 43
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+Find the number of concerts happened in the stadium with the highest capacity .
+schema_links:
+[concert.concert_ID,concert.Stadium_ID = stadium.Stadium_ID,stadium.Capacity]
+classification:
+The SQL query for the question "Find the number of concerts happened in the stadium with the highest capacity." needs these tables = [concert, stadium], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT count(concert_ID) FROM concert, stadium WHERE stadium.Capacity = (SELECT max(Capacity) FROM stadium)
+self correction:
+SELECT count(concert_ID)  FROM concert  JOIN stadium ON concert.Stadium_ID = stadium.Stadium_ID  WHERE stadium.Capacity = (SELECT max(Capacity) FROM stadium)
+
+index is 44
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)
+What are the number of concerts that occurred in the stadium with the largest capacity ?
+schema_links:
+[COUNT(concert.concert_ID),stadium.Capacity,concert.Stadium_ID = stadium.Stadium_ID]
+classification:
+The SQL query for the question "What are the number of concerts that occurred in the stadium with the largest capacity?" needs these tables = [concert, stadium], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT COUNT(concert_ID) FROM concert WHERE Stadium_ID = (SELECT Stadium_ID FROM stadium WHERE Capacity = (SELECT MAX(Capacity) FROM stadium))
+self correction:
+SELECT COUNT(concert_ID) AS num_concerts  FROM concert  WHERE Stadium_ID = (SELECT Stadium_ID                      FROM stadium                      WHERE Capacity = (SELECT MAX(Capacity)                                        FROM stadium))
+
+index is 45
+SELECT count(*) FROM pets WHERE weight  >  10
+Find the number of pets whose weight is heavier than 10.
+schema_links:
+[COUNT(Pets.PetID), Pets.weight, 10]
+classification:
+The SQL query for the question "Find the number of pets whose weight is heavier than 10" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(PetID) FROM Pets WHERE weight > 10
+self correction:
+SELECT COUNT(DISTINCT PetID) FROM Pets WHERE weight > 10
+
+index is 46
+SELECT count(*) FROM pets WHERE weight  >  10
+How many pets have a greater weight than 10?
+schema_links:
+[Pets.*, Pets.weight, 10]
+classification:
+The SQL query for the question "How many pets have a greater weight than 10?" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(*) FROM Pets WHERE weight > 10
+self correction:
+SELECT COUNT(DISTINCT PetID) FROM Pets WHERE weight > 10
+
+index is 47
+SELECT weight FROM pets ORDER BY pet_age LIMIT 1
+Find the weight of the youngest dog.
+schema_links:
+[Pets.weight, Pets.pet_age, Pets.PetType = 'dog']
+classification:
+The SQL query for the question "Find the weight of the youngest dog." needs the table [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT weight FROM Pets WHERE PetType = 'dog' ORDER BY pet_age ASC LIMIT 1
+self correction:
+SELECT weight  FROM Pets  WHERE PetType = 'dog'  ORDER BY pet_age ASC  LIMIT 1
+
+index is 48
+SELECT weight FROM pets ORDER BY pet_age LIMIT 1
+How much does the youngest dog weigh?
+schema_links:
+[Pets.weight, Pets.PetType='dog']
+classification:
+The SQL query for the question "How much does the youngest dog weigh?" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT weight FROM Pets WHERE PetType = 'dog' ORDER BY pet_age ASC LIMIT 1
+self correction:
+SELECT Pets.weight FROM Pets WHERE Pets.PetType = 'dog' ORDER BY Pets.pet_age ASC LIMIT 1
+
+index is 49
+SELECT max(weight) ,  petType FROM pets GROUP BY petType
+Find the maximum weight for each type of pet. List the maximum weight and pet type.
+schema_links:
+[Pets.PetType, Pets.weight]
+classification:
+The SQL query for the question "Find the maximum weight for each type of pet. List the maximum weight and pet type" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT MAX(weight), PetType FROM Pets GROUP BY PetType
+self correction:
+SELECT MAX(weight) AS max_weight, PetType FROM Pets GROUP BY PetType
+
+index is 50
+SELECT max(weight) ,  petType FROM pets GROUP BY petType
+List the maximum weight and type for each type of pet.
+schema_links:
+[Pets.weight, Pets.PetType]
+classification:
+The SQL query for the question "List the maximum weight and type for each type of pet" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT MAX(weight), PetType FROM Pets GROUP BY PetType
+self correction:
+SELECT MAX(weight) AS max_weight, PetType  FROM Pets  GROUP BY PetType
+
+index is 51
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+Find number of pets owned by students who are older than 20.
+schema_links:
+[COUNT(Has_Pet.PetID),Has_Pet.StuID = Student.StuID,Student.Age,20]
+classification:
+The SQL query for the question "Find number of pets owned by students who are older than 20." needs these tables = [Has_Pet, Student], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT COUNT(Has_Pet.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID WHERE Student.Age > 20
+self correction:
+SELECT COUNT(Has_Pet.PetID)  FROM Has_Pet  JOIN Student ON Has_Pet.StuID = Student.StuID  WHERE Student.Age > 20
+
+index is 52
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20
+How many pets are owned by students that have an age greater than 20?
+schema_links:
+[COUNT(Pets.PetID),Has_Pet.StuID,Student.Age,20]
+classification:
+The SQL query for the question "How many pets are owned by students that have an age greater than 20?" needs these tables = [Has_Pet, Student, Pets], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT COUNT(Pets.PetID) FROM Has_Pet
+JOIN Student ON Has_Pet.StuID = Student.StuID
+JOIN Pets ON Has_Pet.PetID = Pets.PetID
+WHERE Student.Age > 20
+self correction:
+SELECT COUNT(DISTINCT Pets.PetID) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.Age > 20
+
+index is 53
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+Find the number of dog pets that are raised by female students (with sex F).
+schema_links:
+[Pets.PetType, Student.Sex, 'dog', 'F']
+classification:
+The SQL query for the question "Find the number of dog pets that are raised by female students (with sex F)." needs these tables = [Pets, Student, Has_Pet], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+
+SELECT COUNT(*) 
+FROM Has_Pet 
+JOIN Pets ON Has_Pet.PetID = Pets.PetID 
+JOIN Student ON Has_Pet.StuID = Student.StuID 
+WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+self correction:
+SELECT COUNT(DISTINCT Has_Pet.PetID)  FROM Has_Pet  JOIN Pets ON Has_Pet.PetID = Pets.PetID  JOIN Student ON Has_Pet.StuID = Student.StuID  WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+
+index is 54
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+How many dog pets are raised by female students?
+schema_links:
+[Pets.PetType, Student.Sex, 'dog', 'female']
+classification:
+The SQL query for the question "How many dog pets are raised by female students?" needs these tables = [Pets, Student, Has_Pet], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT COUNT(*) FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID JOIN Student ON Has_Pet.StuID = Student.StuID WHERE Pets.PetType = 'dog' AND Student.Sex = 'female'
+self correction:
+SELECT COUNT(DISTINCT Has_Pet.PetID) FROM Has_Pet  JOIN Pets ON Has_Pet.PetID = Pets.PetID  JOIN Student ON Has_Pet.StuID = Student.StuID  WHERE Pets.PetType = 'dog'  AND Student.Sex = 'female'
+
+index is 55
+SELECT count(DISTINCT pettype) FROM pets
+Find the number of distinct type of pets.
+schema_links:
+[Pets.PetType]
+classification:
+The SQL query for the question "Find the number of distinct types of pets." needs the table [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [""]
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(DISTINCT PetType) FROM Pets
+self correction:
+SELECT COUNT(DISTINCT PetType) FROM Pets
+
+index is 56
+SELECT count(DISTINCT pettype) FROM pets
+How many different types of pet are there?
+schema_links:
+[Pets.PetType]
+classification:
+The SQL query for the question "How many different types of pets are there?" needs the table [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT COUNT(DISTINCT PetType) FROM Pets
+self correction:
+SELECT COUNT(DISTINCT PetType) AS Total_Pet_Types FROM Pets
+
+index is 57
+SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'
+Find the first name of students who have cat or dog pet.
+schema_links:
+[Student.Fname, Pets.PetType, 'cat', 'dog']
+Slicing error for the classification module
+classification:
+The SQL query for the question "Find the first name of students who have a cat or dog pet" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+NESTED
+SQL generation:
+SELECT Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE PetType IN ('cat', 'dog')
+self correction:
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType IN ('cat', 'dog')
+
+index is 58
+SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'
+What are the first names of every student who has a cat or dog as a pet?
+schema_links:
+[Student.Fname, Has_Pet.StuID = Student.StuID, Has_Pet.PetID = Pets.PetID, Pets.PetType, 'cat', 'dog']
+classification:
+The SQL query for the question "What are the first names of every student who has a cat or dog as a pet?" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT DISTINCT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' OR Pets.PetType = 'dog'
+self correction:
+SELECT Student.Fname  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType = 'cat' OR Pets.PetType = 'dog'
+
+index is 59
+select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat' intersect select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog'
+Find the first name of students who have both cat and dog pets .
+schema_links:
+[Student.Fname, Has_Pet.StuID = Student.StuID, Has_Pet.PetID = Pets.PetID, 'cat', 'dog']
+classification:
+The SQL query for the question "Find the first name of students who have both cat and dog pets" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["Find the first name of students who have cat pets", "Find the first name of students who have dog pets"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' INTERSECT SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog'
+self correction:
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' AND Student.StuID IN (   SELECT Student.StuID   FROM Student   JOIN Has_Pet ON Student.StuID = Has_Pet.StuID   JOIN Pets ON Has_Pet.PetID = Pets.PetID   WHERE Pets.PetType = 'dog' )
+
+index is 60
+SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog'
+What are the students' first names who have both cats and dogs as pets?
+schema_links:
+[Student.Fname, Has_Pet.StuID = Student.StuID, Has_Pet.PetID = Pets.PetID, Pets.PetType, 'cat', 'dog']
+classification:
+The SQL query for the question "What are the students' first names who have both cats and dogs as pets?" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the students' first names who have cats as pets?", "What are the students' first names who have dogs as pets?"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat' INTERSECT SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog'
+self correction:
+SELECT Student.Fname  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType = 'cat'  AND Student.StuID IN (     SELECT Student.StuID      FROM Student      JOIN Has_Pet ON Student.StuID = Has_Pet.StuID      JOIN Pets ON Has_Pet.PetID = Pets.PetID      WHERE Pets.PetType = 'dog' )
+
+index is 61
+SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+Find the major and age of students who do not have a cat pet.
+schema_links:
+[Student.Major, Student.Age, Has_Pet.PetID, Pets.PetType, 'cat']
+classification:
+The SQL query for the question "Find the major and age of students who do not have a cat pet." needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT Major, Age FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType IS NULL OR Pets.PetType <> 'cat'
+self correction:
+SELECT Major, Age FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType IS NULL OR Pets.PetType <> 'cat'
+
+index is 62
+SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+What major is every student who does not own a cat as a pet, and also how old are they?
+schema_links:
+[Student.Major, Has_Pet.StuID = Student.StuID, Has_Pet.PetID = Pets.PetID, Pets.PetType, 'cat', Student.Age]
+classification:
+The SQL query for the question "What major is every student who does not own a cat as a pet, and also how old are they?" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the majors of students who own a cat as a pet?"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Major ,  Age FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'cat'))
+self correction:
+SELECT Major, Age  FROM Student  WHERE StuID NOT IN (   SELECT StuID    FROM Has_Pet    WHERE PetID IN (     SELECT PetID      FROM Pets      WHERE PetType = 'cat'   ) )
+
+index is 63
+SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+Find the id of students who do not have a cat pet.
+schema_links:
+[Student.StuID, Pets.PetType, 'cat']
+classification:
+The SQL query for the question "Find the id of students who do not have a cat pet" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT DISTINCT Student.StuID FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType != 'cat' OR Pets.PetType IS NULL
+self correction:
+SELECT Student.StuID FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType != 'cat' OR Pets.PetType IS NULL
+
+index is 64
+SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+What are the ids of the students who do not own cats as pets?
+schema_links:
+[Student.StuID, Pets.PetType, 'cat']
+classification:
+The SQL query for the question "What are the ids of the students who do not own cats as pets?" needs these tables = [Student, Pets, Has_Pet], so we need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we need JOIN and don't need nested queries, then the SQL query can be classified as "NON-NESTED".
+Label: "NON-NESTED"
+NON-NESTED
+SQL generation:
+SELECT StuID FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetType = 'cat')
+self correction:
+SELECT Student.StuID FROM Student WHERE Student.StuID NOT IN (     SELECT Has_Pet.StuID     FROM Has_Pet     INNER JOIN Pets ON Has_Pet.PetID = Pets.PetID     WHERE Pets.PetType = 'cat' )
+
+index is 65
+SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+Find the first name and age of students who have a dog but do not have a cat as a pet.
+schema_links:
+[Student.Fname, Student.Age, Pets.PetType, Has_Pet.StuID = Student.StuID, Has_Pet.PetID = Pets.PetID, 'dog', 'cat']
+classification:
+The SQL query for the question "Find the first name and age of students who have a dog but do not have a cat as a pet." needs these tables = [Student, Pets, Has_Pet], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["Find the StuIDs of students who have a cat as a pet"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Fname, Age FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'cat'))
+self correction:
+SELECT Fname, Age FROM Student  WHERE StuID IN (   SELECT StuID    FROM Has_Pet    WHERE PetID IN (     SELECT PetID      FROM Pets      WHERE PetType = 'dog'   ) ) AND StuID NOT IN (   SELECT StuID    FROM Has_Pet    WHERE PetID IN (     SELECT PetID      FROM Pets      WHERE PetType = 'cat'   ) );
+
+index is 66
+SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')
+What is the first name of every student who has a dog but does not have a cat?
+schema_links:
+[Student.Fname, Has_Pet.StuID = Student.StuID, Has_Pet.PetID = Pets.PetID, Pets.PetType = 'dog', Pets.PetType = 'cat']
+classification:
+The SQL query for the question "What is the first name of every student who has a dog but does not have a cat?" needs these tables = [Student, Has_Pet, Pets], so we need JOIN.
+Plus, it requires nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = ["What are the first names of students who have a cat?"].
+So, we need JOIN and need nested queries, then the SQL query can be classified as "NESTED".
+Label: "NESTED"
+NESTED
+SQL generation:
+SELECT Student.Fname FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'dog' AND Student.StuID NOT IN (SELECT Student.StuID FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat')
+self correction:
+SELECT Student.Fname  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType = 'dog'  AND Student.StuID NOT IN (     SELECT Student.StuID      FROM Student      JOIN Has_Pet ON Student.StuID = Has_Pet.StuID      JOIN Pets ON Has_Pet.PetID = Pets.PetID      WHERE Pets.PetType = 'cat' ) GROUP BY Student.Fname
+
+index is 67
+SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1
+Find the type and weight of the youngest pet.
+schema_links:
+[Pets.PetType, Pets.weight]
+classification:
+The SQL query for the question "Find the type and weight of the youngest pet" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetType, weight FROM Pets ORDER BY pet_age ASC LIMIT 1
+self correction:
+SELECT Pets.PetType, Pets.weight FROM Pets ORDER BY Pets.pet_age ASC LIMIT 1
+
+index is 68
+SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1
+What type of pet is the youngest animal, and how much does it weigh?
+schema_links:
+[Pets.PetType,Pets.pet_age,Pets.weight]
+classification:
+The SQL query for the question "What type of pet is the youngest animal, and how much does it weigh?" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetType, pet_age, weight
+FROM Pets
+WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+ORDER BY weight
+LIMIT 1
+self correction:
+SELECT PetType, pet_age, weight FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets) ORDER BY weight LIMIT 1
+
+index is 69
+SELECT petid ,  weight FROM pets WHERE pet_age  >  1
+Find the id and weight of all pets whose age is older than 1.
+schema_links:
+[Pets.PetID, Pets.weight, Pets.pet_age, 1]
+classification:
+The SQL query for the question "Find the id and weight of all pets whose age is older than 1." needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetID, weight FROM Pets WHERE pet_age > 1
+self correction:
+SELECT PetID, weight FROM Pets WHERE pet_age > 1
+
+index is 70
+SELECT petid ,  weight FROM pets WHERE pet_age  >  1
+What is the id and weight of every pet who is older than 1?
+schema_links:
+[Pets.PetID, Pets.weight, Pets.pet_age, 1]
+classification:
+The SQL query for the question "What is the id and weight of every pet who is older than 1?" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetID, weight FROM Pets WHERE pet_age > 1
+self correction:
+SELECT Pets.PetID, Pets.weight FROM Pets WHERE Pets.pet_age > 1
+
+index is 71
+SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype
+Find the average and maximum age for each type of pet.
+schema_links:
+[Pets.pet_age, Pets.PetType]
+classification:
+The SQL query for the question "Find the average and maximum age for each type of pet." needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetType, AVG(pet_age), MAX(pet_age) FROM Pets GROUP BY PetType
+self correction:
+SELECT PetType, AVG(pet_age), MAX(pet_age) FROM Pets GROUP BY PetType
+
+index is 72
+SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype
+What is the average and maximum age for each pet type?
+schema_links:
+[Pets.pet_age, Pets.PetType]
+classification:
+The SQL query for the question "What is the average and maximum age for each pet type?" needs the tables [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetType, AVG(pet_age), MAX(pet_age) FROM Pets GROUP BY PetType
+self correction:
+SELECT Pets.PetType, AVG(Pets.pet_age) AS average_age, MAX(Pets.pet_age) AS maximum_age  FROM Pets  GROUP BY Pets.PetType
+
+index is 73
+SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype
+Find the average weight for each pet type.
+schema_links:
+[Pets.weight, Pets.PetType]
+classification:
+The SQL query for the question "Find the average weight for each pet type" needs these tables = [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the questions = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetType, AVG(weight) FROM Pets GROUP BY PetType
+self correction:
+SELECT PetType, AVG(weight)  FROM Pets  GROUP BY PetType
+
+index is 74
+SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype
+What is the average weight for each type of pet?
+schema_links:
+[Pets.weight, Pets.PetType]
+classification:
+The SQL query for the question "What is the average weight for each type of pet?" needs the table [Pets], so we don't need JOIN.
+Plus, it doesn't require nested queries with (INTERSECT, UNION, EXCEPT, IN, NOT IN), and we need the answer to the question = [""].
+So, we don't need JOIN and don't need nested queries, then the SQL query can be classified as "EASY".
+Label: "EASY"
+EASY
+SQL generation:
+SELECT PetType, AVG(weight) FROM Pets GROUP BY PetType
+self correction:
+SELECT PetType, AVG(weight) FROM Pets GROUP BY PetType
+
+index is 75

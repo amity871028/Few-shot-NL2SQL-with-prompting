@@ -1,0 +1,24 @@
+SELECT DISTINCT Name FROM country WHERE Continent = 'Asia' AND Population > (SELECT MAX(Population) FROM country WHERE Continent = 'Africa')
+SELECT Name , SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+SELECT CountryCode FROM countrylanguage WHERE Language = 'Spanish' AND Percentage > 50
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+SELECT Record_Company  FROM orchestra  WHERE Record_Company IN (     SELECT Record_Company      FROM orchestra      WHERE Year_of_Founded < 2003 ) AND Record_Company IN (     SELECT Record_Company      FROM orchestra      WHERE Year_of_Founded > 2003 ) GROUP BY Record_Company
+SELECT T1.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id GROUP BY T1.name ORDER BY COUNT(T2.friend_id) DESC LIMIT 1
+SELECT count(Friend.friend_id)  FROM Highschooler  JOIN Friend ON Highschooler.ID = Friend.student_id  WHERE Highschooler.name = 'Kyle'
+SELECT The given SQLite SQL query seems correct according to the given tables, columns, foreign keys, and primary keys. It returns the IDs of all students who do not have any friends.  The NOT EXISTS clause in the subquery checks if there are any records in the friend table where the ID of a student in the highschooler table matches the student_id in the friend table. If no records exist, it means that the student doesn't have any friends, and the ID of the student will be included in the result set.  Therefore, there is no need to modify the SQL query. Here is the fixed SQL query, which is same as the original one:  ```sql SELECT id FROM highschooler WHERE NOT EXISTS (SELECT * FROM friend WHERE highschooler.id = friend.student_id) ```
+SELECT ID FROM Highschooler WHERE ID NOT IN (SELECT student_id FROM Friend)
+SELECT min(grade) FROM Highschooler WHERE ID NOT IN (SELECT DISTINCT student_id FROM Friend)
+SELECT The given SQL query appears to be correctly formatted and does indeed answer the question. It first selects first names from the "professionals" table that are not found in the "dogs" table, and then does the same for the "owners" table. The use of the UNION operator ensures that only distinct names are returned.  Therefore, the fixed SQL query is the same as the provided one:  ```SQL SELECT first_name FROM Professionals WHERE first_name NOT IN (SELECT name FROM Dogs)  UNION  SELECT first_name FROM Owners WHERE first_name NOT IN (SELECT name FROM Dogs) ```
+SELECT professional_id , role_code , email_address  FROM Professionals  WHERE professional_id NOT IN (SELECT professional_id FROM Treatments);
+SELECT Dogs.owner_id, Owners.first_name, Owners.last_name  FROM Dogs  JOIN Owners ON Dogs.owner_id = Owners.owner_id  GROUP BY Dogs.owner_id  ORDER BY COUNT(*) DESC  LIMIT 1
+SELECT treatment_type_description FROM Treatment_Types  JOIN Treatments ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code  GROUP BY Treatment_Types.treatment_type_code  ORDER BY SUM(Treatments.cost_of_treatment) ASC  LIMIT 1
+SELECT Owners.first_name, Dogs.name FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id
+SELECT dogs.name , treatments.date_of_treatment  FROM Dogs  JOIN Breeds ON Dogs.breed_code = Breeds.breed_code  JOIN Treatments ON Dogs.dog_id = Treatments.dog_id  WHERE Breeds.breed_code IN (   SELECT breed_code    FROM Dogs    GROUP BY breed_code    HAVING COUNT(*) = (     SELECT MIN(breed_count)      FROM (       SELECT breed_code, COUNT(*) as breed_count        FROM Dogs        GROUP BY breed_code     )   ) )  GROUP BY Dogs.name, Treatments.date_of_treatment
+SELECT count(DISTINCT Treatments.professional_id) FROM Treatments WHERE Treatments.professional_id IS NOT NULL
+SELECT COUNT(*) FROM Dogs WHERE age  <  (SELECT AVG(age) FROM Dogs)
+SELECT charge_amount FROM Charges ORDER BY charge_amount DESC LIMIT 1
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+SELECT Citizenship FROM singer GROUP BY Citizenship ORDER BY count(*) DESC LIMIT 1
+SELECT DISTINCT citizenship FROM singer WHERE birth_year < 1945 OR birth_year > 1955
+SELECT property_type_description  FROM Ref_Property_Types  WHERE property_type_code IN (SELECT DISTINCT property_type_code FROM Properties)

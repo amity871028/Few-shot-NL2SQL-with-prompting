@@ -1,0 +1,12 @@
+SELECT Country, COUNT(*) FROM singer GROUP BY Country
+SELECT count(DISTINCT concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+SELECT s.name, s.capacity FROM stadium AS s JOIN concert AS c ON s.Stadium_ID = c.Stadium_ID WHERE c.Year > 2013 GROUP BY s.Stadium_ID ORDER BY COUNT(c.concert_ID) DESC LIMIT 1
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+SELECT DISTINCT singer.Name FROM singer_in_concert JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE concert.Year = 2014
+SELECT count(*) FROM Pets WHERE weight > 10
+SELECT The original SQL query seems to correctly answer the question. It counts the number of pets with weight greater than 10. No JOIN operations, DISTINCT, DESC, or GROUP BY clauses are needed based on the provided question. Thus, the fixed SQL query would be the same as the original one:  ```sql SELECT count(*) FROM Pets WHERE weight  >  10 ```  Here, I've just capitalized the table name to maintain SQL syntax conventions, but in SQLite, table names are case-insensitive, so the original query would work as well.
+SELECT DISTINCT Fname FROM Student WHERE StuID IN (     SELECT Has_Pet.StuID     FROM Has_Pet     JOIN Pets ON Has_Pet.PetID = Pets.PetID     WHERE Pets.PetType = 'Cat' )  AND StuID IN (     SELECT Has_Pet.StuID     FROM Has_Pet     JOIN Pets ON Has_Pet.PetID = Pets.PetID     WHERE Pets.PetType = 'Dog' )
+SELECT has_pet.PetID FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID WHERE Student.LName = 'Smith'
+SELECT continents.ContId , continents.Continent , COUNT(countries.CountryName)  FROM continents  JOIN countries ON continents.ContId = countries.Continent  GROUP BY continents.ContId, continents.Continent
+SELECT DISTINCT Maker FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year = 1970

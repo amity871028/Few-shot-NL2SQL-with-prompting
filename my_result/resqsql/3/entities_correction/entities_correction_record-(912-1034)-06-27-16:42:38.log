@@ -1,0 +1,976 @@
+
+index is 912
+SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  "Kyle"
+How many likes does Kyle have?
+SQL correction:
+SELECT count(*) FROM likes WHERE student_id  =  (SELECT id FROM highschooler WHERE name  =  'Kyle')
+entities correction:
+SELECT COUNT(*) FROM Likes WHERE student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle')
+
+index is 913
+SELECT count(*) FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  "Kyle"
+Return the number of likes that the high schooler named Kyle has.
+SQL correction:
+SELECT count(*) FROM likes JOIN highschooler ON likes.student_id = highschooler.id WHERE highschooler.name = "Kyle"
+entities correction:
+SELECT count(*) FROM Likes JOIN Highschooler ON Likes.student_id = Highschooler.ID WHERE Highschooler.name = "Kyle"
+
+index is 914
+SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+Find the average grade of all students who have some friends.
+SQL correction:
+SELECT AVG (grade) FROM highschooler WHERE id  IN  (SELECT student_id FROM friend)
+original correction:
+SELECT AVG (grade) FROM highschooler WHERE id  IN  (SELECT student_id FROM friend)
+
+index is 915
+SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+What is the average grade of students who have friends?
+SQL correction:
+SELECT avg(grade) FROM highschooler WHERE EXISTS (SELECT * FROM friend WHERE friend.student_id = highschooler.id)
+original correction:
+SELECT avg(grade) FROM highschooler WHERE EXISTS (SELECT * FROM friend WHERE friend.student_id = highschooler.id)
+
+index is 916
+SELECT min(grade) FROM Highschooler WHERE id NOT IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+Find the minimum grade of students who have no friends.
+SQL correction:
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+original correction:
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+
+index is 917
+SELECT min(grade) FROM Highschooler WHERE id NOT IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+What is the lowest grade of students who do not have any friends?
+SQL correction:
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+original correction:
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+
+index is 918
+SELECT state FROM Owners INTERSECT SELECT state FROM Professionals
+Which states have both owners and professionals living there?
+SQL correction:
+SELECT DISTINCT state FROM owners WHERE state IN (SELECT state FROM professionals)
+original correction:
+SELECT DISTINCT state FROM owners WHERE state IN (SELECT state FROM professionals)
+
+index is 919
+SELECT state FROM Owners INTERSECT SELECT state FROM Professionals
+Find the states where both owners and professionals live.
+SQL correction:
+SELECT DISTINCT state FROM owners WHERE state IN (SELECT DISTINCT state FROM professionals)
+original correction:
+SELECT DISTINCT state FROM owners WHERE state IN (SELECT DISTINCT state FROM professionals)
+
+index is 920
+SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )
+What is the average age of the dogs who have gone through any treatments?
+SQL correction:
+SELECT AVG(age) FROM dogs WHERE dog_id IN (SELECT dog_id FROM treatments)
+original correction:
+SELECT AVG(age) FROM dogs WHERE dog_id IN (SELECT dog_id FROM treatments)
+
+index is 921
+SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )
+Find the average age of the dogs who went through treatments.
+SQL correction:
+SELECT AVG(age) FROM dogs JOIN treatments ON dogs.dog_id = treatments.dog_id
+original correction:
+SELECT AVG(age) FROM dogs JOIN treatments ON dogs.dog_id = treatments.dog_id
+
+index is 922
+SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2
+Which professionals live in the state of Indiana or have done treatment on more than 2 treatments? List his or her id, last name and cell phone.
+SQL correction:
+SELECT professional_id , last_name , cell_number FROM professionals WHERE state  =  'Indiana' OR professional_id IN (SELECT professional_id FROM treatments GROUP BY professional_id HAVING count(*)  >  2)
+entities correction:
+SELECT professional_id, last_name, cell_number FROM Professionals WHERE state = 'Indiana' OR professional_id IN (   SELECT professional_id   FROM Treatments   GROUP BY professional_id   HAVING COUNT(*) > 2 )
+
+index is 923
+SELECT professional_id ,  last_name ,  cell_number FROM Professionals WHERE state  =  'Indiana' UNION SELECT T1.professional_id ,  T1.last_name ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >  2
+Find the id, last name and cell phone of the professionals who live in the state of Indiana or have performed more than two treatments.
+SQL correction:
+SELECT professional_id ,  last_name ,  cell_number FROM professionals WHERE state = 'Indiana' OR (SELECT count(*) FROM treatments WHERE treatments.professional_id = professionals.professional_id) > 2
+entities correction:
+SELECT professional_id, last_name, cell_number FROM Professionals WHERE state = 'Indiana' OR professional_id IN (   SELECT professional_id   FROM Treatments   GROUP BY professional_id   HAVING COUNT(*) > 2 )
+
+index is 924
+select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
+Which dogs have not cost their owner more than 1000 for treatment ? List the dog names .
+SQL correction:
+SELECT name FROM dogs WHERE cost_of_treatment > 1000
+original correction:
+SELECT name FROM dogs WHERE cost_of_treatment > 1000
+
+index is 925
+select name from dogs where dog_id not in ( select dog_id from treatments group by dog_id having sum(cost_of_treatment)  >  1000 )
+What are the names of the dogs for which the owner has not spend more than 1000 for treatment ?
+SQL correction:
+SELECT name FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments WHERE cost_of_treatment > 1000)
+original correction:
+SELECT name FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments WHERE cost_of_treatment > 1000)
+
+index is 926
+SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs
+Which first names are used for professionals or owners but are not used as dog names?
+SQL correction:
+SELECT DISTINCT T1.first_name FROM owners AS T1 WHERE T1.first_name NOT IN (SELECT T2.name FROM dogs AS T2)
+original correction:
+SELECT DISTINCT T1.first_name FROM owners AS T1 WHERE T1.first_name NOT IN (SELECT T2.name FROM dogs AS T2)
+
+index is 927
+SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs
+Find the first names that are used for professionals or owners but are not used as dog names.
+SQL correction:
+SELECT first_name FROM owners WHERE first_name NOT IN (SELECT name FROM dogs) UNION SELECT first_name FROM professionals WHERE first_name NOT IN (SELECT name FROM dogs)
+original correction:
+SELECT first_name FROM owners WHERE first_name NOT IN (SELECT name FROM dogs) UNION SELECT first_name FROM professionals WHERE first_name NOT IN (SELECT name FROM dogs)
+
+index is 928
+SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id
+Which professional did not operate any treatment on dogs? List the professional's id, role and email.
+SQL correction:
+SELECT professional_id , role_code , email_address FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+original correction:
+SELECT professional_id , role_code , email_address FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+
+index is 929
+SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id
+Give me the id, role and email of the professionals who did not perform any treatment on dogs.
+SQL correction:
+SELECT professional_id ,  role_code ,  email_address FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+original correction:
+SELECT professional_id ,  role_code ,  email_address FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+
+index is 930
+SELECT T1.owner_id ,  T2.first_name ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1
+Which owner owns the most dogs? List the owner id, first name and last name.
+SQL correction:
+SELECT owner_id ,  first_name ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id ORDER BY count(*) DESC LIMIT 1)
+original correction:
+SELECT owner_id ,  first_name ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id ORDER BY count(*) DESC LIMIT 1)
+
+index is 931
+SELECT T1.owner_id ,  T2.first_name ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1
+Return the owner id, first name and last name of the owner who has the most dogs.
+SQL correction:
+SELECT owner_id ,  first_name ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id HAVING count(*)  =  (SELECT max(count(*)) FROM dogs GROUP BY owner_id))
+original correction:
+SELECT owner_id ,  first_name ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id HAVING count(*)  =  (SELECT max(count(*)) FROM dogs GROUP BY owner_id))
+
+index is 932
+SELECT T1.professional_id ,  T1.role_code ,  T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2
+Which professionals have done at least two treatments? List the professional's id, role, and first name.
+SQL correction:
+SELECT professional_id ,  role_code ,  first_name FROM professionals WHERE professional_id IN (SELECT professional_id FROM treatments GROUP BY professional_id HAVING count(*) >= 2)
+original correction:
+SELECT professional_id ,  role_code ,  first_name FROM professionals WHERE professional_id IN (SELECT professional_id FROM treatments GROUP BY professional_id HAVING count(*) >= 2)
+
+index is 933
+SELECT T1.professional_id ,  T1.role_code ,  T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2
+What are the id, role, and first name of the professionals who have performed two or more treatments?
+SQL correction:
+SELECT professional_id ,  role_code ,  first_name FROM professionals GROUP BY professional_id , role_code , first_name HAVING count(*)  >=  2
+original correction:
+SELECT professional_id ,  role_code ,  first_name FROM professionals GROUP BY professional_id , role_code , first_name HAVING count(*)  >=  2
+
+index is 934
+SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1
+What is the name of the breed with the most dogs?
+SQL correction:
+SELECT breed_name FROM breeds GROUP BY breed_name ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT breed_name FROM breeds GROUP BY breed_name ORDER BY count(*) DESC LIMIT 1
+
+index is 935
+SELECT T1.breed_name FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code  =  T2.breed_code GROUP BY T1.breed_name ORDER BY count(*) DESC LIMIT 1
+Which breed do the most dogs have? Give me the breed name.
+SQL correction:
+SELECT breed_name FROM breeds GROUP BY breed_name ORDER BY count(breed_code) DESC LIMIT 1
+original correction:
+SELECT breed_name FROM breeds GROUP BY breed_name ORDER BY count(breed_code) DESC LIMIT 1
+
+index is 936
+SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1
+Which owner has paid for the most treatments on his or her dogs? List the owner id and last name.
+SQL correction:
+SELECT owner_id ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id ORDER BY sum(cost_of_treatment) DESC LIMIT 1)
+original correction:
+SELECT owner_id ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs GROUP BY owner_id ORDER BY sum(cost_of_treatment) DESC LIMIT 1)
+
+index is 937
+SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1
+Tell me the owner id and last name of the owner who spent the most on treatments of his or her dogs.
+SQL correction:
+SELECT owner_id ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs JOIN treatments ON dogs.dog_id  =  treatments.dog_id GROUP BY owner_id ORDER BY sum(cost_of_treatment) DESC LIMIT 1)
+original correction:
+SELECT owner_id ,  last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs JOIN treatments ON dogs.dog_id  =  treatments.dog_id GROUP BY owner_id ORDER BY sum(cost_of_treatment) DESC LIMIT 1)
+
+index is 938
+SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1
+What is the description of the treatment type that costs the least money in total?
+SQL correction:
+SELECT treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code GROUP BY treatment_types.treatment_type_description ORDER BY sum(cost_of_treatment) LIMIT 1
+original correction:
+SELECT treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code GROUP BY treatment_types.treatment_type_description ORDER BY sum(cost_of_treatment) LIMIT 1
+
+index is 939
+SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1
+Give me the description of the treatment type whose total cost is the lowest.
+SQL correction:
+SELECT treatment_type_description FROM treatment_types WHERE treatment_type_code  =  (SELECT treatment_type_code FROM treatments GROUP BY treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1)
+original correction:
+SELECT treatment_type_description FROM treatment_types WHERE treatment_type_code  =  (SELECT treatment_type_code FROM treatments GROUP BY treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1)
+
+index is 940
+SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1
+Which owner has paid the largest amount of money in total for their dogs? Show the owner id and zip code.
+SQL correction:
+SELECT owner_id , zip_code FROM owners ORDER BY (SELECT sum(charge_amount) FROM charges WHERE dogs.owner_id = owners.owner_id) DESC LIMIT 1
+original correction:
+SELECT owner_id , zip_code FROM owners ORDER BY (SELECT sum(charge_amount) FROM charges WHERE dogs.owner_id = owners.owner_id) DESC LIMIT 1
+
+index is 941
+SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1
+Find the owner id and zip code of the owner who spent the most money in total for his or her dogs.
+SQL correction:
+SELECT owners.owner_id ,  owners.zip_code FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN treatments ON dogs.dog_id  =  treatments.dog_id GROUP BY owners.owner_id ORDER BY sum(treatments.cost_of_treatment) DESC LIMIT 1
+original correction:
+SELECT owners.owner_id ,  owners.zip_code FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN treatments ON dogs.dog_id  =  treatments.dog_id GROUP BY owners.owner_id ORDER BY sum(treatments.cost_of_treatment) DESC LIMIT 1
+
+index is 942
+SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2
+Which professionals have done at least two types of treatments? List the professional id and cell phone.
+SQL correction:
+SELECT professional_id , cell_number FROM professionals GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2
+original correction:
+SELECT professional_id , cell_number FROM professionals GROUP BY professional_id HAVING COUNT(DISTINCT treatment_type_code) >= 2
+
+index is 943
+SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2
+Find the id and cell phone of the professionals who operate two or more types of treatments.
+SQL correction:
+SELECT professional_id ,  cell_number FROM professionals GROUP BY professional_id HAVING count(DISTINCT treatment_type_code)  >  1
+original correction:
+SELECT professional_id ,  cell_number FROM professionals GROUP BY professional_id HAVING count(DISTINCT treatment_type_code)  >  1
+
+index is 944
+SELECT DISTINCT T1.first_name ,  T1.last_name FROM Professionals AS T1 JOIN Treatments AS T2 WHERE cost_of_treatment  <  ( SELECT avg(cost_of_treatment) FROM Treatments )
+What are the first name and last name of the professionals who have done treatment with cost below average?
+SQL correction:
+SELECT first_name ,  last_name FROM professionals WHERE cost_of_treatment  <  (SELECT avg(cost_of_treatment) FROM treatments)
+original correction:
+SELECT first_name ,  last_name FROM professionals WHERE cost_of_treatment  <  (SELECT avg(cost_of_treatment) FROM treatments)
+
+index is 945
+SELECT DISTINCT T1.first_name ,  T1.last_name FROM Professionals AS T1 JOIN Treatments AS T2 WHERE cost_of_treatment  <  ( SELECT avg(cost_of_treatment) FROM Treatments )
+Which professionals have operated a treatment that costs less than the average? Give me theor first names and last names.
+SQL correction:
+SELECT first_name , last_name FROM professionals WHERE professional_id IN (SELECT professional_id FROM treatments WHERE cost_of_treatment < (SELECT avg(cost_of_treatment) FROM treatments))
+original correction:
+SELECT first_name , last_name FROM professionals WHERE professional_id IN (SELECT professional_id FROM treatments WHERE cost_of_treatment < (SELECT avg(cost_of_treatment) FROM treatments))
+
+index is 946
+SELECT T1.date_of_treatment ,  T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id  =  T2.professional_id
+List the date of each treatment, together with the first name of the professional who operated it.
+SQL correction:
+SELECT date_of_treatment , first_name FROM treatments JOIN professionals ON treatments.professional_id  =  professionals.professional_id
+original correction:
+SELECT date_of_treatment , first_name FROM treatments JOIN professionals ON treatments.professional_id  =  professionals.professional_id
+
+index is 947
+SELECT T1.date_of_treatment ,  T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id  =  T2.professional_id
+What are the date and the operating professional's first name of each treatment?
+SQL correction:
+SELECT date_of_treatment ,  first_name FROM treatments JOIN professionals ON treatments.professional_id  =  professionals.professional_id
+original correction:
+SELECT date_of_treatment ,  first_name FROM treatments JOIN professionals ON treatments.professional_id  =  professionals.professional_id
+
+index is 948
+SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code
+List the cost of each treatment and the corresponding treatment type description.
+SQL correction:
+SELECT cost_of_treatment , treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code
+original correction:
+SELECT cost_of_treatment , treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code
+
+index is 949
+SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code
+What are the cost and treatment type description of each treatment?
+SQL correction:
+SELECT cost_of_treatment, treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code
+original correction:
+SELECT cost_of_treatment, treatment_type_description FROM treatments JOIN treatment_types ON treatments.treatment_type_code = treatment_types.treatment_type_code
+
+index is 950
+SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id
+List each owner's first name, last name, and the size of his for her dog.
+SQL correction:
+SELECT owners.first_name , owners.last_name , sizes.size_description FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN sizes ON dogs.size_code  =  sizes.size_code
+original correction:
+SELECT owners.first_name , owners.last_name , sizes.size_description FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN sizes ON dogs.size_code  =  sizes.size_code
+
+index is 951
+SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id
+What are each owner's first name, last name, and the size of their dog?
+SQL correction:
+SELECT owners.first_name ,  owners.last_name ,  sizes.size_description FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN sizes ON dogs.size_code  =  sizes.size_code
+original correction:
+SELECT owners.first_name ,  owners.last_name ,  sizes.size_description FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id JOIN sizes ON dogs.size_code  =  sizes.size_code
+
+index is 952
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id
+List pairs of the owner's first name and the dogs's name.
+SQL correction:
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id
+original correction:
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id
+
+index is 953
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id
+What are each owner's first name and their dogs's name?
+SQL correction:
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id
+original correction:
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id
+
+index is 954
+SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )
+List the names of the dogs of the rarest breed and the treatment dates of them.
+SQL correction:
+SELECT dogs.name ,  treatments.date_of_treatment FROM dogs JOIN treatments ON dogs.dog_id  =  treatments.dog_id WHERE dogs.breed_code  =  (SELECT breed_code FROM breeds WHERE breed_name  =  (SELECT breed_name FROM breeds GROUP BY breed_name HAVING count(*)  =  1))
+original correction:
+SELECT dogs.name ,  treatments.date_of_treatment FROM dogs JOIN treatments ON dogs.dog_id  =  treatments.dog_id WHERE dogs.breed_code  =  (SELECT breed_code FROM breeds WHERE breed_name  =  (SELECT breed_name FROM breeds GROUP BY breed_name HAVING count(*)  =  1))
+
+index is 955
+SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )
+Which dogs are of the rarest breed? Show their names and treatment dates.
+SQL correction:
+SELECT dogs.name , treatments.date_of_treatment FROM dogs JOIN treatments ON dogs.dog_id = treatments.dog_id JOIN breeds ON dogs.breed_code = breeds.breed_code WHERE breeds.breed_code = (SELECT breed_code FROM breeds ORDER BY breed_code LIMIT 1)
+original correction:
+SELECT dogs.name , treatments.date_of_treatment FROM dogs JOIN treatments ON dogs.dog_id = treatments.dog_id JOIN breeds ON dogs.breed_code = breeds.breed_code WHERE breeds.breed_code = (SELECT breed_code FROM breeds ORDER BY breed_code LIMIT 1)
+
+index is 956
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'
+Which dogs are owned by someone who lives in Virginia? List the owner's first name and the dog's name.
+SQL correction:
+SELECT owners.first_name ,  dogs.name FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id WHERE owners.state  =  'Virginia'
+entities correction:
+SELECT owners.first_name, dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id WHERE owners.state = 'Virginia'
+
+index is 957
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T1.state  =  'Virginia'
+Find the first names of owners living in Virginia and the names of dogs they own.
+SQL correction:
+SELECT owners.first_name , dogs.name FROM owners JOIN dogs ON owners.owner_id  =  dogs.owner_id WHERE owners.state  =  'Virginia'
+entities correction:
+SELECT owners.first_name, dogs.name FROM owners JOIN dogs ON owners.owner_id = dogs.owner_id WHERE owners.state = 'Virginia'
+
+index is 958
+SELECT DISTINCT T1.date_arrived ,  T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id
+What are the arriving date and the departing date of the dogs who have gone through a treatment?
+SQL correction:
+SELECT date_arrived ,  date_departed FROM dogs WHERE EXISTS (SELECT dog_id FROM treatments WHERE dogs.dog_id = treatments.dog_id)
+original correction:
+SELECT date_arrived ,  date_departed FROM dogs WHERE EXISTS (SELECT dog_id FROM treatments WHERE dogs.dog_id = treatments.dog_id)
+
+index is 959
+SELECT DISTINCT T1.date_arrived ,  T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id
+Find the arriving date and the departing date of the dogs that received a treatment.
+SQL correction:
+SELECT date_arrived ,  date_departed FROM dogs WHERE EXISTS (SELECT dog_id FROM treatments WHERE treatments.dog_id  =  dogs.dog_id)
+original correction:
+SELECT date_arrived ,  date_departed FROM dogs WHERE EXISTS (SELECT dog_id FROM treatments WHERE treatments.dog_id  =  dogs.dog_id)
+
+index is 960
+SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )
+List the last name of the owner owning the youngest dog.
+SQL correction:
+SELECT last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs WHERE age  =  (SELECT min(age) FROM dogs))
+original correction:
+SELECT last_name FROM owners WHERE owner_id  =  (SELECT owner_id FROM dogs WHERE age  =  (SELECT min(age) FROM dogs))
+
+index is 961
+SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )
+Who owns the youngest dog? Give me his or her last name.
+SQL correction:
+SELECT last_name FROM dogs JOIN owners ON dogs.owner_id = owners.owner_id ORDER BY dogs.date_of_birth LIMIT 1
+original correction:
+SELECT last_name FROM dogs JOIN owners ON dogs.owner_id = owners.owner_id ORDER BY dogs.date_of_birth LIMIT 1
+
+index is 962
+SELECT email_address FROM Professionals WHERE state  =  'Hawaii' OR state  =  'Wisconsin'
+List the emails of the professionals who live in the state of Hawaii or the state of Wisconsin.
+SQL correction:
+SELECT email_address FROM professionals WHERE state IN ('Hawaii', 'Wisconsin')
+entities correction:
+SELECT email_address FROM Professionals WHERE state IN ('Hawaii', 'Wisconsin')
+
+index is 963
+SELECT email_address FROM Professionals WHERE state  =  'Hawaii' OR state  =  'Wisconsin'
+What are the emails of the professionals living in either the state of Hawaii or the state of Wisconsin?
+SQL correction:
+SELECT email_address FROM professionals WHERE state  IN  ('Hawaii', 'Wisconsin')
+entities correction:
+SELECT email_address FROM Professionals WHERE state IN ('Hawaii', 'Wisconsin')
+
+index is 964
+SELECT date_arrived ,  date_departed FROM Dogs
+What are the arriving date and the departing date of all the dogs?
+SQL correction:
+SELECT date_arrived ,  date_departed FROM dogs
+original correction:
+SELECT date_arrived ,  date_departed FROM dogs
+
+index is 965
+SELECT date_arrived ,  date_departed FROM Dogs
+List the arrival date and the departure date for all the dogs.
+SQL correction:
+SELECT date_arrived ,  date_departed FROM dogs
+original correction:
+SELECT date_arrived ,  date_departed FROM dogs
+
+index is 966
+SELECT count(DISTINCT dog_id) FROM Treatments
+How many dogs went through any treatments?
+SQL correction:
+SELECT count(DISTINCT dog_id) FROM treatments
+original correction:
+SELECT count(DISTINCT dog_id) FROM treatments
+
+index is 967
+SELECT count(DISTINCT dog_id) FROM Treatments
+Count the number of dogs that went through a treatment.
+SQL correction:
+SELECT count(*) FROM treatments
+original correction:
+SELECT count(*) FROM treatments
+
+index is 968
+SELECT count(DISTINCT professional_id) FROM Treatments
+How many professionals have performed any treatment to dogs?
+SQL correction:
+SELECT COUNT(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+original correction:
+SELECT COUNT(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+
+index is 969
+SELECT count(DISTINCT professional_id) FROM Treatments
+Find the number of professionals who have ever treated dogs.
+SQL correction:
+SELECT COUNT(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+original correction:
+SELECT COUNT(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+
+index is 970
+SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'
+Which professionals live in a city containing the substring 'West'? List his or her role, street, city and state.
+SQL correction:
+SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'
+entities correction:
+SELECT role_code, street, city, state FROM Professionals WHERE city LIKE '%West%'
+
+index is 971
+SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'
+Find the role, street, city and state of the professionals living in a city that contains the substring 'West'.
+SQL correction:
+SELECT role_code ,  street ,  city ,  state FROM professionals WHERE city LIKE '%West%'
+entities correction:
+SELECT role_code, street, city, state FROM Professionals WHERE city LIKE '%West%';
+
+index is 972
+SELECT first_name ,  last_name ,  email_address FROM Owners WHERE state LIKE '%North%'
+Which owners live in the state whose name contains the substring 'North'? List his first name, last name and email.
+SQL correction:
+SELECT first_name ,  last_name ,  email_address FROM owners WHERE state LIKE '%North%'
+entities correction:
+SELECT first_name, last_name, email_address FROM Owners WHERE state LIKE '%North%';
+
+index is 973
+SELECT first_name ,  last_name ,  email_address FROM Owners WHERE state LIKE '%North%'
+Return the first name, last name and email of the owners living in a state whose name contains the substring 'North'.
+SQL correction:
+SELECT first_name ,  last_name ,  email_address FROM owners WHERE state LIKE '%North%'
+entities correction:
+SELECT first_name, last_name, email_address FROM Owners WHERE state LIKE '%North%'
+
+index is 974
+SELECT count(*) FROM Dogs WHERE age  <  ( SELECT avg(age) FROM Dogs )
+How many dogs have an age below the average?
+SQL correction:
+SELECT count(*) FROM dogs WHERE age < (SELECT avg(age) FROM dogs)
+original correction:
+SELECT count(*) FROM dogs WHERE age < (SELECT avg(age) FROM dogs)
+
+index is 975
+SELECT count(*) FROM Dogs WHERE age  <  ( SELECT avg(age) FROM Dogs )
+Count the number of dogs of an age below the average.
+SQL correction:
+SELECT count(dog_id) FROM dogs WHERE age  <  (SELECT AVG(age) FROM dogs)
+original correction:
+SELECT count(dog_id) FROM dogs WHERE age  <  (SELECT AVG(age) FROM dogs)
+
+index is 976
+SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1
+How much does the most recent treatment cost?
+SQL correction:
+SELECT MAX(cost_of_treatment) FROM treatments
+original correction:
+SELECT MAX(cost_of_treatment) FROM treatments
+
+index is 977
+SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1
+Show me the cost of the most recently performed treatment.
+SQL correction:
+SELECT cost_of_treatment FROM treatments ORDER BY date_of_treatment DESC LIMIT 1
+original correction:
+SELECT cost_of_treatment FROM treatments ORDER BY date_of_treatment DESC LIMIT 1
+
+index is 978
+SELECT count(*) FROM Dogs WHERE dog_id NOT IN ( SELECT dog_id FROM Treatments )
+How many dogs have not gone through any treatment?
+SQL correction:
+SELECT count(dog_id) FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments)
+original correction:
+SELECT count(dog_id) FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments)
+
+index is 979
+select count(*) from dogs where dog_id not in ( select dog_id from treatments )
+Tell me the number of dogs that have not received any treatment .
+SQL correction:
+SELECT count(dog_id) FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments)
+original correction:
+SELECT count(dog_id) FROM dogs WHERE dog_id NOT IN (SELECT dog_id FROM treatments)
+
+index is 980
+SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )
+How many owners temporarily do not have any dogs?
+SQL correction:
+SELECT count(*) FROM owners WHERE owner_id NOT IN (SELECT DISTINCT owner_id FROM dogs)
+original correction:
+SELECT count(*) FROM owners WHERE owner_id NOT IN (SELECT DISTINCT owner_id FROM dogs)
+
+index is 981
+SELECT count(*) FROM Owners WHERE owner_id NOT IN ( SELECT owner_id FROM Dogs )
+Find the number of owners who do not own any dogs at this moment.
+SQL correction:
+SELECT count(DISTINCT T1.owner_id) FROM owners AS T1 WHERE T1.owner_id NOT IN (SELECT owner_id FROM dogs)
+original correction:
+SELECT count(DISTINCT T1.owner_id) FROM owners AS T1 WHERE T1.owner_id NOT IN (SELECT owner_id FROM dogs)
+
+index is 982
+SELECT count(*) FROM Professionals WHERE professional_id NOT IN ( SELECT professional_id FROM Treatments )
+How many professionals did not operate any treatment on dogs?
+SQL correction:
+SELECT count(DISTINCT T1.professional_id) FROM professionals AS T1 WHERE T1.professional_id NOT IN (SELECT DISTINCT T2.professional_id FROM treatments AS T2)
+original correction:
+SELECT count(DISTINCT T1.professional_id) FROM professionals AS T1 WHERE T1.professional_id NOT IN (SELECT DISTINCT T2.professional_id FROM treatments AS T2)
+
+index is 983
+SELECT count(*) FROM Professionals WHERE professional_id NOT IN ( SELECT professional_id FROM Treatments )
+Find the number of professionals who have not treated any dogs.
+SQL correction:
+SELECT count(professional_id) FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+original correction:
+SELECT count(professional_id) FROM professionals WHERE professional_id NOT IN (SELECT professional_id FROM treatments)
+
+index is 984
+SELECT name ,  age ,  weight FROM Dogs WHERE abandoned_yn  =  1
+List the dog name, age and weight of the dogs who have been abandoned? 1 stands for yes, and 0 stands for no.
+SQL correction:
+SELECT name, age, weight FROM Dogs WHERE abandoned_yn = 1
+original correction:
+SELECT name, age, weight FROM Dogs WHERE abandoned_yn = 1
+
+index is 985
+SELECT name ,  age ,  weight FROM Dogs WHERE abandoned_yn  =  1
+What are the dog name, age and weight of the dogs that were abandoned? Note that 1 stands for yes, and 0 stands for no in the tables.
+SQL correction:
+SELECT name , age , weight FROM dogs WHERE abandoned_yn  =  1
+original correction:
+SELECT name , age , weight FROM dogs WHERE abandoned_yn  =  1
+
+index is 986
+SELECT avg(age) FROM Dogs
+What is the average age of all the dogs?
+SQL correction:
+SELECT avg(age) FROM dogs
+original correction:
+SELECT avg(age) FROM dogs
+
+index is 987
+SELECT avg(age) FROM Dogs
+Compute the average age of all the dogs.
+SQL correction:
+SELECT AVG(age) FROM dogs
+original correction:
+SELECT AVG(age) FROM dogs
+
+index is 988
+SELECT max(age) FROM Dogs
+What is the age of the oldest dog?
+SQL correction:
+SELECT max(age) FROM dogs
+original correction:
+SELECT max(age) FROM dogs
+
+index is 989
+SELECT max(age) FROM Dogs
+Tell me the age of the oldest dog.
+SQL correction:
+SELECT max(age) FROM dogs
+original correction:
+SELECT max(age) FROM dogs
+
+index is 990
+SELECT charge_type ,  charge_amount FROM Charges
+How much does each charge type costs? List both charge type and amount.
+SQL correction:
+SELECT charge_type ,  charge_amount FROM charges
+original correction:
+SELECT charge_type ,  charge_amount FROM charges
+
+index is 991
+SELECT charge_type ,  charge_amount FROM Charges
+List each charge type and its amount.
+SQL correction:
+SELECT charge_type ,  charge_amount FROM charges
+original correction:
+SELECT charge_type ,  charge_amount FROM charges
+
+index is 992
+SELECT max(charge_amount) FROM Charges
+How much does the most expensive charge type costs?
+SQL correction:
+SELECT max(charge_amount) FROM charges
+original correction:
+SELECT max(charge_amount) FROM charges
+
+index is 993
+SELECT max(charge_amount) FROM Charges
+What is the charge amount of the most expensive charge type?
+SQL correction:
+SELECT charge_amount FROM charges ORDER BY charge_amount DESC LIMIT 1
+original correction:
+SELECT charge_amount FROM charges ORDER BY charge_amount DESC LIMIT 1
+
+index is 994
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+List the email, cell phone and home phone of all the professionals.
+SQL correction:
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+original correction:
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+
+index is 995
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+What are the email, cell phone and home phone of each professional?
+SQL correction:
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+original correction:
+SELECT email_address ,  cell_number ,  home_phone FROM professionals
+
+index is 996
+SELECT DISTINCT breed_code ,  size_code FROM dogs
+What are all the possible breed type and size type combinations?
+SQL correction:
+SELECT breeds.breed_name , sizes.size_description FROM breeds , sizes
+original correction:
+SELECT breeds.breed_name , sizes.size_description FROM breeds , sizes
+
+index is 997
+SELECT DISTINCT breed_code ,  size_code FROM dogs
+Find the distinct breed type and size type combinations for dogs.
+SQL correction:
+SELECT DISTINCT breed_code ,  size_code FROM dogs
+original correction:
+SELECT DISTINCT breed_code ,  size_code FROM dogs
+
+index is 998
+SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code
+List the first name of all the professionals along with the description of the treatment they have done.
+SQL correction:
+SELECT professionals.first_name , treatment_types.treatment_type_description FROM professionals JOIN treatments ON professionals.professional_id = treatments.professional_id
+original correction:
+SELECT professionals.first_name , treatment_types.treatment_type_description FROM professionals JOIN treatments ON professionals.professional_id = treatments.professional_id
+
+index is 999
+SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code
+What are each professional's first name and description of the treatment they have performed?
+SQL correction:
+SELECT professionals.first_name , treatment_types.treatment_type_description FROM professionals JOIN treatments ON professionals.professional_id  =  treatments.professional_id
+original correction:
+SELECT professionals.first_name , treatment_types.treatment_type_description FROM professionals JOIN treatments ON professionals.professional_id  =  treatments.professional_id
+
+index is 1000
+SELECT count(*) FROM singer
+How many singers are there?
+SQL correction:
+SELECT count(*) FROM singer
+original correction:
+SELECT count(*) FROM singer
+
+index is 1001
+SELECT count(*) FROM singer
+What is the count of singers?
+SQL correction:
+SELECT count(*) FROM singer
+original correction:
+SELECT count(*) FROM singer
+
+index is 1002
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+List the name of singers in ascending order of net worth.
+SQL correction:
+SELECT name FROM singer ORDER BY net_worth_millions ASC
+original correction:
+SELECT name FROM singer ORDER BY net_worth_millions ASC
+
+index is 1003
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+What are the names of singers ordered by ascending net worth?
+SQL correction:
+SELECT name FROM singer ORDER BY net_worth_millions ASC
+original correction:
+SELECT name FROM singer ORDER BY net_worth_millions ASC
+
+index is 1004
+SELECT Birth_Year ,  Citizenship FROM singer
+What are the birth year and citizenship of singers?
+SQL correction:
+SELECT birth_year ,  citizenship FROM singer
+original correction:
+SELECT birth_year ,  citizenship FROM singer
+
+index is 1005
+SELECT Birth_Year ,  Citizenship FROM singer
+What are the birth years and citizenships of the singers?
+SQL correction:
+SELECT birth_year ,  citizenship FROM singer
+original correction:
+SELECT birth_year ,  citizenship FROM singer
+
+index is 1006
+SELECT Name FROM singer WHERE Citizenship != "France"
+List the name of singers whose citizenship is not "France".
+SQL correction:
+SELECT name FROM singer WHERE citizenship  <>  'France'
+entities correction:
+SELECT name FROM singer WHERE citizenship <> 'France'
+
+index is 1007
+SELECT Name FROM singer WHERE Citizenship != "France"
+What are the names of the singers who are not French citizens?
+SQL correction:
+SELECT name FROM singer WHERE citizenship != 'French'
+entities correction:
+SELECT name FROM singer WHERE citizenship <> 'France'
+
+index is 1008
+SELECT Name FROM singer WHERE Birth_Year  =  1948 OR Birth_Year  =  1949
+Show the name of singers whose birth year is either 1948 or 1949?
+SQL correction:
+SELECT DISTINCT name FROM singer WHERE birth_year = 1948 OR birth_year = 1949
+original correction:
+SELECT DISTINCT name FROM singer WHERE birth_year = 1948 OR birth_year = 1949
+
+index is 1009
+SELECT Name FROM singer WHERE Birth_Year  =  1948 OR Birth_Year  =  1949
+What are the names of the singers whose birth years are either 1948 or 1949?
+SQL correction:
+SELECT DISTINCT name FROM singer WHERE birth_year = 1948 OR birth_year = 1949
+original correction:
+SELECT DISTINCT name FROM singer WHERE birth_year = 1948 OR birth_year = 1949
+
+index is 1010
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+What is the name of the singer with the largest net worth?
+SQL correction:
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+original correction:
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+
+index is 1011
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+What is the name of the singer who is worth the most?
+SQL correction:
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+original correction:
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+
+index is 1012
+SELECT Citizenship ,  COUNT(*) FROM singer GROUP BY Citizenship
+Show different citizenship of singers and the number of singers of each citizenship.
+SQL correction:
+SELECT DISTINCT citizenship , COUNT(citizenship) FROM singer GROUP BY citizenship
+original correction:
+SELECT DISTINCT citizenship , COUNT(citizenship) FROM singer GROUP BY citizenship
+
+index is 1013
+SELECT Citizenship ,  COUNT(*) FROM singer GROUP BY Citizenship
+For each citizenship, how many singers are from that country?
+SQL correction:
+SELECT citizenship , count(*) FROM singer GROUP BY citizenship
+original correction:
+SELECT citizenship , count(*) FROM singer GROUP BY citizenship
+
+index is 1014
+SELECT Citizenship FROM singer GROUP BY Citizenship ORDER BY COUNT(*) DESC LIMIT 1
+Please show the most common citizenship of singers.
+SQL correction:
+SELECT citizenship ,  count(*) FROM singer GROUP BY citizenship ORDER BY count(*) DESC LIMIT 1
+original correction:
+SELECT citizenship ,  count(*) FROM singer GROUP BY citizenship ORDER BY count(*) DESC LIMIT 1
+
+index is 1015
+select citizenship from singer group by citizenship order by count(*) desc limit 1
+What is the most common singer citizenship ?
+SQL correction:
+SELECT citizenship FROM singer GROUP BY citizenship ORDER BY count(citizenship) DESC LIMIT 1
+original correction:
+SELECT citizenship FROM singer GROUP BY citizenship ORDER BY count(citizenship) DESC LIMIT 1
+
+index is 1016
+SELECT Citizenship ,  max(Net_Worth_Millions) FROM singer GROUP BY Citizenship
+Show different citizenships and the maximum net worth of singers of each citizenship.
+SQL correction:
+SELECT citizenship ,  MAX (net_worth_millions) FROM singer GROUP BY citizenship
+original correction:
+SELECT citizenship ,  MAX (net_worth_millions) FROM singer GROUP BY citizenship
+
+index is 1017
+SELECT Citizenship ,  max(Net_Worth_Millions) FROM singer GROUP BY Citizenship
+For each citizenship, what is the maximum net worth?
+SQL correction:
+SELECT citizenship ,  MAX(net_worth_millions) FROM singer GROUP BY citizenship
+original correction:
+SELECT citizenship ,  MAX(net_worth_millions) FROM singer GROUP BY citizenship
+
+index is 1018
+SELECT T2.Title ,  T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID
+Show titles of songs and names of singers.
+SQL correction:
+SELECT title ,  name FROM song JOIN singer ON song.singer_id  =  singer.singer_id
+original correction:
+SELECT title ,  name FROM song JOIN singer ON song.singer_id  =  singer.singer_id
+
+index is 1019
+SELECT T2.Title ,  T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID
+What are the song titles and singer names?
+SQL correction:
+SELECT title , name FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID
+original correction:
+SELECT title , name FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID
+
+index is 1020
+SELECT DISTINCT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID WHERE T2.Sales  >  300000
+Show distinct names of singers that have songs with sales more than 300000.
+SQL correction:
+SELECT DISTINCT name FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID WHERE sales > 300000
+original correction:
+SELECT DISTINCT name FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID WHERE sales > 300000
+
+index is 1021
+SELECT DISTINCT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID WHERE T2.Sales  >  300000
+what are the different names of the singers that have sales more than 300000?
+SQL correction:
+SELECT DISTINCT name FROM singer WHERE sales > 300000
+original correction:
+SELECT DISTINCT name FROM singer WHERE sales > 300000
+
+index is 1022
+SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name HAVING COUNT(*)  >  1
+Show the names of singers that have more than one song.
+SQL correction:
+SELECT name FROM singer GROUP BY name HAVING count(*)  >  1
+original correction:
+SELECT name FROM singer GROUP BY name HAVING count(*)  >  1
+
+index is 1023
+SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name HAVING COUNT(*)  >  1
+What are the names of the singers that have more than one songs?
+SQL correction:
+SELECT name FROM singer GROUP BY name HAVING count(*)  >  1
+original correction:
+SELECT name FROM singer GROUP BY name HAVING count(*)  >  1
+
+index is 1024
+SELECT T1.Name ,  sum(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name
+Show the names of singers and the total sales of their songs.
+SQL correction:
+SELECT singer.name , sum(song.sales) FROM singer JOIN song ON singer.singer_id = song.singer_id GROUP BY singer.name
+original correction:
+SELECT singer.name , sum(song.sales) FROM singer JOIN song ON singer.singer_id = song.singer_id GROUP BY singer.name
+
+index is 1025
+SELECT T1.Name ,  sum(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID GROUP BY T1.Name
+For each singer name, what is the total sales for their songs?
+SQL correction:
+SELECT singer.name , sum(song.sales) FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID GROUP BY singer.name
+original correction:
+SELECT singer.name , sum(song.sales) FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID GROUP BY singer.name
+
+index is 1026
+SELECT Name FROM singer WHERE Singer_ID NOT IN (SELECT Singer_ID FROM song)
+List the name of singers that do not have any song.
+SQL correction:
+SELECT name FROM singer WHERE singer_id NOT IN (SELECT singer_id FROM song)
+original correction:
+SELECT name FROM singer WHERE singer_id NOT IN (SELECT singer_id FROM song)
+
+index is 1027
+SELECT Name FROM singer WHERE Singer_ID NOT IN (SELECT Singer_ID FROM song)
+What is the sname of every sing that does not have any song?
+SQL correction:
+SELECT name FROM singer WHERE NOT EXISTS (SELECT * FROM song WHERE singer.Singer_ID = song.Singer_ID)
+original correction:
+SELECT name FROM singer WHERE NOT EXISTS (SELECT * FROM song WHERE singer.Singer_ID = song.Singer_ID)
+
+index is 1028
+SELECT Citizenship FROM singer WHERE Birth_Year  <  1945 INTERSECT SELECT Citizenship FROM singer WHERE Birth_Year  >  1955
+Show the citizenship shared by singers with birth year before 1945 and after 1955.
+SQL correction:
+SELECT DISTINCT citizenship FROM singer WHERE birth_year < 1945 AND birth_year > 1955
+original correction:
+SELECT DISTINCT citizenship FROM singer WHERE birth_year < 1945 AND birth_year > 1955
+
+index is 1029
+SELECT Citizenship FROM singer WHERE Birth_Year  <  1945 INTERSECT SELECT Citizenship FROM singer WHERE Birth_Year  >  1955
+What are the citizenships that are shared by singers with a birth year before 1945 and after 1955?
+SQL correction:
+SELECT DISTINCT citizenship FROM singer WHERE birth_year  <  1945 AND birth_year  >  1955
+original correction:
+SELECT DISTINCT citizenship FROM singer WHERE birth_year  <  1945 AND birth_year  >  1955
+
+index is 1030
+SELECT count(*) FROM Other_Available_Features
+How many available features are there in total?
+SQL correction:
+SELECT count(*) FROM other_available_features
+original correction:
+SELECT count(*) FROM other_available_features
+
+index is 1031
+SELECT T2.feature_type_name FROM Other_Available_Features AS T1 JOIN Ref_Feature_Types AS T2 ON T1.feature_type_code  =  T2.feature_type_code WHERE T1.feature_name  =  "AirCon"
+What is the feature type name of feature AirCon?
+SQL correction:
+SELECT feature_type_name FROM ref_feature_types WHERE feature_type_code  =  (SELECT feature_type_code FROM other_available_features WHERE feature_name  =  'AirCon')
+entities correction:
+SELECT feature_type_name  FROM ref_feature_types  WHERE feature_type_code = (SELECT feature_type_code                             FROM other_available_features                             WHERE feature_name = 'AirCon')
+
+index is 1032
+SELECT T2.property_type_description FROM Properties AS T1 JOIN Ref_Property_Types AS T2 ON T1.property_type_code  =  T2.property_type_code GROUP BY T1.property_type_code
+Show the property type descriptions of properties belonging to that code.
+SQL correction:
+SELECT property_type_description FROM ref_property_types WHERE property_type_code = (SELECT property_type_code FROM properties)
+original correction:
+SELECT property_type_description FROM ref_property_types WHERE property_type_code = (SELECT property_type_code FROM properties)
+
+index is 1033
+SELECT property_name FROM Properties WHERE property_type_code  =  "House" UNION SELECT property_name FROM Properties WHERE property_type_code  =  "Apartment" AND room_count  >  1
+What are the names of properties that are either houses or apartments with more than 1 room?
+SQL correction:
+SELECT property_name FROM properties WHERE (property_type_code = 'Apartment' OR property_type_code = 'House') AND room_count > 1
+entities correction:
+SELECT property_name  FROM Properties  WHERE (property_type_code = 'Apartment' OR property_type_code = 'House')  AND room_count > 1

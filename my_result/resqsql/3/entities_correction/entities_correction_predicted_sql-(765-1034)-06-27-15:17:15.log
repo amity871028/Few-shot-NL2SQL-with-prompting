@@ -1,0 +1,147 @@
+SELECT AVG(lifeexpectancy) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE countrylanguage.Language != 'English' AND countrylanguage.IsOfficial = 'F'
+SELECT SUM(population) FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language IN ('Dutch', 'Papiamento', 'Spanish', 'Balochi', 'Dari', 'Pashto', 'Turkmenian', 'Uzbek', 'Ambo'))
+SELECT sum(Population) FROM country WHERE Code NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language != 'English')
+SELECT language FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE country.HeadOfState = 'Beatrix' AND countrylanguage.IsOfficial = 'T'
+SELECT language FROM countrylanguage WHERE CountryCode = (   SELECT Code   FROM country   WHERE HeadOfState = 'Beatrix' ) AND IsOfficial = 'T'
+SELECT count(DISTINCT language) FROM countrylanguage JOIN country ON countrylanguage.countrycode = country.code WHERE country.indepyear < 1930
+SELECT count(DISTINCT language) FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE country.IndepYear < 1930
+SELECT name  FROM country  WHERE surfacearea > (   SELECT MAX(surfacearea)    FROM country    WHERE continent = 'Europe' )
+SELECT name FROM country WHERE SurfaceArea > (SELECT MAX(SurfaceArea) FROM country WHERE Continent = 'Europe')
+SELECT name FROM country WHERE continent = 'Africa' AND population < (SELECT MIN(population) FROM country WHERE continent = 'Asia')
+SELECT name FROM country WHERE continent = 'Africa' AND population < (SELECT MIN(population) FROM country WHERE continent = 'Asia')
+SELECT name  FROM country  WHERE continent = 'Asia'  AND population > (SELECT MAX(population) FROM country WHERE continent = 'Africa')
+SELECT name FROM country WHERE continent = 'Asia' AND population > (SELECT max(population) FROM country WHERE continent = 'Africa')
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE UPPER(language) = 'ENGLISH')
+SELECT code FROM country WHERE code NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English')
+SELECT DISTINCT CountryCode  FROM countrylanguage  WHERE Language != 'English'  AND CountryCode NOT IN (SELECT CountryCode FROM countrylanguage WHERE Language = 'English')
+SELECT countrycode FROM countrylanguage WHERE language != 'English'
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language <> 'English') AND governmentform NOT LIKE '%Republic%'
+SELECT code FROM country WHERE code NOT IN (SELECT countrycode FROM countrylanguage WHERE language = 'English') AND governmentform NOT LIKE '%Republic%'
+SELECT DISTINCT city.Name FROM city JOIN country ON city.CountryCode = country.Code JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE country.Continent = 'Europe' AND countrylanguage.Language <> 'English'
+SELECT city.Name FROM city JOIN country ON city.CountryCode = country.Code JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE country.Continent = 'Europe' AND countrylanguage.Language != 'English'
+SELECT DISTINCT Name  FROM city  WHERE CountryCode IN (     SELECT Code      FROM country      WHERE Continent = 'Asia'          AND Code IN (             SELECT CountryCode              FROM countrylanguage              WHERE Language = 'Chinese'                  AND IsOfficial = 'T'         ) )
+SELECT DISTINCT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.Continent = 'Asia'    AND countrylanguage.Language = 'Chinese'    AND countrylanguage.IsOfficial = 'T'
+SELECT name ,  indepyear ,  surfacearea FROM country WHERE population  =  (SELECT min(population) FROM country)
+SELECT name ,  indepyear ,  surfacearea FROM country WHERE population  =  (SELECT min(population) FROM country)
+SELECT population ,  name ,  headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+SELECT name ,  population ,  headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+SELECT country.name , count(DISTINCT countrylanguage.language) FROM country JOIN countrylanguage ON country.code = countrylanguage.countrycode GROUP BY country.name HAVING count(DISTINCT countrylanguage.language) >= 3
+HAVING count(DISTINCT countrylanguage.language) > 2
+SELECT district ,  count(*) FROM city WHERE population  >  (SELECT avg(population) FROM city) GROUP BY district
+SELECT district , count(name) FROM city GROUP BY district HAVING population  >  (SELECT avg(population) FROM city)
+SELECT governmentform , SUM(population) FROM country GROUP BY governmentform HAVING AVG(lifeexpectancy) > 72
+SELECT governmentform ,  SUM(population) FROM country WHERE lifeexpectancy > 72 GROUP BY governmentform
+SELECT continent , AVG(lifeexpectancy) , SUM(population) FROM country GROUP BY continent HAVING AVG(lifeexpectancy) < 72
+SELECT continent , SUM(population) , AVG(lifeexpectancy) FROM country GROUP BY continent HAVING AVG(lifeexpectancy) < 72
+SELECT name , surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+SELECT name ,  surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+SELECT name FROM country ORDER BY population DESC LIMIT 3
+SELECT name FROM country ORDER BY population DESC LIMIT 3
+SELECT name FROM country ORDER BY population ASC LIMIT 3
+SELECT name FROM country ORDER BY population ASC LIMIT 3
+SELECT count(DISTINCT Code) FROM country WHERE Continent = 'Asia'
+SELECT count(*) FROM country WHERE continent = 'Asia';
+SELECT name FROM country WHERE continent = 'Europe' AND population = 80000
+SELECT name  FROM country  WHERE continent = 'Europe' AND population = 80000
+SELECT sum(population), avg(surfacearea) FROM country WHERE continent = 'North America' AND surfacearea > 3000;
+SELECT 
+SELECT name FROM city WHERE population BETWEEN 160000 AND 900000
+SELECT name FROM city WHERE population BETWEEN 160000 AND 900000
+SELECT language FROM countrylanguage GROUP BY language ORDER BY count(countrycode) DESC LIMIT 1
+SELECT language FROM countrylanguage GROUP BY language ORDER BY count(*) DESC LIMIT 1
+SELECT T1.name ,  T2.language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.code  =  T2.countrycode WHERE T2.percentage  = (SELECT MAX(T3.percentage) FROM countrylanguage AS T3 WHERE T3.countrycode  =  T2.countrycode GROUP BY countrycode) GROUP BY T2.countrycode
+SELECT countrylanguage.countrycode ,  countrylanguage.language FROM countrylanguage GROUP BY countrylanguage.countrycode ORDER BY MAX(countrylanguage.percentage) DESC
+SELECT count(DISTINCT CountryCode) FROM countrylanguage WHERE Language = 'Spanish' AND Percentage = (SELECT MAX(Percentage) FROM countrylanguage WHERE Language = 'Spanish');
+SELECT count(DISTINCT CountryCode) FROM countrylanguage WHERE Language = 'Spanish' AND IsOfficial = 'T' AND Percentage > 50
+SELECT countrycode  FROM countrylanguage  WHERE language = 'Spanish'  AND percentage = (     SELECT max(percentage)      FROM countrylanguage      WHERE language = 'Spanish' ) ORDER BY percentage DESC LIMIT 1;
+SELECT countrycode FROM countrylanguage WHERE Language = 'Spanish' AND Percentage > 50
+SELECT count(Conductor_ID) FROM conductor
+SELECT count(conductor_id) FROM conductor
+SELECT name FROM conductor ORDER BY age ASC
+SELECT name FROM conductor ORDER BY age
+SELECT name FROM conductor WHERE nationality NOT IN ('USA')
+SELECT name FROM conductor WHERE nationality <> 'USA'
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+SELECT avg(attendance) FROM show
+SELECT avg(attendance) FROM show
+SELECT MAX(share), MIN(share) FROM performance WHERE type <> 'Live final'
+SELECT MAX(share), MIN(share) FROM performance WHERE type <> 'Live final'
+SELECT count(DISTINCT nationality) FROM conductor
+SELECT COUNT(DISTINCT nationality) FROM conductor
+SELECT name FROM conductor ORDER BY year_of_work DESC
+SELECT name FROM conductor ORDER BY year_of_work DESC
+SELECT name FROM conductor ORDER BY year_of_work DESC LIMIT 1
+SELECT name FROM conductor ORDER BY year_of_work DESC LIMIT 1
+SELECT conductor.name , orchestra.orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID
+SELECT conductor.name , orchestra.orchestra FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID
+SELECT name FROM conductor GROUP BY name HAVING count(orchestra_id) > 1
+SELECT name FROM conductor GROUP BY name HAVING count(*)  >  1
+SELECT name FROM conductor GROUP BY name ORDER BY count(orchestra_id) DESC LIMIT 1
+SELECT name FROM conductor GROUP BY name ORDER BY count(orchestra_id) DESC LIMIT 1
+SELECT name FROM conductor WHERE conductor_id IN (SELECT conductor_id FROM orchestra WHERE year_of_founded > 2008)
+SELECT DISTINCT T1.name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID WHERE T2.Year_of_Founded > 2008
+SELECT record_company ,  COUNT(orchestra_id) FROM orchestra GROUP BY record_company
+SELECT count(DISTINCT orchestra_id) , record_company FROM orchestra GROUP BY record_company
+SELECT major_record_format FROM orchestra GROUP BY major_record_format ORDER BY count(major_record_format) ASC
+SELECT major_record_format , COUNT(*) FROM orchestra GROUP BY major_record_format ORDER BY COUNT(*) DESC
+SELECT record_company FROM orchestra GROUP BY record_company ORDER BY count(orchestra_id) DESC LIMIT 1
+SELECT record_company FROM orchestra GROUP BY record_company ORDER BY count(*) DESC LIMIT 1
+SELECT DISTINCT orchestra FROM orchestra WHERE NOT EXISTS (SELECT * FROM performance WHERE orchestra.Orchestra_ID = performance.Orchestra_ID)
+SELECT DISTINCT orchestra FROM orchestra WHERE NOT EXISTS (SELECT * FROM performance WHERE orchestra.Orchestra_ID = performance.Orchestra_ID)
+SELECT DISTINCT record_company FROM orchestra WHERE year_of_founded < 2003 AND year_of_founded > 2003
+SELECT record_company FROM orchestra WHERE year_of_founded < 2003 AND year_of_founded > 2003 GROUP BY record_company
+SELECT COUNT(*) FROM orchestra WHERE major_record_format = 'CD' OR major_record_format = 'DVD'
+SELECT COUNT(DISTINCT Orchestra_ID) FROM orchestra WHERE major_record_format IN ('CD', 'DVD')
+SELECT year_of_founded FROM orchestra GROUP BY year_of_founded HAVING count(*)  >  1
+SELECT year_of_founded FROM orchestra GROUP BY year_of_founded HAVING count(*)  >  1
+SELECT count(id) FROM highschooler
+SELECT count(id) FROM highschooler
+SELECT name , grade FROM highschooler
+SELECT name , grade FROM highschooler
+SELECT grade FROM highschooler
+SELECT grade ,  name FROM highschooler
+SELECT grade FROM Highschooler WHERE name = 'Kyle'
+SELECT grade FROM Highschooler WHERE name = "Kyle"
+SELECT name FROM highschooler WHERE grade  =  10
+SELECT name FROM highschooler WHERE grade = 10
+SELECT ID FROM Highschooler WHERE name = 'Kyle'
+SELECT ID FROM Highschooler WHERE name = 'Kyle'
+SELECT count(id) FROM highschooler WHERE grade  =  9 OR grade  =  10
+SELECT count(id) FROM highschooler WHERE grade  =  9 OR grade  =  10
+SELECT grade ,  COUNT(*) FROM highschooler GROUP BY grade
+SELECT grade ,  COUNT(*) FROM highschooler GROUP BY grade
+SELECT grade FROM highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+SELECT grade FROM highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1
+SELECT DISTINCT grade FROM takes GROUP BY grade HAVING count(DISTINCT id) >= 4
+SELECT grade FROM highschooler GROUP BY grade HAVING count(*) >= 4
+SELECT student_id ,  COUNT(friend_id) FROM friend GROUP BY student_id
+SELECT T1.name ,  COUNT(T2.friend_id) FROM highschooler AS T1 JOIN friend AS T2 ON T1.id  =  T2.student_id GROUP BY T1.name
+SELECT highschooler.name , count(friend.friend_id) FROM highschooler JOIN friend ON highschooler.id = friend.student_id GROUP BY highschooler.name
+SELECT highschooler.name ,  count(friend.friend_id) FROM highschooler JOIN friend ON highschooler.id  =  friend.student_id GROUP BY highschooler.name
+SELECT name FROM highschooler ORDER BY (SELECT COUNT(friend_id) FROM friend WHERE friend.student_id  =  highschooler.id) DESC LIMIT 1
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+SELECT DISTINCT name FROM Highschooler GROUP BY name HAVING COUNT(friend_id) >= 3
+SELECT name FROM Highschooler GROUP BY name HAVING count(*)  >=  3
+SELECT T2.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.friend_id WHERE T1.name = 'Kyle'
+
+SELECT COUNT(friend.friend_id) FROM friend JOIN highschooler ON friend.student_id = highschooler.ID WHERE highschooler.name = 'Kyle'
+SELECT count(*) FROM Friend WHERE student_id = (SELECT ID FROM Highschooler WHERE name = 'Kyle')
+SELECT id FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+SELECT id FROM highschooler WHERE NOT EXISTS (SELECT * FROM friend WHERE highschooler.id  =  friend.student_id)
+SELECT name FROM highschooler WHERE NOT EXISTS (SELECT friend_id FROM friend WHERE student_id = highschooler.id)
+SELECT name FROM highschooler WHERE id NOT IN (SELECT student_id FROM friend)
+SELECT DISTINCT T1.id FROM highschooler AS T1 WHERE EXISTS (SELECT * FROM friend AS T2 WHERE T2.student_id = T1.id) AND EXISTS (SELECT * FROM likes AS T3 WHERE T3.student_id = T1.id)
+SELECT DISTINCT student_id FROM friend INNER JOIN likes ON friend.student_id = likes.student_id
+SELECT DISTINCT name FROM highschooler WHERE EXISTS (SELECT * FROM friend WHERE highschooler.id = friend.student_id) AND EXISTS (SELECT * FROM likes WHERE highschooler.id = likes.student_id)
+SELECT DISTINCT name FROM highschooler WHERE id IN (SELECT DISTINCT student_id FROM friend) AND id IN (SELECT DISTINCT student_id FROM likes)
+SELECT student_id , COUNT(*) FROM Likes GROUP BY student_id
+SELECT student_id ,  COUNT(*) FROM likes GROUP BY student_id
+SELECT highschooler.name, count(likes.liked_id) FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY highschooler.name
+SELECT highschooler.name , count(likes.liked_id) FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY highschooler.name
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+SELECT name FROM highschooler GROUP BY name ORDER BY count(*) DESC LIMIT 1
+SELECT name FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY name HAVING count(liked_id) >= 2
+SELECT name FROM highschooler JOIN likes ON highschooler.id = likes.student_id GROUP BY name HAVING count(liked_id) >= 2
+SELECT name FROM highschooler WHERE grade  >  5 AND (SELECT count(*) FROM friend WHERE friend.student_id  =  highschooler.id)  >=  2
+SELECT name FROM highschooler JOIN friend ON highschooler.id  =  friend.student_id WHERE grade > 5 GROUP BY name HAVING COUNT(DISTINCT friend.friend_id) >= 2

@@ -1,0 +1,192 @@
+
+index is 777, level is extra
+SELECT Name FROM country WHERE Continent  =  "Asia"  AND population  >  (SELECT min(population) FROM country WHERE Continent  =  "Africa")
+What are the Asian countries which have a population larger than that of any country in Africa?
+SQL generation:
+SELECT DISTINCT name FROM country WHERE continent = 'Asia' AND population > (SELECT MAX(population) FROM country WHERE continent = 'Africa')
+self correction:
+SELECT DISTINCT Name FROM country WHERE Continent = 'Asia' AND Population > (SELECT MAX(Population) FROM country WHERE Continent = 'Africa')
+
+index is 800, level is medium
+SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+What are the names and areas of countries with the top 5 largest area?
+SQL generation:
+SELECT name , surfacearea FROM country ORDER BY surfacearea DESC LIMIT 5
+self correction:
+SELECT Name , SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+
+index is 821, level is medium
+SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  "Spanish" GROUP BY CountryCode
+Return the codes of countries for which Spanish is the predominantly spoken language.
+SQL generation:
+SELECT countrycode FROM countrylanguage WHERE language = 'Spanish' AND percentage > 50
+self correction:
+SELECT CountryCode FROM countrylanguage WHERE Language = 'Spanish' AND Percentage > 50
+
+index is 829, level is easy
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+Return the record companies of orchestras, sorted descending by the years in which they were founded.
+SQL generation:
+SELECT record_company FROM orchestra ORDER BY year_of_founded DESC
+self correction:
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+
+index is 854, level is hard
+SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+List the names of orchestras that have no performance.
+SQL generation:
+SELECT orchestra FROM orchestra WHERE NOT EXISTS (SELECT orchestra_id FROM performance WHERE orchestra.orchestra_id = performance.orchestra_id)
+self correction:
+SELECT Orchestra FROM orchestra WHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance)
+
+index is 857, level is hard
+SELECT Record_Company FROM orchestra WHERE Year_of_Founded  <  2003 INTERSECT SELECT Record_Company FROM orchestra WHERE Year_of_Founded  >  2003
+What are the record companies that are used by both orchestras founded before 2003 and those founded after 2003?
+SQL generation:
+SELECT record_company FROM orchestra WHERE year_of_founded  <  2003 AND year_of_founded  >  2003 GROUP BY record_company
+self correction:
+SELECT Record_Company  FROM orchestra  WHERE Record_Company IN (     SELECT Record_Company      FROM orchestra      WHERE Year_of_Founded < 2003 ) AND Record_Company IN (     SELECT Record_Company      FROM orchestra      WHERE Year_of_Founded > 2003 ) GROUP BY Record_Company
+
+index is 887, level is extra
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+Return the name of the high school student with the most friends.
+SQL generation:
+SELECT T1.name FROM highschooler AS T1 JOIN friend AS T2 ON T1.id  =  T2.student_id GROUP BY T1.id ORDER BY count(T2.friend_id) DESC LIMIT 1
+self correction:
+SELECT T1.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id GROUP BY T1.name ORDER BY COUNT(T2.friend_id) DESC LIMIT 1
+
+index is 892, level is medium
+SELECT count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id WHERE T2.name  =  "Kyle"
+How many friends does the high school student Kyle have?
+SQL generation:
+SELECT count(friend_id) FROM Highschooler JOIN Friend ON Highschooler.ID = Friend.student_id WHERE Highschooler.name = 'Kyle'
+self correction:
+SELECT count(Friend.friend_id)  FROM Highschooler  JOIN Friend ON Highschooler.ID = Friend.student_id  WHERE Highschooler.name = 'Kyle'
+
+index is 894, level is hard
+SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend
+Show ids of all students who do not have any friends.
+SQL generation:
+SELECT id FROM highschooler WHERE NOT EXISTS (SELECT * FROM friend WHERE highschooler.id = friend.student_id)
+self correction:
+SELECT The given SQLite SQL query seems correct according to the given tables, columns, foreign keys, and primary keys. It returns the IDs of all students who do not have any friends.  The NOT EXISTS clause in the subquery checks if there are any records in the friend table where the ID of a student in the highschooler table matches the student_id in the friend table. If no records exist, it means that the student doesn't have any friends, and the ID of the student will be included in the result set.  Therefore, there is no need to modify the SQL query. Here is the fixed SQL query, which is same as the original one:  ```sql SELECT id FROM highschooler WHERE NOT EXISTS (SELECT * FROM friend WHERE highschooler.id = friend.student_id) ```
+
+index is 895, level is hard
+SELECT id FROM Highschooler EXCEPT SELECT student_id FROM Friend
+What are the ids of high school students who do not have friends?
+SQL generation:
+SELECT id FROM highschooler WHERE NOT EXISTS (SELECT student_id FROM friend WHERE friend.student_id  =  highschooler.id)
+self correction:
+SELECT ID FROM Highschooler WHERE ID NOT IN (SELECT student_id FROM Friend)
+
+index is 917, level is extra
+SELECT min(grade) FROM Highschooler WHERE id NOT IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)
+What is the lowest grade of students who do not have any friends?
+SQL generation:
+SELECT min(grade) FROM highschooler WHERE id NOT IN (SELECT DISTINCT student_id FROM friend)
+self correction:
+SELECT min(grade) FROM Highschooler WHERE ID NOT IN (SELECT DISTINCT student_id FROM Friend)
+
+index is 926, level is hard
+SELECT first_name FROM Professionals UNION SELECT first_name FROM Owners EXCEPT SELECT name FROM Dogs
+Which first names are used for professionals or owners but are not used as dog names?
+SQL generation:
+SELECT first_name FROM professionals WHERE first_name NOT IN (SELECT name FROM dogs) UNION SELECT first_name FROM owners WHERE first_name NOT IN (SELECT name FROM dogs)
+self correction:
+SELECT The given SQL query appears to be correctly formatted and does indeed answer the question. It first selects first names from the "professionals" table that are not found in the "dogs" table, and then does the same for the "owners" table. The use of the UNION operator ensures that only distinct names are returned.  Therefore, the fixed SQL query is the same as the provided one:  ```SQL SELECT first_name FROM Professionals WHERE first_name NOT IN (SELECT name FROM Dogs)  UNION  SELECT first_name FROM Owners WHERE first_name NOT IN (SELECT name FROM Dogs) ```
+
+index is 929, level is extra
+SELECT professional_id ,  role_code ,  email_address FROM Professionals EXCEPT SELECT T1.professional_id ,  T1.role_code ,  T1.email_address FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id
+Give me the id, role and email of the professionals who did not perform any treatment on dogs.
+SQL generation:
+SELECT professional_id , role_code , email_address FROM professionals WHERE NOT EXISTS (SELECT * FROM treatments WHERE treatments.professional_id  =  professionals.professional_id)
+self correction:
+SELECT professional_id , role_code , email_address  FROM Professionals  WHERE professional_id NOT IN (SELECT professional_id FROM Treatments);
+
+index is 930, level is extra
+SELECT T1.owner_id ,  T2.first_name ,  T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id  =  T2.owner_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1
+Which owner owns the most dogs? List the owner id, first name and last name.
+SQL generation:
+SELECT owner_id ,  first_name ,  last_name FROM owners GROUP BY owner_id, first_name, last_name ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT Dogs.owner_id, Owners.first_name, Owners.last_name  FROM Dogs  JOIN Owners ON Dogs.owner_id = Owners.owner_id  GROUP BY Dogs.owner_id  ORDER BY COUNT(*) DESC  LIMIT 1
+
+index is 938, level is extra
+SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1
+What is the description of the treatment type that costs the least money in total?
+SQL generation:
+SELECT treatment_type_description FROM treatment_types ORDER BY (SELECT SUM(cost_of_treatment) FROM treatments WHERE treatment_types.treatment_type_code = treatments.treatment_type_code) ASC LIMIT 1
+self correction:
+SELECT treatment_type_description FROM Treatment_Types  JOIN Treatments ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code  GROUP BY Treatment_Types.treatment_type_code  ORDER BY SUM(Treatments.cost_of_treatment) ASC  LIMIT 1
+
+index is 952, level is medium
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id
+List pairs of the owner's first name and the dogs's name.
+SQL generation:
+SELECT owners.first_name , dogs.name FROM owners , dogs WHERE owners.owner_id  =  dogs.owner_id
+self correction:
+SELECT Owners.first_name, Dogs.name FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id
+
+index is 955, level is extra
+SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )
+Which dogs are of the rarest breed? Show their names and treatment dates.
+SQL generation:
+SELECT dogs.name , treatments.date_of_treatment FROM dogs JOIN breeds ON dogs.breed_code = breeds.breed_code JOIN treatments ON dogs.dog_id = treatments.dog_id WHERE breeds.breed_code IN (SELECT breed_code FROM breeds GROUP BY breed_code HAVING COUNT(*) = (SELECT MIN(count(*)) FROM breeds)) GROUP BY dogs.name , treatments.date_of_treatment
+self correction:
+SELECT dogs.name , treatments.date_of_treatment  FROM Dogs  JOIN Breeds ON Dogs.breed_code = Breeds.breed_code  JOIN Treatments ON Dogs.dog_id = Treatments.dog_id  WHERE Breeds.breed_code IN (   SELECT breed_code    FROM Dogs    GROUP BY breed_code    HAVING COUNT(*) = (     SELECT MIN(breed_count)      FROM (       SELECT breed_code, COUNT(*) as breed_count        FROM Dogs        GROUP BY breed_code     )   ) )  GROUP BY Dogs.name, Treatments.date_of_treatment
+
+index is 968, level is easy
+SELECT count(DISTINCT professional_id) FROM Treatments
+How many professionals have performed any treatment to dogs?
+SQL generation:
+SELECT count(DISTINCT professional_id) FROM treatments WHERE professional_id IS NOT NULL
+self correction:
+SELECT count(DISTINCT Treatments.professional_id) FROM Treatments WHERE Treatments.professional_id IS NOT NULL
+
+index is 975, level is hard
+SELECT count(*) FROM Dogs WHERE age  <  ( SELECT avg(age) FROM Dogs )
+Count the number of dogs of an age below the average.
+SQL generation:
+SELECT count(*) FROM dogs WHERE age  <  (SELECT avg(age) FROM dogs)
+self correction:
+SELECT COUNT(*) FROM Dogs WHERE age  <  (SELECT AVG(age) FROM Dogs)
+
+index is 993, level is easy
+SELECT max(charge_amount) FROM Charges
+What is the charge amount of the most expensive charge type?
+SQL generation:
+SELECT charge_amount FROM charges ORDER BY charge_amount DESC LIMIT 1
+self correction:
+SELECT charge_amount FROM Charges ORDER BY charge_amount DESC LIMIT 1
+
+index is 1010, level is medium
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+What is the name of the singer with the largest net worth?
+SQL generation:
+SELECT name FROM singer ORDER BY net_worth_millions DESC LIMIT 1
+self correction:
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+
+index is 1015, level is hard
+select citizenship from singer group by citizenship order by count(*) desc limit 1
+What is the most common singer citizenship ?
+SQL generation:
+SELECT citizenship FROM singer GROUP BY citizenship ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT Citizenship FROM singer GROUP BY Citizenship ORDER BY count(*) DESC LIMIT 1
+
+index is 1028, level is hard
+SELECT Citizenship FROM singer WHERE Birth_Year  <  1945 INTERSECT SELECT Citizenship FROM singer WHERE Birth_Year  >  1955
+Show the citizenship shared by singers with birth year before 1945 and after 1955.
+SQL generation:
+SELECT DISTINCT citizenship FROM singer WHERE birth_year < 1945 OR birth_year > 1955
+self correction:
+SELECT DISTINCT citizenship FROM singer WHERE birth_year < 1945 OR birth_year > 1955
+
+index is 1032, level is medium
+SELECT T2.property_type_description FROM Properties AS T1 JOIN Ref_Property_Types AS T2 ON T1.property_type_code  =  T2.property_type_code GROUP BY T1.property_type_code
+Show the property type descriptions of properties belonging to that code.
+SQL generation:
+SELECT property_type_description FROM ref_property_types WHERE property_type_code  =  (SELECT property_type_code FROM properties)
+self correction:
+SELECT property_type_description  FROM Ref_Property_Types  WHERE property_type_code IN (SELECT DISTINCT property_type_code FROM Properties)

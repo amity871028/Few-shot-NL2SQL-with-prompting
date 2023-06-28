@@ -1,0 +1,406 @@
+
+index is 516
+select t2.department_name ,  t1.department_id from degree_programs as t1 join departments as t2 on t1.department_id  =  t2.department_id group by t1.department_id order by count(*) desc limit 1
+What is the name and id of the department with the most number of degrees ?
+SQL generation:
+SELECT T1.department_name ,  T1.department_id ,  count(T2.*) FROM departments AS T1 JOIN degree_programs AS T2 ON T1.department_id  =  T2.department_id GROUP BY T1.department_id ORDER BY count(T2.*) DESC LIMIT 1
+self correction:
+SELECT T1.department_name, T1.department_id, COUNT(T2.degree_program_id)  FROM Departments AS T1  JOIN Degree_Programs AS T2 ON T1.department_id = T2.department_id  GROUP BY T1.department_id, T1.department_name  ORDER BY COUNT(T2.degree_program_id) DESC  LIMIT 1
+
+index is 517
+SELECT count(DISTINCT department_id) FROM Degree_Programs
+How many departments offer any degree?
+SQL generation:
+SELECT COUNT (DISTINCT department_id) FROM Degree_Programs
+self correction:
+SELECT COUNT (DISTINCT department_id) FROM Degree_Programs
+
+index is 518
+SELECT count(DISTINCT department_id) FROM Degree_Programs
+How many different departments offer degrees?
+SQL generation:
+SELECT COUNT (DISTINCT department_id) FROM degree_programs
+self correction:
+SELECT COUNT(DISTINCT department_id) FROM Degree_Programs
+
+index is 519
+SELECT count(DISTINCT degree_summary_name) FROM Degree_Programs
+How many different degree names are offered?
+SQL generation:
+SELECT COUNT(DISTINCT degree_summary_name) FROM Degree_Programs
+self correction:
+SELECT COUNT(DISTINCT degree_summary_name) FROM Degree_Programs
+
+index is 520
+SELECT count(DISTINCT degree_summary_name) FROM Degree_Programs
+How many different degrees are offered?
+SQL generation:
+SELECT count(DISTINCT degree_program_id) FROM Degree_Programs
+self correction:
+SELECT count(DISTINCT degree_program_id) FROM Degree_Programs
+
+index is 521
+SELECT count(*) FROM Departments AS T1 JOIN Degree_Programs AS T2 ON T1.department_id  =  T2.department_id WHERE T1.department_name  =  'engineer'
+How many degrees does the engineering department offer?
+SQL generation:
+SELECT COUNT(degree_program_id) FROM Degree_Programs WHERE department_id IN (SELECT department_id FROM Departments WHERE department_name  =  'engineering')
+self correction:
+SELECT COUNT(Degree_Programs.degree_program_id)  FROM Degree_Programs  INNER JOIN Departments ON Degree_Programs.department_id = Departments.department_id WHERE Departments.department_name = 'engineering'
+
+index is 522
+SELECT count(*) FROM Departments AS T1 JOIN Degree_Programs AS T2 ON T1.department_id  =  T2.department_id WHERE T1.department_name  =  'engineer'
+How many degrees does the engineering department have?
+SQL generation:
+SELECT count(degree_program_id) FROM degree_programs WHERE department_id  =  (SELECT department_id FROM departments WHERE department_name  =  'engineering')
+self correction:
+SELECT count(Degree_Programs.degree_program_id)  FROM Degree_Programs  WHERE department_id = (SELECT department_id FROM Departments WHERE department_name = 'Engineering')
+
+index is 523
+SELECT section_name ,  section_description FROM Sections
+What are the names and descriptions of all the sections?
+SQL generation:
+SELECT section_name ,  section_description FROM sections
+self correction:
+SELECT section_name ,  section_description FROM Sections
+
+index is 524
+SELECT section_name ,  section_description FROM Sections
+What are the names and descriptions for all the sections?
+SQL generation:
+SELECT section_name, section_description FROM sections
+self correction:
+SELECT section_name, section_description FROM Sections
+
+index is 525
+SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(*)  <=  2
+What are the names and id of courses having at most 2 sections?
+SQL generation:
+SELECT T1.course_name ,  T1.course_id FROM courses AS T1 JOIN sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T2.course_id HAVING count(T2.section_id) <= 2
+self correction:
+SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(T2.section_id) <= 2
+
+index is 526
+SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(*)  <=  2
+What are the names and ids of every course with less than 2 sections?
+SQL generation:
+SELECT T1.course_name, T1.course_id, COUNT(T2.section_id) FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id = T2.course_id GROUP BY T1.course_id HAVING COUNT(T2.section_id) < 2
+self correction:
+SELECT T1.course_name, T1.course_id, COUNT(T2.section_id)  FROM Courses AS T1  JOIN Sections AS T2 ON T1.course_id = T2.course_id  GROUP BY T1.course_id, T1.course_name  HAVING COUNT(T2.section_id) < 2
+
+index is 527
+SELECT section_name FROM Sections ORDER BY section_name DESC
+List the section_name in reversed lexicographical order.
+SQL generation:
+SELECT section_name FROM sections ORDER BY section_name DESC
+self correction:
+SELECT section_name FROM Sections ORDER BY section_name DESC
+
+index is 528
+SELECT section_name FROM Sections ORDER BY section_name DESC
+What are the names of the sections in reverse alphabetical order?
+SQL generation:
+SELECT section_name FROM sections ORDER BY section_name DESC
+self correction:
+SELECT section_name FROM Sections ORDER BY section_name DESC
+
+index is 529
+SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1
+What is the semester which most student registered in? Show both the name and the id.
+SQL generation:
+SELECT T1.semester_name ,  T1.semester_id FROM semesters AS T1 JOIN student_enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T2.semester_id ORDER BY count(T2.student_id) DESC LIMIT 1
+self correction:
+SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T2.semester_id ORDER BY count(T2.student_id) DESC LIMIT 1
+
+index is 530
+SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1
+For each semester, what is the name and id of the one with the most students registered?
+SQL generation:
+SELECT T1.semester_id ,  T1.semester_name ,  COUNT (T2.student_id) FROM semesters AS T1 JOIN student_enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY COUNT(T2.student_id) DESC
+self correction:
+SELECT T1.semester_id ,  T1.semester_name ,  COUNT (DISTINCT T2.student_id) FROM semesters AS T1 JOIN student_enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id, T1.semester_name ORDER BY COUNT(DISTINCT T2.student_id) DESC LIMIT 1
+
+index is 531
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+What is the description of the department whose name has the substring the computer?
+SQL generation:
+SELECT department_description FROM departments WHERE department_name LIKE '%the computer%'
+self correction:
+SELECT department_description FROM Departments WHERE department_name LIKE '%the computer%'
+
+index is 532
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+What is the department description for the one whose name has the word computer?
+SQL generation:
+SELECT department_description FROM departments WHERE department_name LIKE '%computer%'
+self correction:
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+
+index is 533
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2
+Who are enrolled in 2 degree programs in one semester? List the first name, middle name and last name and the id.
+SQL generation:
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM students AS T1 JOIN student_enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ,  T2.semester_id HAVING count(T2.degree_program_id)  =  2
+self correction:
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ,  T2.semester_id HAVING count(DISTINCT T2.degree_program_id)  =  2
+
+index is 534
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2
+What are the first, middle, and last names, along with the ids, of all students who enrolled in 2 degree programs in one semester?
+SQL generation:
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM students AS T1 JOIN student_enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T2.student_id ,  T2.semester_id HAVING count(T2.degree_program_id) = 2
+self correction:
+SELECT T1.first_name, T1.middle_name, T1.last_name, T1.student_id  FROM Students AS T1  JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id  GROUP BY T1.student_id, T2.semester_id  HAVING COUNT(DISTINCT T2.degree_program_id) = 2
+
+index is 535
+SELECT DISTINCT T1.first_name ,  T1.middle_name ,  T1.last_name FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id JOIN Degree_Programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id WHERE T3.degree_summary_name  =  'Bachelor'
+Who is enrolled in a Bachelor degree program? List the first name, middle name, last name.
+SQL generation:
+SELECT T1.first_name, T1.middle_name, T1.last_name FROM students AS T1 JOIN student_enrolment AS T2 ON T1.student_id = T2.student_id JOIN degree_programs AS T3 ON T2.degree_program_id = T3.degree_program_id WHERE T3.degree_summary_name = 'Bachelor'
+self correction:
+SELECT T1.first_name, T1.middle_name, T1.last_name  FROM Students AS T1  JOIN Student_Enrolment AS T2  ON T1.student_id = T2.student_id  JOIN Degree_Programs AS T3  ON T2.degree_program_id = T3.degree_program_id  WHERE T3.degree_summary_name = 'Bachelor'
+
+index is 536
+SELECT DISTINCT T1.first_name ,  T1.middle_name ,  T1.last_name FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id JOIN Degree_Programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id WHERE T3.degree_summary_name  =  'Bachelor'
+What are the first, middle, and last names for everybody enrolled in a Bachelors program?
+SQL generation:
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name FROM students AS T1 JOIN student_enrolment AS T2 ON T1.student_id  =  T2.student_id JOIN degree_programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id WHERE T3.degree_summary_name  =  'Bachelors'
+self correction:
+SELECT T1.first_name ,  T1.middle_name ,  T1.last_name  FROM Students AS T1  JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id  JOIN Degree_Programs AS T3 ON T2.degree_program_id  =  T3.degree_program_id  WHERE T3.degree_summary_name  =  'Bachelors'   The original SQLite SQL QUERY is correct as per the provided tables, columns, foreign keys, and primary keys. It properly joins the relevant tables and filters for students in a 'Bachelors' degree program. It also correctly selects the first, middle, and last names of these students. Therefore, there is no need for any changes.
+
+index is 537
+SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1
+Find the kind of program which most number of students are enrolled in?
+SQL generation:
+SELECT T2.degree_summary_name FROM student_enrolment AS T1 JOIN degree_programs AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T2.degree_summary_name ORDER BY count(T1.degree_program_id) DESC LIMIT 1
+self correction:
+SELECT T2.degree_summary_name FROM Student_Enrolment AS T1 JOIN Degree_Programs AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T2.degree_summary_name ORDER BY count(T1.degree_program_id) DESC LIMIT 1
+
+index is 538
+SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1
+What is the degree summary name that has the most number of students enrolled?
+SQL generation:
+SELECT degree_summary_name FROM degree_programs JOIN student_enrolment ON degree_programs.degree_program_id = student_enrolment.degree_program_id GROUP BY degree_summary_name ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT degree_summary_name  FROM Degree_Programs  JOIN Student_Enrolment ON Degree_Programs.degree_program_id = Student_Enrolment.degree_program_id  GROUP BY degree_summary_name  ORDER BY count(*) DESC  LIMIT 1
+
+index is 539
+SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1
+Find the program which most number of students are enrolled in. List both the id and the summary.
+SQL generation:
+SELECT T2.degree_program_id, T2.degree_summary_name FROM student_enrolment AS T1 JOIN degree_programs AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY COUNT(*) DESC LIMIT 1
+self correction:
+SELECT T2.degree_program_id, T2.degree_summary_name  FROM Student_Enrolment AS T1  JOIN Degree_Programs AS T2  ON T1.degree_program_id = T2.degree_program_id  GROUP BY T1.degree_program_id  ORDER BY COUNT(*) DESC  LIMIT 1
+
+index is 540
+SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1
+What is the program id and the summary of the degree that has the most students enrolled?
+SQL generation:
+SELECT degree_program_id, degree_summary_name FROM degree_programs WHERE degree_program_id IN (SELECT degree_program_id FROM student_enrolment GROUP BY degree_program_id ORDER BY COUNT(student_id) DESC LIMIT 1)
+self correction:
+SELECT degree_program_id, degree_summary_name  FROM Degree_Programs  WHERE degree_program_id IN (     SELECT degree_program_id      FROM Student_Enrolment      GROUP BY degree_program_id      ORDER BY COUNT(*) DESC      LIMIT 1 )
+
+index is 541
+SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+Which student has enrolled for the most times in any program? List the id, first name, middle name, last name, the number of enrollments and student id.
+SQL generation:
+SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(T2.student_enrolment_id) FROM students AS T1 JOIN student_enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T2.student_id ORDER BY count(T2.student_enrolment_id) DESC LIMIT 1
+self correction:
+SELECT T1.student_id, T1.first_name, T1.middle_name, T1.last_name, COUNT(T2.student_enrolment_id) AS number_of_enrollments FROM Students AS T1  JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id  GROUP BY T1.student_id, T1.first_name, T1.middle_name, T1.last_name  ORDER BY number_of_enrollments DESC  LIMIT 1
+
+index is 542
+SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+What is the first, middle, and last name, along with the id and number of enrollments, for the student who enrolled the most in any program?
+SQL generation:
+SELECT T1.first_name, T1.middle_name, T1.last_name, T1.student_id, count(T2.student_id) FROM students AS T1 JOIN student_enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T2.student_id ORDER BY count(T2.student_id) DESC LIMIT 1
+self correction:
+SELECT T1.first_name, T1.middle_name, T1.last_name, T1.student_id, COUNT(T2.student_id) AS enrollments FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY enrollments DESC  LIMIT 1
+
+index is 543
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN( SELECT semester_id FROM Student_Enrolment )
+Which semesters do not have any student enrolled? List the semester name.
+SQL generation:
+SELECT semester_name FROM semesters WHERE semester_id NOT IN (SELECT semester_id FROM student_enrolment)
+self correction:
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN (SELECT semester_id FROM Student_Enrolment)
+
+index is 544
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN( SELECT semester_id FROM Student_Enrolment )
+What is the name of the semester with no students enrolled?
+SQL generation:
+SELECT semester_name FROM semesters WHERE semester_id NOT IN (SELECT semester_id FROM student_enrolment)
+self correction:
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN (SELECT semester_id FROM Student_Enrolment)
+
+index is 545
+SELECT DISTINCT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id
+What are all the course names of the courses which ever have students enrolled in?
+SQL generation:
+SELECT DISTINCT course_name FROM courses WHERE course_id IN (SELECT course_id FROM student_enrolment_courses)
+self correction:
+SELECT DISTINCT course_name FROM Courses WHERE course_id IN (SELECT course_id FROM Student_Enrolment_Courses)
+
+index is 546
+SELECT DISTINCT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id
+What are the names of all courses that have some students enrolled?
+SQL generation:
+SELECT DISTINCT course_name FROM Courses WHERE course_id IN (SELECT course_id FROM Student_Enrolment_Courses)
+self correction:
+SELECT DISTINCT course_name  FROM Courses  WHERE course_id IN (SELECT course_id FROM Student_Enrolment_Courses)
+
+index is 547
+SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1
+What's the name of the course with most number of enrollments?
+SQL generation:
+SELECT T2.course_name FROM student_enrolment_courses AS T1 JOIN courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id ORDER BY count(T1.student_course_id) DESC LIMIT 1
+self correction:
+SELECT T2.course_name  FROM Student_Enrolment_Courses AS T1  JOIN Courses AS T2  ON T1.course_id  =  T2.course_id  GROUP BY T1.course_id  ORDER BY COUNT(T1.student_course_id) DESC  LIMIT 1
+
+index is 548
+SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1
+What is the name of the course with the most students enrolled?
+SQL generation:
+SELECT T1.course_name FROM courses AS T1 JOIN student_enrolment_courses AS T2 ON T1.course_id = T2.course_id GROUP BY T2.course_id ORDER BY count(T2.student_enrolment_id) DESC LIMIT 1
+self correction:
+SELECT T1.course_name  FROM Courses AS T1  JOIN Student_Enrolment_Courses AS T2  ON T1.course_id = T2.course_id  GROUP BY T1.course_id  ORDER BY COUNT(T2.student_course_id) DESC  LIMIT 1
+
+index is 549
+SELECT T1.last_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'NorthCarolina' EXCEPT SELECT DISTINCT T3.last_name FROM Students AS T3 JOIN Student_Enrolment AS T4 ON T3.student_id  =  T4.student_id
+Find the last name of the students who currently live in the state of North Carolina but have not registered in any degree program.
+SQL generation:
+SELECT T1.last_name FROM students AS T1 JOIN addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'North Carolina' AND NOT EXISTS (SELECT * FROM student_enrolment AS T3 WHERE T1.student_id  =  T3.student_id)
+self correction:
+SELECT T1.last_name  FROM Students AS T1  JOIN Addresses AS T2  ON T1.current_address_id = T2.address_id  WHERE T2.state_province_county = 'North Carolina'  AND NOT EXISTS (     SELECT *      FROM Student_Enrolment AS T3      WHERE T1.student_id = T3.student_id )
+
+index is 550
+SELECT T1.last_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.current_address_id  =  T2.address_id WHERE T2.state_province_county  =  'NorthCarolina' EXCEPT SELECT DISTINCT T3.last_name FROM Students AS T3 JOIN Student_Enrolment AS T4 ON T3.student_id  =  T4.student_id
+What are the last name of the students who live in North Carolina but have not registered in any degree programs?
+SQL generation:
+SELECT T1.last_name FROM students AS T1 JOIN addresses AS T2 ON T1.current_address_id = T2.address_id WHERE T2.state_province_county  =  'North Carolina' AND NOT EXISTS ( SELECT * FROM student_enrolment AS T3 WHERE T1.student_id  =  T3.student_id )
+self correction:
+SELECT DISTINCT T1.last_name  FROM Students AS T1  JOIN Addresses AS T2  ON T1.current_address_id = T2.address_id  WHERE T2.state_province_county = 'North Carolina'  AND NOT EXISTS (      SELECT *      FROM Student_Enrolment AS T3      WHERE T1.student_id = T3.student_id  )
+
+index is 551
+SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*)  >=  2
+Show the date and id of the transcript with at least 2 course results.
+SQL generation:
+SELECT T1.transcript_date ,  T1.transcript_id FROM transcripts AS T1 JOIN transcript_contents AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING COUNT(T2.student_course_id) >= 2
+self correction:
+SELECT T1.transcript_date, T1.transcript_id  FROM Transcripts AS T1  JOIN Transcript_Contents AS T2  ON T1.transcript_id = T2.transcript_id  GROUP BY T1.transcript_id, T1.transcript_date  HAVING COUNT(T2.student_course_id) >= 2
+
+index is 552
+SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*)  >=  2
+What is the date and id of the transcript with at least 2 courses listed?
+SQL generation:
+SELECT T1.transcript_date ,  T1.transcript_id FROM transcripts AS T1 JOIN transcript_contents AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*) >= 2
+self correction:
+SELECT T1.transcript_date ,  T1.transcript_id FROM Transcripts AS T1 JOIN Transcript_Contents AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*) >= 2
+
+index is 553
+SELECT cell_mobile_number FROM Students WHERE first_name  =  'Timmothy' AND last_name  =  'Ward'
+What is the phone number of the man with the first name Timmothy and the last name Ward?
+SQL generation:
+SELECT cell_mobile_number FROM students WHERE first_name  =  'Timmothy' AND last_name  =  'Ward'
+self correction:
+SELECT cell_mobile_number FROM Students WHERE first_name  =  'Timmothy' AND last_name  =  'Ward'
+
+index is 554
+select cell_mobile_number from students where first_name  =  'timmothy' and last_name  =  'ward'
+What is the mobile phone number of the student named Timmothy Ward ?
+SQL generation:
+SELECT cell_mobile_number FROM students WHERE first_name = 'Timmothy' AND last_name = 'Ward'
+self correction:
+SELECT cell_mobile_number FROM Students WHERE first_name = 'Timmothy' AND last_name = 'Ward'
+
+index is 555
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+Who is the first student to register? List the first name, middle name and last name.
+SQL generation:
+SELECT first_name, middle_name, last_name FROM students ORDER BY date_first_registered ASC LIMIT 1
+self correction:
+SELECT first_name, middle_name, last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+
+index is 556
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+What is the first, middle, and last name of the first student to register?
+SQL generation:
+SELECT first_name ,  middle_name ,  last_name FROM students ORDER BY date_first_registered ASC LIMIT 1
+self correction:
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+
+index is 557
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1
+Who is the earliest graduate of the school? List the first name, middle name and last name.
+SQL generation:
+SELECT first_name , middle_name , last_name FROM students ORDER BY date_left ASC LIMIT 1
+self correction:
+SELECT first_name , middle_name , last_name FROM Students ORDER BY date_left ASC LIMIT 1
+
+index is 558
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1
+What is the first, middle, and last name of the earliest school graduate?
+SQL generation:
+SELECT first_name, middle_name, last_name FROM students ORDER BY date_left ASC LIMIT 1
+self correction:
+SELECT Students.first_name, Students.middle_name, Students.last_name FROM Students WHERE date_left IS NOT NULL ORDER BY date_left ASC LIMIT 1
+
+index is 559
+SELECT first_name FROM Students WHERE current_address_id != permanent_address_id
+Whose permanent address is different from his or her current address? List his or her first name.
+SQL generation:
+SELECT first_name FROM students WHERE permanent_address_id != current_address_id
+self correction:
+SELECT first_name FROM Students WHERE permanent_address_id != current_address_id
+
+index is 560
+SELECT first_name FROM Students WHERE current_address_id != permanent_address_id
+What is the first name of the student whose permanent address is different from his or her current one?
+SQL generation:
+SELECT first_name FROM students WHERE permanent_address_id != current_address_id
+self correction:
+SELECT first_name FROM Students WHERE permanent_address_id != current_address_id
+
+index is 561
+SELECT T1.address_id ,  T1.line_1 ,  T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1
+Which address holds the most number of students currently? List the address id and all lines.
+SQL generation:
+SELECT T2.address_id ,  T2.line_1 ,  T2.line_2 ,  T2.line_3 ,  count(T1.current_address_id) FROM students AS T1 JOIN addresses AS T2 ON T1.current_address_id  =  T2.address_id GROUP BY T2.address_id ,  T2.line_1 ,  T2.line_2 ,  T2.line_3 ORDER BY count(T1.current_address_id) DESC LIMIT 1
+self correction:
+SELECT T2.address_id, T2.line_1, T2.line_2, T2.line_3, count(T1.current_address_id) AS students_count  FROM Students AS T1  JOIN Addresses AS T2 ON T1.current_address_id = T2.address_id  GROUP BY T2.address_id  ORDER BY students_count DESC  LIMIT 1
+
+index is 562
+SELECT T1.address_id ,  T1.line_1 ,  T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1
+What is the id, line 1, and line 2 of the address with the most students?
+SQL generation:
+SELECT address_id ,  line_1 ,  line_2 FROM addresses WHERE address_id  =  (SELECT current_address_id FROM students GROUP BY current_address_id ORDER BY count(student_id) DESC LIMIT 1)
+self correction:
+SELECT address_id, line_1, line_2  FROM Addresses  WHERE address_id IN (   SELECT current_address_id    FROM Students    GROUP BY current_address_id    ORDER BY COUNT(student_id) DESC    LIMIT 1 )
+
+index is 563
+SELECT avg(transcript_date) FROM Transcripts
+On average, when were the transcripts printed?
+SQL generation:
+SELECT AVG (transcript_date) FROM transcripts
+self correction:
+SELECT AVG(transcript_date) FROM Transcripts
+
+index is 564
+SELECT avg(transcript_date) FROM Transcripts
+What is the average transcript date?
+SQL generation:
+SELECT AVG(transcript_date) FROM transcripts
+self correction:
+SELECT AVG(transcript_date) FROM Transcripts
+
+index is 565
+SELECT transcript_date ,  other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1
+When is the first transcript released? List the date and details.
+SQL generation:
+SELECT transcript_date, other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1
+self correction:
+SELECT transcript_date, other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1
+
+index is 566
+SELECT transcript_date ,  other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1
+What is the earliest date of a transcript release, and what details can you tell me?
+SQL generation:
+SELECT transcript_date ,  other_details FROM transcripts ORDER BY transcript_date ASC LIMIT 1

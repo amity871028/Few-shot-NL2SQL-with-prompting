@@ -1,0 +1,12 @@
+easy_to_easy: 426
+easy_to_non: 50
+easy_to_nested: 60
+easy_to_: 8
+non_to_easy: 74
+non_to_non: 188
+non_to_nested: 63
+non_to_: 6
+nested_to_easy: 18
+nested_to_non: 31
+nested_to_nested: 110
+nested_to_: 0

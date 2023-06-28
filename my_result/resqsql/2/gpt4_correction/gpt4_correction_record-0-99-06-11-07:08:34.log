@@ -1,0 +1,610 @@
+[154, 164, 192, 203, 205, 290, 306, 334, 398, 429, 445, 512, 560, 568, 580, 622, 685, 728, 733, 807, 812, 837, 866, 987, 1002]
+[16, 34, 82, 138, 209, 263, 266, 270, 299, 323, 336, 340, 354, 419, 468, 531, 553, 724, 840, 849, 858, 860, 957, 973, 1017]
+[53, 64, 83, 103, 256, 257, 346, 396, 410, 422, 423, 460, 595, 635, 676, 759, 773, 786, 787, 810, 814, 899, 900, 910, 919]
+[130, 166, 232, 277, 312, 344, 373, 452, 503, 529, 537, 542, 548, 637, 712, 743, 754, 755, 760, 785, 906, 907, 916, 941, 954]
+
+index is 16, level is medium
+select max(capacity), average from stadium
+What is the maximum capacity and the average of all stadiums ?
+SQL generation:
+SELECT MAX(capacity) , AVG(capacity) FROM stadium
+self correction:
+SELECT MAX(Capacity) , AVG(Capacity) FROM stadium
+
+index is 34, level is medium
+select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id
+What are the names , themes , and number of singers for every concert ?
+SQL generation:
+SELECT concert_name , theme , COUNT(singer_id) FROM concert JOIN singer_in_concert ON concert.concert_id = singer_in_concert.concert_id GROUP BY concert_name , theme
+self correction:
+SELECT concert.concert_Name , concert.Theme , COUNT(singer_in_concert.Singer_ID)  FROM concert  JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID  GROUP BY concert.concert_Name , concert.Theme
+
+index is 53, level is hard
+SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog'
+Find the number of dog pets that are raised by female students (with sex F).
+SQL generation:
+SELECT count(petid) FROM student JOIN has_pet ON student.StuID = has_pet.StuID JOIN pets ON has_pet.PetID = pets.PetID WHERE pet_type = 'dog' AND sex = 'F'
+self correction:
+SELECT count(Pets.PetID)  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.PetType = 'dog' AND Student.Sex = 'F'
+
+index is 64, level is hard
+SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'
+What are the ids of the students who do not own cats as pets?
+SQL generation:
+SELECT id FROM student WHERE id NOT IN (SELECT stuid FROM has_pet JOIN pets ON has_pet.petid = pets.petid WHERE pettype = 'cat')
+self correction:
+SELECT StuID FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE PetType = 'cat')
+
+index is 82, level is medium
+SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1
+What is the first name and gender of the all the students who have more than one pet?
+SQL generation:
+SELECT fname ,  sex FROM student JOIN has_pet ON student.stuid  =  has_pet.stuid GROUP BY student.fname, student.sex HAVING count(has_pet.*)  >  1
+self correction:
+SELECT Fname, Sex FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  GROUP BY Student.StuID  HAVING COUNT(Has_Pet.PetID) > 1
+
+index is 83, level is hard
+SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat'
+Find the last name of the student who has a cat that is age 3.
+SQL generation:
+SELECT lname FROM student JOIN has_pet ON student.StuID = has_pet.StuID JOIN pets ON has_pet.PetID = pets.PetID WHERE pets.PetType = 'cat' AND pets.pet_age = 3
+self correction:
+SELECT The given SQLite SQL query appears to be correct based on the provided schema and the requirement in the question. It is correctly joining the tables based on the provided foreign keys and filtering the result based on the pet type and pet age. Therefore, the fixed SQLite SQL query would be the same as the given query:  ```sql SELECT lname FROM student JOIN has_pet ON student.StuID = has_pet.StuID JOIN pets ON has_pet.PetID = pets.PetID WHERE pets.PetType = 'cat' AND pets.pet_age = 3 ```
+
+index is 103, level is hard
+SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.model  =  T2.model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.id WHERE T3.year  >  1980;
+Which distinct car models are the produced after 1980?
+SQL generation:
+SELECT DISTINCT model FROM car_names JOIN cars_data ON car_names.makeid = cars_data.id WHERE cars_data.year > 1980
+self correction:
+SELECT DISTINCT car_names.Model  FROM car_names  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year > 1980
+
+index is 130, level is extra
+SELECT T1.CountryName FROM COUNTRIES AS T1 JOIN CONTINENTS AS T2 ON T1.Continent  =  T2.ContId JOIN CAR_MAKERS AS T3 ON T1.CountryId  =  T3.Country WHERE T2.Continent  =  'europe' GROUP BY T1.CountryName HAVING count(*)  >=  3;
+What are the names of all European countries with at least 3 manufacturers?
+SQL generation:
+SELECT countryname FROM countries JOIN car_makers ON countries.countryid = car_makers.country WHERE countries.continent = 'Europe' GROUP BY countryname HAVING count(DISTINCT car_makers.id) >= 3
+self correction:
+SELECT countries.CountryName  FROM countries  JOIN car_makers  ON countries.CountryId = car_makers.Country  JOIN continents  ON countries.Continent = continents.ContId  WHERE continents.Continent = 'Europe'  GROUP BY countries.CountryName  HAVING COUNT(DISTINCT car_makers.Id) >= 3
+
+index is 138, level is medium
+SELECT avg(T2.edispl) FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T1.Model  =  'volvo';
+What is the average edispl for all volvos?
+SQL generation:
+SELECT AVG(edispl) FROM cars_data WHERE Id IN (SELECT MakeId FROM car_names WHERE Model = 'volvo')
+self correction:
+SELECT AVG(cars_data.Edispl)  FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  JOIN model_list ON car_names.Model = model_list.Model  JOIN car_makers ON model_list.Maker = car_makers.Id  WHERE car_makers.Maker = 'volvo'
+
+index is 154, level is easy
+select distinct year from cars_data where weight between 3000 and 4000;
+What are the different years in which there were cars produced that weighed less than 4000 and also cars that weighted more than 3000 ?
+SQL generation:
+SELECT DISTINCT year FROM cars_data WHERE (weight  <  4000 AND weight  >  3000)
+self correction:
+SELECT DISTINCT Year FROM cars_data WHERE (Weight  <  4000 AND Weight  >  3000)
+
+index is 164, level is easy
+SELECT COUNT(*) FROM CARS_DATA WHERE Cylinders  >  6;
+What is the number of carsw ith over 6 cylinders?
+SQL generation:
+SELECT count(*) FROM cars_data WHERE cylinders  >  6
+self correction:
+SELECT count(*) FROM cars_data WHERE Cylinders > 6
+
+index is 166, level is extra
+SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Cylinders  =  4 ORDER BY T2.horsepower DESC LIMIT 1;
+For all of the 4 cylinder cars, which model has the most horsepower?
+SQL generation:
+SELECT model FROM cars_data JOIN model_list ON cars_data.id = model_list.modelid WHERE cylinders = 4 AND horsepower = (SELECT max(horsepower) FROM cars_data WHERE cylinders = 4)
+self correction:
+SELECT car_names.Model FROM cars_data  JOIN car_names ON cars_data.Id = car_names.MakeId  WHERE cars_data.Cylinders = 4  AND cars_data.Horsepower = (     SELECT MAX(cars_data.Horsepower)      FROM cars_data      WHERE cars_data.Cylinders = 4 )
+
+index is 192, level is easy
+SELECT count(*) FROM FLIGHTS
+Return the number of flights.
+SQL generation:
+SELECT count(*) FROM flights
+self correction:
+SELECT count(*) FROM flights
+
+index is 203, level is easy
+SELECT count(*) FROM FLIGHTS WHERE SourceAirport  =  "APG"
+How many flights depart from 'APG'?
+SQL generation:
+SELECT count(*) FROM flights WHERE sourceairport = 'APG'
+self correction:
+SELECT count(*) FROM flights WHERE SourceAirport = 'APG'
+
+index is 205, level is easy
+SELECT count(*) FROM FLIGHTS WHERE DestAirport  =  "ATO"
+How many flights have destination ATO?
+SQL generation:
+SELECT COUNT(*) FROM flights WHERE destairport = 'ATO'
+self correction:
+SELECT COUNT(*) FROM flights WHERE DestAirport = 'ATO'
+
+index is 209, level is medium
+SELECT count(*) FROM FLIGHTS AS T1 JOIN AIRPORTS AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.City  =  "Aberdeen"
+How many flights arriving in Aberdeen city?
+SQL generation:
+SELECT count(*) FROM airports WHERE city = "Aberdeen"
+self correction:
+SELECT count(*)  FROM flights  JOIN airports  ON flights.DestAirport = airports.AirportCode  WHERE airports.City = "Aberdeen"
+
+index is 232, level is extra
+SELECT T1.Abbreviation ,  T1.Country FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) LIMIT 1
+What is the abbreviation of the airilne has the fewest flights and what country is it in?
+SQL generation:
+SELECT airlines.abbreviation , airlines.country FROM flights JOIN airlines ON flights.airline  =  airlines.uid GROUP BY airlines.abbreviation , airlines.country HAVING count(*)  =  (SELECT min(count(*)) FROM flights GROUP BY airline)
+self correction:
+SELECT The abbreviation of the airline with the fewest flights and the country it is in can be determined by the query. However, there is an issue in your original query where you are joining `flights` and `airlines` tables using `flights.airline` and `airlines.uid`, whereas based on the information provided, it seems that the common column should be `airline` in both tables.  Also, the subquery in the HAVING clause is used to get the airline with the minimum count of flights but it is missing a join with the airlines table, which is needed to connect the flights and airlines.  Here's how the corrected SQLite SQL QUERY might look:  ```sql SELECT airlines.Abbreviation, airlines.Country  FROM flights  JOIN airlines ON flights.Airline = airlines.Airline  GROUP BY airlines.Abbreviation, airlines.Country  HAVING COUNT(*) = (     SELECT MIN(flight_counts.count)     FROM (         SELECT flights.Airline, COUNT(*) as count          FROM flights          GROUP BY flights.Airline     ) as flight_counts ) ``` This query first groups the flights by airline and counts them. Then, it selects the airline with the minimum count. Finally, it joins with the airlines table to get the abbreviation and country of the airline with the minimum number of flights. Note that we are still grouping by two columns (`airlines.Abbreviation` and `airlines.Country`), since the question specifically asks for the airline abbreviation and country.
+
+index is 256, level is hard
+SELECT count(*) FROM Flights AS T1 JOIN Airports AS T2 ON T1.DestAirport  =  T2.AirportCode WHERE T2.city  =  "Aberdeen" OR T2.city  =  "Abilene"
+How many flights land in Aberdeen or Abilene?
+SQL generation:
+SELECT count(*) FROM flights WHERE destairport IN ('Aberdeen', 'Abilene')
+self correction:
+SELECT count(*) FROM flights WHERE DestAirport IN (SELECT AirportCode FROM airports WHERE City IN ('Aberdeen', 'Abilene'))
+
+index is 257, level is hard
+SELECT AirportName FROM Airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM Flights UNION SELECT DestAirport FROM Flights)
+Find the name of airports which do not have any flight in and out.
+SQL generation:
+SELECT airportname FROM airports WHERE airportcode NOT IN (SELECT sourceairport FROM flights UNION SELECT destairport FROM flights)
+self correction:
+SELECT AirportName FROM airports WHERE AirportCode NOT IN (SELECT SourceAirport FROM flights UNION SELECT DestAirport FROM flights)
+
+index is 263, level is medium
+SELECT count(*) ,  city FROM employee GROUP BY city
+What is the number of employees from each city?
+SQL generation:
+SELECT city ,  COUNT(employee_id) FROM employee GROUP BY city
+self correction:
+SELECT City, COUNT(Employee_ID) FROM employee GROUP BY City
+
+index is 266, level is medium
+SELECT city FROM employee WHERE age  <  30 GROUP BY city HAVING count(*)  >  1
+Find the cities that have more than one employee under age 30.
+SQL generation:
+SELECT city FROM employee GROUP BY city HAVING count(*)  >  1 AND age < 30
+self correction:
+SELECT City FROM employee WHERE Age < 30 GROUP BY City HAVING COUNT(Employee_ID) > 1
+
+index is 270, level is medium
+SELECT manager_name ,  district FROM shop ORDER BY number_products DESC LIMIT 1
+What are the manager name and district of the shop that sells the largest number of products?
+SQL generation:
+SELECT manager_name ,  district FROM shop WHERE number_products  =  (SELECT max(number_products) FROM shop)
+self correction:
+SELECT Manager_name, District FROM shop WHERE Number_products = (SELECT MAX(Number_products) FROM shop)
+
+index is 277, level is extra
+SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID GROUP BY t2.Employee_ID ORDER BY count(*) DESC LIMIT 1
+find the name of employee who was awarded the most times in the evaluation.
+SQL generation:
+SELECT name FROM employee ORDER BY (SELECT COUNT(*) FROM evaluation WHERE evaluation.employee_id = employee.employee_id) DESC LIMIT 1
+self correction:
+SELECT employee.Name  FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID GROUP BY employee.Name ORDER BY COUNT(evaluation.Employee_ID) DESC LIMIT 1
+
+index is 290, level is easy
+SELECT sum(bonus) FROM evaluation
+Find the total amount of bonus given in all the evaluations.
+SQL generation:
+SELECT sum(bonus) FROM evaluation
+self correction:
+SELECT sum(bonus) FROM evaluation
+
+index is 299, level is medium
+SELECT document_id ,  document_name ,  document_description FROM Documents
+List document IDs, document names, and document descriptions for all documents.
+SQL generation:
+SELECT document_id ,  document_name ,  document_description FROM documents
+self correction:
+SELECT Document_ID ,  Document_Name ,  Document_Description FROM Documents
+
+index is 306, level is easy
+SELECT count(DISTINCT template_id) FROM Documents
+Count the number of different templates used for documents.
+SQL generation:
+SELECT count(DISTINCT template_id) FROM Templates
+self correction:
+SELECT count(DISTINCT Documents.Template_ID) FROM Documents
+
+index is 312, level is extra
+SELECT T1.template_id ,  T2.Template_Type_Code FROM Documents AS T1 JOIN Templates AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_id ORDER BY count(*) DESC LIMIT 1
+Return the id and type code of the template that is used for the greatest number of documents.
+SQL generation:
+SELECT template_id ,  template_type_code FROM templates WHERE template_id  =  (SELECT template_id FROM documents GROUP BY template_id ORDER BY count(template_id) DESC LIMIT 1)
+self correction:
+SELECT T.Template_ID , T.Template_Type_Code  FROM Templates T  INNER JOIN Documents D ON D.Template_ID = T.Template_ID GROUP BY T.Template_ID, T.Template_Type_Code ORDER BY COUNT(D.Template_ID) DESC LIMIT 1
+
+index is 323, level is medium
+SELECT template_id FROM Templates WHERE template_type_code  =  "PP" OR template_type_code  =  "PPT"
+What are the ids of templates with template type code PP or PPT?
+SQL generation:
+SELECT template_id FROM templates WHERE template_type_code  =  'PP' OR template_type_code  =  'PPT'
+self correction:
+SELECT Template_ID FROM Templates WHERE Template_Type_Code  =  'PP' OR Template_Type_Code  =  'PPT'
+
+index is 334, level is easy
+SELECT template_type_code FROM Templates GROUP BY template_type_code HAVING count(*)  <  3
+What are the codes of template types that have fewer than 3 templates?
+SQL generation:
+SELECT template_type_code FROM templates GROUP BY template_type_code HAVING count(template_id)  <  3
+self correction:
+SELECT Template_Type_Code  FROM Templates  GROUP BY Template_Type_Code  HAVING COUNT(Template_ID) < 3
+
+index is 336, level is medium
+SELECT min(Version_Number) ,  template_type_code FROM Templates
+Return the lowest version number, along with its corresponding template type code.
+SQL generation:
+SELECT version_number ,  template_type_code FROM templates ORDER BY version_number LIMIT 1
+self correction:
+SELECT MIN(Templates.Version_Number) AS Lowest_Version_Number, Templates.Template_Type_Code FROM Templates INNER JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code GROUP BY Templates.Template_Type_Code ORDER BY Lowest_Version_Number ASC LIMIT 1
+
+index is 340, level is medium
+SELECT T2.document_name FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id WHERE T1.template_type_code  =  "BK"
+What are the names of documents that use templates with the code BK?
+SQL generation:
+SELECT document_name FROM documents WHERE template_id = (SELECT template_id FROM templates WHERE template_type_code = 'BK')
+self correction:
+SELECT D.Document_Name  FROM Documents D INNER JOIN Templates T  ON D.Template_ID = T.Template_ID WHERE T.Template_Type_Code = 'BK'
+
+index is 344, level is extra
+SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) DESC LIMIT 1
+Return the code of the template type that is most commonly used in documents.
+SQL generation:
+SELECT template_type_code FROM templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT T.Template_Type_Code FROM Templates T JOIN Documents D ON D.Template_ID = T.Template_ID GROUP BY T.Template_Type_Code ORDER BY COUNT(*) DESC LIMIT 1
+
+index is 346, level is hard
+SELECT template_type_code FROM Templates EXCEPT SELECT template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id
+What are the codes of template types that are not used for any document?
+SQL generation:
+SELECT template_type_code FROM ref_template_types WHERE template_type_code NOT IN (SELECT Template_ID FROM Documents)
+self correction:
+SELECT template_type_code  FROM Ref_Template_Types  WHERE template_type_code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID IN (SELECT Template_ID FROM Documents))
+
+index is 354, level is medium
+SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID
+Return the different descriptions for templates that have been used in a document.
+SQL generation:
+SELECT DISTINCT template_details FROM templates
+self correction:
+SELECT DISTINCT Ref_Template_Types.Template_Type_Description FROM Templates INNER JOIN Documents ON Templates.Template_ID = Documents.Template_ID INNER JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code
+
+index is 373, level is extra
+SELECT T1.document_id ,  T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1
+What is the document id and name with greatest number of paragraphs?
+SQL generation:
+SELECT document_id ,  document_name FROM documents JOIN paragraphs ON documents.document_id  =  paragraphs.document_id GROUP BY documents.document_id, documents.document_name ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT documents.Document_ID ,  documents.Document_Name FROM Documents JOIN Paragraphs ON Documents.Document_ID  =  Paragraphs.Document_ID GROUP BY Documents.Document_ID, Documents.Document_Name ORDER BY count(*) DESC LIMIT 1
+
+index is 396, level is hard
+SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1
+What is the most commmon hometowns for teachers?
+SQL generation:
+SELECT hometown FROM teacher GROUP BY hometown ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT Hometown, COUNT(*) AS frequency  FROM teacher  GROUP BY Hometown  ORDER BY frequency DESC  LIMIT 1
+
+index is 398, level is easy
+SELECT Hometown FROM teacher GROUP BY Hometown HAVING COUNT(*)  >=  2
+What are the towns from which at least two teachers come from?
+SQL generation:
+SELECT hometown FROM teacher GROUP BY hometown HAVING count(DISTINCT teacher_id) >= 2
+self correction:
+SELECT Hometown FROM teacher GROUP BY Hometown HAVING COUNT(DISTINCT Teacher_ID) >= 2
+
+index is 410, level is hard
+SELECT Name FROM teacher WHERE Teacher_id NOT IN (SELECT Teacher_id FROM course_arrange)
+What are the names of the teachers whose courses have not been arranged?
+SQL generation:
+SELECT name FROM teacher WHERE teacher_id NOT IN (SELECT teacher_id FROM course_arrange)
+self correction:
+SELECT Name FROM teacher WHERE Teacher_ID NOT IN (SELECT Teacher_ID FROM course_arrange)
+
+index is 419, level is medium
+SELECT t1.id ,  t1.name ,  t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id GROUP BY t1.id HAVING count(*)  >  1
+find the id, name and age for visitors who visited some museums more than once.
+SQL generation:
+SELECT id , name , age FROM visitor GROUP BY id , name , age HAVING count(*)  >  1
+self correction:
+SELECT visitor.ID, visitor.Name, visitor.Age  FROM visitor  JOIN visit  ON visitor.ID = visit.visitor_ID  GROUP BY visitor.ID  HAVING COUNT(visit.Museum_ID) > 1
+
+index is 422, level is hard
+SELECT name FROM museum WHERE Museum_ID NOT IN (SELECT museum_id FROM visit)
+What is the name of the museum that had no visitor yet?
+SQL generation:
+SELECT name FROM museum WHERE NOT EXISTS (SELECT * FROM visit WHERE museum.Museum_ID = visit.Museum_ID)
+self correction:
+SELECT Name FROM museum WHERE NOT EXISTS (SELECT * FROM visit WHERE museum.Museum_ID = visit.Museum_ID)
+
+index is 423, level is hard
+SELECT t1.name ,  t1.age FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id ORDER BY t2.num_of_ticket DESC LIMIT 1
+Find the name and age of the visitor who bought the most tickets at once.
+SQL generation:
+SELECT name ,  age FROM visitor ORDER BY num_of_ticket DESC LIMIT 1
+self correction:
+SELECT visitor.Name, visitor.Age FROM visitor JOIN visit ON visitor.ID = visit.visitor_ID ORDER BY visit.Num_of_Ticket DESC LIMIT 1
+
+index is 429, level is easy
+SELECT count(*) FROM players
+Find the total number of players.
+SQL generation:
+SELECT count(*) FROM players
+self correction:
+SELECT count(DISTINCT player_id) FROM players
+
+index is 445, level is easy
+SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*)  >  10
+Find the name of tourney that has more than 10 matches.
+SQL generation:
+SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(match_num)  >  10
+self correction:
+SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(match_num) > 10
+
+index is 452, level is extra
+SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'WTA Championships' INTERSECT SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id WHERE T2.tourney_name  =  'Australian Open'
+What are the first names and country codes for players who won both the WTA Championships and the Australian Open?
+SQL generation:
+SELECT first_name ,  country_code FROM players WHERE player_id IN (SELECT winner_id FROM matches WHERE tourney_name = 'Australian Open') AND player_id IN (SELECT winner_id FROM matches WHERE tourney_name = 'WTA Championships')
+self correction:
+SELECT DISTINCT p.first_name, p.country_code  FROM players p INNER JOIN matches m1 ON p.player_id = m1.winner_id  INNER JOIN matches m2 ON p.player_id = m2.winner_id WHERE m1.tourney_name = 'Australian Open' AND m2.tourney_name = 'WTA Championships'
+
+index is 460, level is hard
+SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id ORDER BY T2.tours DESC LIMIT 1
+What is the first name and country code of the player with the most tours?
+SQL generation:
+SELECT first_name ,  country_code FROM players ORDER BY tours DESC LIMIT 1
+self correction:
+SELECT first_name, country_code  FROM players  INNER JOIN rankings  ON players.player_id = rankings.player_id  ORDER BY rankings.tours DESC  LIMIT 1
+
+index is 468, level is medium
+SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1
+What are the names of the winner and loser who played in the longest match?
+SQL generation:
+SELECT winner_name ,  loser_name FROM matches WHERE minutes  =  (SELECT max(minutes) FROM matches)
+self correction:
+SELECT The provided SQL query looks correct as it selects the names of the winner and loser who played the longest match in terms of minutes. Here, it assumes that there's only one match with the maximum minutes. If there's a possibility of multiple matches having the same maximum minutes, you should use `IN` instead of `=`.  However, considering the foreign keys and primary keys provided, if you want to get the information from the 'players' table instead of the 'matches' table, then we need to modify the query to join the tables. Here's how you can do it:  ```sql SELECT win.first_name || ' ' || win.last_name AS winner_name, lose.first_name || ' ' || lose.last_name AS loser_name FROM matches JOIN players AS win ON matches.winner_id = win.player_id JOIN players AS lose ON matches.loser_id = lose.player_id WHERE minutes  =  (SELECT max(minutes) FROM matches) ```  This query will return the full names of the winner and loser (by joining their first name and last name) who played the longest match. It joins the 'matches' table with the 'players' table twice, once for the winner and once for the loser. The `||` operator is used to concatenate the first name and the last name.
+
+index is 503, level is extra
+SELECT count(*) FROM battle WHERE id NOT IN ( SELECT lost_in_battle FROM ship WHERE tonnage  =  '225' );
+How many battles did not lose any ship with tonnage '225'?
+SQL generation:
+SELECT count(*) FROM battle WHERE result = 'victory' AND id NOT IN (SELECT lost_in_battle FROM ship WHERE tonnage = '225')
+self correction:
+SELECT count(*) FROM battle WHERE id NOT IN (SELECT lost_in_battle FROM ship WHERE tonnage = 225)
+
+index is 512, level is easy
+SELECT course_description FROM Courses WHERE course_name  =  'math'
+What are the descriptions for all the math courses?
+SQL generation:
+SELECT course_description FROM courses WHERE course_name = 'math'
+self correction:
+SELECT course_description FROM Courses WHERE course_name LIKE '%math%'
+
+index is 529, level is extra
+SELECT T1.semester_name ,  T1.semester_id FROM Semesters AS T1 JOIN Student_Enrolment AS T2 ON T1.semester_id  =  T2.semester_id GROUP BY T1.semester_id ORDER BY count(*) DESC LIMIT 1
+What is the semester which most student registered in? Show both the name and the id.
+SQL generation:
+SELECT semester_name, semester_id FROM semesters JOIN student_enrolment ON semesters.semester_id = student_enrolment.semester_id GROUP BY semester_name, semester_id ORDER BY count(student_enrolment.student_enrolment_id) DESC LIMIT 1
+self correction:
+SELECT Semesters.semester_name, Semesters.semester_id  FROM Semesters  JOIN Student_Enrolment ON Semesters.semester_id = Student_Enrolment.semester_id  GROUP BY Semesters.semester_id  ORDER BY COUNT(Student_Enrolment.student_id) DESC  LIMIT 1
+
+index is 531, level is medium
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+What is the description of the department whose name has the substring the computer?
+SQL generation:
+SELECT department_description FROM departments WHERE department_name LIKE '%computer%'
+self correction:
+SELECT department_description FROM Departments WHERE department_name LIKE '%computer%'
+
+index is 537, level is extra
+SELECT T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_summary_name ORDER BY count(*) DESC LIMIT 1
+Find the kind of program which most number of students are enrolled in?
+SQL generation:
+SELECT degree_summary_name FROM degree_programs JOIN student_enrolment ON student_enrolment.degree_program_id = degree_programs.degree_program_id GROUP BY degree_summary_name ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT The provided SQL query appears to be correctly written based on the instructions given. It correctly joins the `Degree_Programs` and `Student_Enrolment` tables on the `degree_program_id` field, groups by the `degree_summary_name` (the name of the program), and orders by the count of each `degree_summary_name` in descending order. This allows the query to find the degree program with the most students enrolled. The `LIMIT 1` at the end ensures that only the most popular program is returned. Therefore, the fixed SQL query remains the same as the original:  ```sql SELECT degree_summary_name  FROM Degree_Programs  JOIN Student_Enrolment  ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id  GROUP BY degree_summary_name  ORDER BY count(*) DESC  LIMIT 1 ```
+
+index is 542, level is extra
+SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1
+What is the first, middle, and last name, along with the id and number of enrollments, for the student who enrolled the most in any program?
+SQL generation:
+SELECT first_name, middle_name, last_name, student_id, count(student_enrolment_id) FROM students JOIN student_enrolment ON students.student_id = student_enrolment.student_id GROUP BY students.student_id ORDER BY count(student_enrolment_id) DESC LIMIT 1
+self correction:
+SELECT first_name, middle_name, last_name, student_id, count(student_enrolment_id) AS num_enrollments FROM Students JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id GROUP BY Students.student_id ORDER BY num_enrollments DESC LIMIT 1
+
+index is 548, level is extra
+SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1
+What is the name of the course with the most students enrolled?
+SQL generation:
+SELECT course_name FROM courses JOIN student_enrolment_courses ON courses.course_id = student_enrolment_courses.course_id GROUP BY course_name ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT course_name  FROM Courses  JOIN Student_Enrolment_Courses  ON Courses.course_id = Student_Enrolment_Courses.course_id  GROUP BY course_name  ORDER BY COUNT(*) DESC  LIMIT 1
+
+index is 553, level is medium
+SELECT cell_mobile_number FROM Students WHERE first_name  =  'Timmothy' AND last_name  =  'Ward'
+What is the phone number of the man with the first name Timmothy and the last name Ward?
+SQL generation:
+SELECT cell_mobile_number FROM students WHERE first_name = 'Timmothy' AND last_name = 'Ward'
+self correction:
+SELECT cell_mobile_number FROM Students WHERE first_name = 'Timmothy' AND last_name = 'Ward'
+
+index is 560, level is easy
+SELECT first_name FROM Students WHERE current_address_id != permanent_address_id
+What is the first name of the student whose permanent address is different from his or her current one?
+SQL generation:
+SELECT first_name FROM students WHERE permanent_address_id != current_address_id
+self correction:
+SELECT first_name FROM Students WHERE permanent_address_id != current_address_id
+
+index is 568, level is easy
+SELECT count(*) FROM Transcripts
+How many transcripts are listed?
+SQL generation:
+SELECT count(*) FROM transcripts
+self correction:
+SELECT count(*) FROM Transcripts
+
+index is 580, level is easy
+SELECT other_student_details FROM Students ORDER BY other_student_details DESC
+What other details can you tell me about students in reverse alphabetical order?
+SQL generation:
+SELECT * FROM students ORDER BY last_name DESC
+self correction:
+SELECT * FROM Students ORDER BY last_name DESC
+
+index is 595, level is hard
+SELECT Country ,  count(*) FROM TV_Channel GROUP BY Country ORDER BY count(*) DESC LIMIT 1;
+Which country has the most of TV Channels? List the country and number of TV Channels it has.
+SQL generation:
+SELECT country ,  count(*) FROM tv_channel GROUP BY country ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT Country ,  COUNT(*) FROM TV_Channel GROUP BY Country ORDER BY COUNT(*) DESC LIMIT 1
+
+index is 622, level is easy
+SELECT Weekly_Rank FROM TV_series WHERE Episode = "A Love of a Lifetime";
+What is the weekly rank for the episode "A Love of a Lifetime"?
+SQL generation:
+SELECT weekly_rank FROM tv_series WHERE episode = "A Love of a Lifetime"
+self correction:
+SELECT Weekly_Rank FROM TV_series WHERE Episode = "A Love of a Lifetime"
+
+index is 635, level is hard
+SELECT country FROM TV_Channel EXCEPT SELECT T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.written_by  =  'Todd Casey'
+which countries' tv channels are not playing any cartoon written by Todd Casey?
+SQL generation:
+SELECT DISTINCT country FROM tv_channel WHERE id NOT IN (SELECT channel FROM cartoon WHERE written_by = 'Todd Casey')
+self correction:
+SELECT DISTINCT Country FROM TV_Channel  WHERE id NOT IN      (SELECT Channel FROM Cartoon WHERE Written_by = 'Todd Casey')
+
+index is 637, level is extra
+SELECT T1.series_name ,  T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by  =  'Michael Chang' INTERSECT SELECT T1.series_name ,  T1.country FROM TV_Channel AS T1 JOIN cartoon AS T2 ON T1.id = T2.Channel WHERE T2.directed_by  =  'Ben Jones'
+Find the series name and country of the tv channel that is playing some cartoons directed by Ben Jones and Michael Chang?
+SQL generation:
+SELECT series_name ,  country FROM TV_Channel JOIN Cartoon ON TV_Channel.id = Cartoon.Channel WHERE Cartoon.Directed_by  =  'Ben Jones' AND Cartoon.Directed_by  =  'Michael Chang' GROUP BY series_name ,  country
+self correction:
+SELECT series_name, country  FROM TV_Channel  JOIN Cartoon ON TV_Channel.id = Cartoon.Channel  WHERE Cartoon.Directed_by IN ('Ben Jones', 'Michael Chang')  GROUP BY series_name, country
+
+index is 676, level is hard
+SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1
+Give the nationality that is most common across all people.
+SQL generation:
+SELECT nationality FROM people GROUP BY nationality ORDER BY count(*) DESC LIMIT 1
+self correction:
+SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1
+
+index is 685, level is easy
+SELECT count(DISTINCT Nationality) FROM people
+How many distinct nationalities are there?
+SQL generation:
+SELECT COUNT(DISTINCT nationality) FROM people
+self correction:
+SELECT COUNT(DISTINCT nationality) FROM people
+
+index is 712, level is extra
+SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.Name  =  "Aruba" ORDER BY Percentage DESC LIMIT 1
+Which language is the most popular in Aruba?
+SQL generation:
+SELECT language FROM countrylanguage WHERE countrycode = (SELECT code FROM country WHERE name = 'Aruba') AND percentage = (SELECT max(percentage) FROM countrylanguage WHERE countrycode = (SELECT code FROM country WHERE name = 'Aruba'))
+self correction:
+SELECT Language  FROM countrylanguage  WHERE CountryCode = (SELECT Code FROM country WHERE Name = 'Aruba')  AND Percentage = (     SELECT MAX(Percentage)      FROM countrylanguage      WHERE CountryCode = (SELECT Code FROM country WHERE Name = 'Aruba') )
+
+index is 724, level is medium
+SELECT avg(LifeExpectancy) FROM country WHERE Continent  =  "Africa" AND GovernmentForm  =  "Republic"
+What is the average life expectancy in African countries that are republics?
+SQL generation:
+SELECT avg(lifeexpectancy) FROM country WHERE governmentform = 'Republic' AND continent = 'Africa'
+self correction:
+SELECT avg(LifeExpectancy) FROM country WHERE GovernmentForm LIKE '%Republic%' AND Continent = 'Africa'
+
+index is 728, level is easy
+SELECT sum(Population) FROM city WHERE District  =  "Gelderland"
+How many people live in Gelderland district?
+SQL generation:
+SELECT sum(population) FROM city WHERE district = 'Gelderland'
+self correction:
+SELECT SUM(Population) FROM city WHERE District = 'Gelderland'
+
+index is 733, level is easy
+SELECT count(DISTINCT LANGUAGE) FROM countrylanguage
+What is the number of distinct languages used around the world?
+SQL generation:
+SELECT count(DISTINCT language) FROM countrylanguage
+self correction:
+SELECT count(DISTINCT language) FROM countrylanguage
+
+index is 743, level is extra
+SELECT T1.Continent FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Continent ORDER BY COUNT(*) DESC LIMIT 1
+Which continent speaks the most languages?
+SQL generation:
+SELECT continent FROM countrylanguage GROUP BY continent ORDER BY count(language) DESC LIMIT 1
+self correction:
+SELECT country.Continent  FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  GROUP BY country.Continent  ORDER BY COUNT(DISTINCT countrylanguage.Language) DESC  LIMIT 1
+
+index is 754, level is extra
+select t1.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "english" and isofficial  =  "t" union select t1.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode where t2.language  =  "dutch" and isofficial  =  "t"
+What are the countries where either English or Dutch is the official language ?
+SQL generation:
+SELECT DISTINCT country.name FROM countrylanguage JOIN country ON countrylanguage.countrycode = country.code WHERE (countrylanguage.language = 'English' OR countrylanguage.language = 'Dutch') AND countrylanguage.isofficial = 'T'
+self correction:
+SELECT DISTINCT country.Name FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code WHERE (countrylanguage.Language = 'English' OR countrylanguage.Language = 'Dutch') AND countrylanguage.IsOfficial = 'T'
+
+index is 755, level is extra
+SELECT * FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "English" AND IsOfficial  =  "T" UNION SELECT * FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "Dutch" AND IsOfficial  =  "T"
+Which countries have either English or Dutch as an official language?
+SQL generation:
+SELECT DISTINCT name FROM country WHERE code IN (SELECT countrycode FROM countrylanguage WHERE language IN ('English', 'Dutch') AND isofficial = 'T')
+self correction:
+SELECT DISTINCT Name FROM country WHERE Code IN (SELECT CountryCode FROM countrylanguage WHERE Language IN ('English', 'Dutch') AND IsOfficial = 'T')
+
+index is 759, level is hard
+SELECT T2.Language FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T1.GovernmentForm  =  "Republic" GROUP BY T2.Language HAVING COUNT(*)  =  1
+What languages are only used by a single country with a republic government?
+SQL generation:
+SELECT DISTINCT language FROM countrylanguage WHERE countrycode IN (SELECT code FROM country WHERE governmentform = 'Republic') GROUP BY language HAVING count(*) = 1
+self correction:
+SELECT DISTINCT language FROM countrylanguage WHERE countrycode IN (SELECT code FROM country WHERE governmentform = 'Republic') GROUP BY language HAVING count(*) = 1
+
+index is 760, level is extra
+SELECT T1.Name ,  T1.Population FROM city AS T1 JOIN countrylanguage AS T2 ON T1.CountryCode  =  T2.CountryCode WHERE T2.Language  =  "English" ORDER BY T1.Population DESC LIMIT 1
+Find the city with the largest population that uses English.
+SQL generation:
+SELECT name FROM city WHERE population  =  (SELECT max(population) FROM city) AND CountryCode IN (SELECT code FROM countrylanguage WHERE Language  =  'English')
+self correction:
+SELECT city.Name, city.Population FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON countrylanguage.CountryCode = country.Code  WHERE countrylanguage.Language = 'English'  ORDER BY city.Population DESC  LIMIT 1;
+
+index is 773, level is hard
+SELECT Name FROM country WHERE SurfaceArea  >  (SELECT min(SurfaceArea) FROM country WHERE Continent  =  "Europe")
+Which countries have greater area than that of any country in Europe?
+SQL generation:
+SELECT DISTINCT name FROM country WHERE surfacearea > (SELECT max(surfacearea) FROM country WHERE continent = 'Europe')
+self correction:
+SELECT The SQLite SQL QUERY provided appears to be correct. It's intended to find the countries that have a larger surface area than any country in Europe. It does this by comparing the surface area of each country to the maximum surface area of any country in Europe.   Therefore, the FIXED SQL QUERY would remain unchanged:  ```SQL SELECT DISTINCT name FROM country WHERE surfacearea > (SELECT max(surfacearea) FROM country WHERE continent = 'Europe') ```
+
+index is 785, level is extra
+SELECT DISTINCT T2.Name FROM country AS T1 JOIN city AS T2 ON T2.CountryCode  =  T1.Code WHERE T1.Continent  =  'Europe' AND T1.Name NOT IN (SELECT T3.Name FROM country AS T3 JOIN countrylanguage AS T4 ON T3.Code  =  T4.CountryCode WHERE T4.IsOfficial  =  'T' AND T4.Language  =  'English')
+What are the names of cities in Europe for which English is not the official language?
+SQL generation:
+SELECT DISTINCT name FROM city JOIN country ON city.countrycode = country.code JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE country.continent = 'Europe' AND countrylanguage.language <> 'English'
+self correction:
+SELECT DISTINCT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.Continent = 'Europe'  AND (countrylanguage.Language <> 'English' OR countrylanguage.IsOfficial = 'F')
+
+index is 786, level is hard
+select distinct t3.name from country as t1 join countrylanguage as t2 on t1.code  =  t2.countrycode join city as t3 on t1.code  =  t3.countrycode where t2.isofficial  =  't' and t2.language  =  'chinese' and t1.continent  =  "asia"
+Which unique cities are in Asian countries where Chinese is the official language ?
+SQL generation:
+SELECT DISTINCT name FROM city JOIN country ON city.CountryCode = country.Code JOIN countrylanguage ON city.CountryCode = countrylanguage.CountryCode WHERE country.continent = 'Asia' AND countrylanguage.Language = 'Chinese' AND countrylanguage.IsOfficial = 'T'
+self correction:
+SELECT DISTINCT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE country.Continent = 'Asia' AND countrylanguage.Language = 'Chinese' AND countrylanguage.IsOfficial = 'T'
+
+index is 787, level is hard
+SELECT DISTINCT T3.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode JOIN city AS T3 ON T1.Code  =  T3.CountryCode WHERE T2.IsOfficial  =  'T' AND T2.Language  =  'Chinese' AND T1.Continent  =  "Asia"
+Return the different names of cities that are in Asia and for which Chinese is the official language.
+SQL generation:
+SELECT DISTINCT city.name FROM city JOIN country ON city.countrycode = country.code JOIN countrylanguage ON country.code = countrylanguage.countrycode WHERE country.continent = 'Asia' AND countrylanguage.language = 'Chinese' AND countrylanguage.isofficial = 'T'

@@ -1,0 +1,96 @@
+
+index is 11, level is medium
+SELECT country ,  count(*) FROM singer GROUP BY country
+How many singers are from each country?
+SQL generation:
+SELECT country , count(*) FROM singer GROUP BY country
+self correction:
+SELECT Country, COUNT(*) FROM singer GROUP BY Country
+
+index is 21, level is medium
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts occurred in 2014 or 2015?
+SQL generation:
+SELECT count(DISTINCT concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+self correction:
+SELECT count(DISTINCT concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+
+index is 25, level is extra
+select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1
+What is the name and capacity of the stadium with the most concerts after 2013 ?
+SQL generation:
+SELECT name ,  capacity FROM stadium WHERE stadium_id  =  (SELECT max(stadium_id) FROM concert WHERE year > 2013)
+self correction:
+SELECT s.name, s.capacity FROM stadium AS s JOIN concert AS c ON s.Stadium_ID = c.Stadium_ID WHERE c.Year > 2013 GROUP BY s.Stadium_ID ORDER BY COUNT(c.concert_ID) DESC LIMIT 1
+
+index is 28, level is hard
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+Show the stadium names without any concert.
+SQL generation:
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert)
+self correction:
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)
+
+index is 32, level is hard
+SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014
+What are the names of all stadiums that did not have a concert in 2014?
+SQL generation:
+SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert WHERE year = 2014)
+self correction:
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = 2014)
+
+index is 37, level is hard
+SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014
+List all singer names in concerts in year 2014.
+SQL generation:
+SELECT DISTINCT singer.name FROM singer_in_concert JOIN concert ON singer_in_concert.concert_id = concert.concert_ID JOIN singer ON singer_in_concert.singer_id = singer.singer_ID WHERE concert.year = 2014
+self correction:
+SELECT DISTINCT singer.Name FROM singer_in_concert JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE concert.Year = 2014
+
+index is 45, level is easy
+SELECT count(*) FROM pets WHERE weight  >  10
+Find the number of pets whose weight is heavier than 10.
+SQL generation:
+SELECT count(*) FROM Pets WHERE weight > 10
+self correction:
+SELECT count(*) FROM Pets WHERE weight > 10
+
+index is 46, level is easy
+SELECT count(*) FROM pets WHERE weight  >  10
+How many pets have a greater weight than 10?
+SQL generation:
+SELECT count(*) FROM pets WHERE weight  >  10
+self correction:
+SELECT The original SQL query seems to correctly answer the question. It counts the number of pets with weight greater than 10. No JOIN operations, DISTINCT, DESC, or GROUP BY clauses are needed based on the provided question. Thus, the fixed SQL query would be the same as the original one:  ```sql SELECT count(*) FROM Pets WHERE weight  >  10 ```  Here, I've just capitalized the table name to maintain SQL syntax conventions, but in SQLite, table names are case-insensitive, so the original query would work as well.
+
+index is 60, level is extra
+SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog'
+What are the students' first names who have both cats and dogs as pets?
+SQL generation:
+SELECT DISTINCT fname FROM student JOIN has_pet ON student.stuid = has_pet.stuid JOIN pets ON has_pet.petid = pets.petid WHERE pets.pettype = 'cat' OR pets.pettype = 'dog'
+self correction:
+SELECT DISTINCT Fname FROM Student WHERE StuID IN (     SELECT Has_Pet.StuID     FROM Has_Pet     JOIN Pets ON Has_Pet.PetID = Pets.PetID     WHERE Pets.PetType = 'Cat' )  AND StuID IN (     SELECT Has_Pet.StuID     FROM Has_Pet     JOIN Pets ON Has_Pet.PetID = Pets.PetID     WHERE Pets.PetType = 'Dog' )
+
+index is 77, level is medium
+SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith'
+Find the id of the pet owned by student whose last name is ‘Smith’.
+SQL generation:
+SELECT has_pet.petid FROM student JOIN has_pet ON student.stuid  =  has_pet.stuid WHERE student.lname  =  'Smith'
+self correction:
+SELECT has_pet.PetID FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID WHERE Student.LName = 'Smith'
+
+index is 90, level is medium
+SELECT T1.ContId ,  T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.Continent GROUP BY T1.ContId;
+For each continent, list its id, name, and how many countries it has?
+SQL generation:
+SELECT contid , continent , count(countryname) FROM continents JOIN countries ON continents.contid = countries.continent GROUP BY contid , continent
+self correction:
+SELECT continents.ContId , continents.Continent , COUNT(countries.CountryName)  FROM continents  JOIN countries ON continents.ContId = countries.Continent  GROUP BY continents.ContId, continents.Continent
+
+index is 99, level is extra
+SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';
+Find the name of the makers that produced some cars in the year of 1970?
+SQL generation:
+SELECT DISTINCT maker FROM car_makers JOIN car_names ON car_makers.id = car_names.makeid JOIN cars_data ON car_names.makeid = cars_data.id WHERE cars_data.year = 1970
+self correction:
+SELECT DISTINCT Maker FROM car_makers  JOIN model_list ON car_makers.Id = model_list.Maker  JOIN car_names ON model_list.Model = car_names.Model  JOIN cars_data ON car_names.MakeId = cars_data.Id  WHERE cars_data.Year = 1970

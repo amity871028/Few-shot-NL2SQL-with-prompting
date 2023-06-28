@@ -1,0 +1,414 @@
+
+index is 0
+SELECT count(*) FROM singer
+How many singers do we have?
+schema_links:
+How many singers do we have? | singer : singer.singer_id , singer.name , singer.country , singer.song_name , singer.song_release_year , singer.* | stadium : stadium.capacity , stadium.location , stadium.name , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.singer_id , singer_in_concert.concert_id , singer_in_concert.*
+natsql and SQL generation:
+select count ( _ ) from _ | select count ( singer.singer_id ) from singer
+SQL = SELECT count(singer_id) FROM singer
+natsql:
+select count ( _ ) from _ | select count ( singer.singer_id ) from singer
+
+SQL:
+SELECT count(singer_id) FROM singer
+self correction:
+SELECT count(Singer_ID) FROM singer
+
+index is 1
+SELECT count(*) FROM singer
+What is the total number of singers?
+schema_links:
+What is the total number of singers? | singer : singer.singer_id , singer.name , singer.country , singer.song_name , singer.age , singer.* | stadium : stadium.capacity , stadium.highest , stadium.lowest , stadium.location , stadium.name , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.singer_id , singer_in_concert.concert_id , singer_in_concert.*
+natsql and SQL generation:
+select count ( _ ) from _ | select count ( singer.singer_id ) from singer
+SQL = SELECT count(singer_id) FROM singer
+natsql:
+select count ( _ ) from _ | select count ( singer.singer_id ) from singer
+
+SQL:
+SELECT count(singer_id) FROM singer
+self correction:
+SELECT COUNT(Singer_ID) FROM singer
+
+index is 2
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+Show name, country, age for all singers ordered by age from the oldest to the youngest.
+schema_links:
+Show name, country, age for all singers ordered by age from the oldest to the youngest. | singer : singer.name , singer.country , singer.age , singer.song_name , singer.is_male , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ , _ from _ order by _ desc | select singer.name , singer.country , singer.age from singer order by singer.age desc
+SQL = SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+natsql:
+select _ , _ , _ from _ order by _ desc | select singer.name , singer.country , singer.age from singer order by singer.age desc
+
+SQL:
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+self correction:
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+
+index is 3
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+What are the names, countries, and ages for every singer in descending order of age?
+schema_links:
+What are the names, countries, and ages for every singer in descending order of age? | singer : singer.name , singer.country , singer.age , singer.song_name , singer.singer_id , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ , _ from _ order by _ desc | select singer.name , singer.country , singer.age from singer order by singer.age desc
+SQL = SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+natsql:
+select _ , _ , _ from _ order by _ desc | select singer.name , singer.country , singer.age from singer order by singer.age desc
+
+SQL:
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC
+self correction:
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+
+index is 4
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'
+What is the average, minimum, and maximum age of all singers from France?
+schema_links:
+What is the average, minimum, and maximum age of all singers from France? | singer : singer.country ( France ) , singer.age , singer.name , singer.is_male , singer.singer_id , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select avg ( _ ) , min ( _ ) , max ( _ ) from _ where @.@ = _ | select avg ( singer.age ) , min ( singer.age ) , max ( singer.age ) from singer where singer.country = 'France'
+SQL = SELECT avg(age) , min(age) , max(age) FROM singer WHERE country  =  'France'
+natsql:
+select avg ( _ ) , min ( _ ) , max ( _ ) from _ where @.@ = _ | select avg ( singer.age ) , min ( singer.age ) , max ( singer.age ) from singer where singer.country = 'France'
+
+SQL:
+SELECT avg(age) , min(age) , max(age) FROM singer WHERE country  =  'France'
+self correction:
+SELECT avg(Age) , min(Age) , max(Age) FROM singer WHERE Country = 'France'
+
+index is 5
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'
+What is the average, minimum, and maximum age for all French singers?
+schema_links:
+What is the average, minimum, and maximum age for all French singers? | singer : singer.country , singer.age , singer.name , singer.is_male , singer.song_name , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select avg ( _ ) , min ( _ ) , max ( _ ) from _ where _ | select avg ( singer.age ) , min ( singer.age ) , max ( singer.age ) from singer where singer.country = 'France'
+SQL = SELECT AVG(age) ,  MIN(age) ,  MAX(age) FROM singer WHERE country = 'France'
+natsql:
+select avg ( _ ) , min ( _ ) , max ( _ ) from _ where _ | select avg ( singer.age ) , min ( singer.age ) , max ( singer.age ) from singer where singer.country = 'France'
+
+SQL:
+SELECT AVG(age) ,  MIN(age) ,  MAX(age) FROM singer WHERE country = 'France'
+self correction:
+SELECT AVG(age), MIN(age), MAX(age) FROM singer WHERE Country = 'France'
+
+index is 6
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1
+Show the name and the release year of the song by the youngest singer.
+schema_links:
+Show the name and the release year of the song by the youngest singer. | singer : singer.song_name , singer.song_release_year , singer.age , singer.name , singer.singer_id , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , min ( _ ) from _ | select singer.name , min ( singer.age ) from singer group by singer.name
+SQL = SELECT name , MIN(age) FROM singer GROUP BY name
+natsql:
+select _ , min ( _ ) from _ | select singer.name , min ( singer.age ) from singer group by singer.name
+
+SQL:
+SELECT name , MIN(age) FROM singer GROUP BY name
+self correction:
+SELECT Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+
+index is 7
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1
+What are the names and release years for all the songs of the youngest singer?
+schema_links:
+What are the names and release years for all the songs of the youngest singer? | singer : singer.song_release_year , singer.song_name , singer.age , singer.name , singer.is_male , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ from _ where _ = ( select min ( _ ) from _ ) | select singer.name , singer.song_release_year from singer where singer.age = ( select min ( singer.age ) from singer )
+SQL = SELECT name , song_release_year FROM singer WHERE age = (SELECT min(age) FROM singer)
+natsql:
+select _ , _ from _ where _ = ( select min ( _ ) from _ ) | select singer.name , singer.song_release_year from singer where singer.age = ( select min ( singer.age ) from singer )
+
+SQL:
+SELECT name , song_release_year FROM singer WHERE age = (SELECT min(age) FROM singer)
+self correction:
+SELECT Name , Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+
+index is 8
+SELECT DISTINCT country FROM singer WHERE age  >  20
+What are all distinct countries where singers above age 20 are from?
+schema_links:
+What are all distinct countries where singers above age 20 are from? | singer : singer.country , singer.age , singer.name , singer.song_name , singer.singer_id , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select distinct _ from _ where @.@ > _ | select distinct singer.country from singer where singer.age > 20
+SQL = SELECT DISTINCT country FROM singer WHERE age > 20
+natsql:
+select distinct _ from _ where @.@ > _ | select distinct singer.country from singer where singer.age > 20
+
+SQL:
+SELECT DISTINCT country FROM singer WHERE age > 20
+self correction:
+SELECT DISTINCT Country FROM singer WHERE Age > 20
+
+index is 9
+SELECT DISTINCT country FROM singer WHERE age  >  20
+What are  the different countries with singers above age 20?
+schema_links:
+What are  the different countries with singers above age 20? | singer : singer.country , singer.age , singer.name , singer.song_name , singer.is_male , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select distinct _ from _ where _ > _ | select distinct singer.country from singer where singer.age > 20
+SQL = SELECT DISTINCT country FROM singer WHERE age > 20
+natsql:
+select distinct _ from _ where _ > _ | select distinct singer.country from singer where singer.age > 20
+
+SQL:
+SELECT DISTINCT country FROM singer WHERE age > 20
+self correction:
+SELECT DISTINCT country FROM singer WHERE age > 20
+
+index is 10
+SELECT country ,  count(*) FROM singer GROUP BY country
+Show all countries and the number of singers in each country.
+schema_links:
+Show all countries and the number of singers in each country. | singer : singer.country , singer.name , singer.song_name , singer.age , singer.is_male , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , count ( _ ) from _ group by _ | select singer.country , count ( singer.* ) from singer group by singer.country
+SQL = SELECT country ,  COUNT(*) FROM singer GROUP BY country
+natsql:
+select _ , count ( _ ) from _ group by _ | select singer.country , count ( singer.* ) from singer group by singer.country
+
+SQL:
+SELECT country ,  COUNT(*) FROM singer GROUP BY country
+self correction:
+SELECT The provided SQLite SQL query seems correct as per the requirements mentioned in the question. The task is to display all countries and the number of singers in each country. This is done by grouping singers by country and counting the number of singers in each country. The query does not require any other table for joining because all necessary data is available in the 'singer' table. So, the fixed SQL query is as follows:  ```sql SELECT country , COUNT(*) FROM singer GROUP BY country ```
+
+index is 11
+SELECT country ,  count(*) FROM singer GROUP BY country
+How many singers are from each country?
+schema_links:
+How many singers are from each country? | singer : singer.country , singer.singer_id , singer.name , singer.song_name , singer.age , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , count ( _ ) from _ group by _ | select singer.country , count ( singer.singer_id ) from singer group by singer.country
+SQL = SELECT country ,  COUNT(singer_id) FROM singer GROUP BY country
+natsql:
+select _ , count ( _ ) from _ group by _ | select singer.country , count ( singer.singer_id ) from singer group by singer.country
+
+SQL:
+SELECT country ,  COUNT(singer_id) FROM singer GROUP BY country
+self correction:
+SELECT The original SQL query is correct based on the question asked. So the fixed query is the same:  ```sql SELECT country, COUNT(Singer_ID) FROM singer GROUP BY country ```
+
+index is 12
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+List all song names by singers above the average age.
+schema_links:
+List all song names by singers above the average age. | singer : singer.song_name , singer.age , singer.name , singer.song_release_year , singer.country , singer.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ from _ where _ > avg ( _ ) | select singer.song_name from singer where singer.age > avg ( singer.age )
+SQL = SELECT song_name FROM singer WHERE age > (SELECT avg(age) FROM singer)
+natsql:
+select _ from _ where _ > avg ( _ ) | select singer.song_name from singer where singer.age > avg ( singer.age )
+
+SQL:
+SELECT song_name FROM singer WHERE age > (SELECT avg(age) FROM singer)
+self correction:
+SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)
+
+index is 13
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+What are all the song names by singers who are older than average?
+schema_links:
+What are all the song names by singers who are older than average? | singer : singer.song_name , singer.age , singer.name , singer.song_release_year , singer.country , singer.* | stadium : stadium.average , stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ from _ where @.@ > avg ( _ ) | select singer.song_name from singer where @.@ > avg ( singer.age )
+SQL = SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+natsql:
+select _ from _ where @.@ > avg ( _ ) | select singer.song_name from singer where @.@ > avg ( singer.age )
+
+SQL:
+SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer)
+self correction:
+SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer)
+
+index is 14
+SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+Show location and name for all stadiums with a capacity between 5000 and 10000.
+schema_links:
+Show location and name for all stadiums with a capacity between 5000 and 10000. | stadium : stadium.name , stadium.capacity , stadium.location , stadium.highest , stadium.stadium_id , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ from _ where _ between _ and _ | select stadium.location , stadium.name from stadium where stadium.capacity between 5000 and 10000
+SQL = SELECT location ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+natsql:
+select _ , _ from _ where _ between _ and _ | select stadium.location , stadium.name from stadium where stadium.capacity between 5000 and 10000
+
+SQL:
+SELECT location ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+self correction:
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+
+index is 15
+SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+What are the locations and names of all stations with capacity between 5000 and 10000?
+schema_links:
+What are the locations and names of all stations with capacity between 5000 and 10000? | stadium : stadium.capacity , stadium.name , stadium.location , stadium.stadium_id , stadium.highest , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ from _ where _ between _ and _ | select stadium.location , stadium.name from stadium where stadium.capacity between 5000 and 10000
+SQL = SELECT location ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+natsql:
+select _ , _ from _ where _ between _ and _ | select stadium.location , stadium.name from stadium where stadium.capacity between 5000 and 10000
+
+SQL:
+SELECT location ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000
+self correction:
+SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000
+
+index is 16
+select max(capacity), average from stadium
+What is the maximum capacity and the average of all stadiums ?
+schema_links:
+What is the maximum capacity and the average of all stadiums ? | stadium : stadium.average , stadium.capacity , stadium.highest , stadium.lowest , stadium.name , stadium.* | concert : concert.theme , concert.year , concert.concert_id , concert.concert_name , concert.stadium_id , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select max ( _ ) , avg ( _ ) from _ | select max ( stadium.capacity ) , avg ( stadium.capacity ) from stadium
+SQL = SELECT max(capacity) ,  AVG(capacity) FROM stadium
+natsql:
+select max ( _ ) , avg ( _ ) from _ | select max ( stadium.capacity ) , avg ( stadium.capacity ) from stadium
+
+SQL:
+SELECT max(capacity) ,  AVG(capacity) FROM stadium
+self correction:
+SELECT max(Capacity), AVG(Capacity) FROM stadium
+
+index is 17
+select avg(capacity) ,  max(capacity) from stadium
+What is the average and maximum capacities for all stadiums ?
+schema_links:
+What is the average and maximum capacities for all stadiums ? | stadium : stadium.capacity , stadium.average , stadium.highest , stadium.lowest , stadium.location , stadium.* | concert : concert.concert_name , concert.theme , concert.year , concert.concert_id , concert.stadium_id , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select avg ( _ ) , max ( _ ) from _ | select avg ( stadium.capacity ) , max ( stadium.capacity ) from stadium
+SQL = SELECT AVG(capacity) , MAX(capacity) FROM stadium
+natsql:
+select avg ( _ ) , max ( _ ) from _ | select avg ( stadium.capacity ) , max ( stadium.capacity ) from stadium
+
+SQL:
+SELECT AVG(capacity) , MAX(capacity) FROM stadium
+self correction:
+SELECT AVG(Capacity), MAX(Capacity) FROM stadium
+
+index is 18
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+What is the name and capacity for the stadium with highest average attendance?
+schema_links:
+What is the name and capacity for the stadium with highest average attendance? | stadium : stadium.name , stadium.capacity , stadium.average , stadium.highest , stadium.stadium_id , stadium.* | concert : concert.concert_name , concert.theme , concert.year , concert.concert_id , concert.stadium_id , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ from _ order by avg ( _ ) desc limit _ | select stadium.name , stadium.capacity from stadium order by stadium.average desc limit 1
+SQL = SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+natsql:
+select _ , _ from _ order by avg ( _ ) desc limit _ | select stadium.name , stadium.capacity from stadium order by stadium.average desc limit 1
+
+SQL:
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+self correction:
+SELECT The provided SQLite SQL QUERY appears to be correct. The question is asking for the name and capacity of the stadium with the highest average attendance. The SQL query is selecting the name and capacity columns from the stadium table, ordering the results by the average column in descending order, and then limiting the results to the first one. This would indeed give the name and capacity of the stadium with the highest average attendance. So, there's no need to change anything.  Here is the SQL query again:  ```sql SELECT name , capacity FROM stadium ORDER BY average DESC LIMIT 1 ```
+
+index is 19
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1
+What is the name and capacity for the stadium with the highest average attendance?
+schema_links:
+What is the name and capacity for the stadium with the highest average attendance? | stadium : stadium.name , stadium.capacity , stadium.average , stadium.highest , stadium.stadium_id , stadium.* | concert : concert.concert_name , concert.theme , concert.year , concert.concert_id , concert.stadium_id , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , max ( avg ( _ ) ) from _ group by _ | select stadium.name , stadium.capacity from stadium where stadium.average = max ( stadium.average )
+SQL = SELECT name , capacity FROM stadium WHERE average  =  (SELECT max(average) FROM stadium)
+natsql:
+select _ , max ( avg ( _ ) ) from _ group by _ | select stadium.name , stadium.capacity from stadium where stadium.average = max ( stadium.average )
+
+SQL:
+SELECT name , capacity FROM stadium WHERE average  =  (SELECT max(average) FROM stadium)
+self correction:
+SELECT name, capacity FROM stadium WHERE average  =  (SELECT max(average) FROM stadium)
+
+index is 20
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts are there in year 2014 or 2015?
+schema_links:
+How many concerts are there in year 2014 or 2015? | concert : concert.year , concert.concert_name , concert.concert_id , concert.theme , concert.stadium_id , concert.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select count ( distinct _ ) from _ where _ or _ | select count ( distinct concert.concert_id ) from concert where concert.year = 2014 or concert.year = 2015
+SQL = SELECT COUNT(DISTINCT concert_ID) FROM concert WHERE year = 2014 OR year = 2015
+natsql:
+select count ( distinct _ ) from _ where _ or _ | select count ( distinct concert.concert_id ) from concert where concert.year = 2014 or concert.year = 2015
+
+SQL:
+SELECT COUNT(DISTINCT concert_ID) FROM concert WHERE year = 2014 OR year = 2015
+self correction:
+SELECT COUNT(DISTINCT concert_ID) FROM concert WHERE Year = 2014 OR Year = 2015
+
+index is 21
+SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015
+How many concerts occurred in 2014 or 2015?
+schema_links:
+How many concerts occurred in 2014 or 2015? | concert : concert.year , concert.concert_name , concert.concert_id , concert.theme , concert.stadium_id , concert.* | stadium : stadium.capacity , stadium.location , stadium.name , stadium.highest , stadium.lowest , stadium.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select count ( _ ) from _ where year = _ or year = _ | select count ( concert.* ) from concert where year = 2014 or year = 2015
+SQL = SELECT count(*) FROM concert WHERE year  =  2014 OR year  =  2015
+natsql:
+select count ( _ ) from _ where year = _ or year = _ | select count ( concert.* ) from concert where year = 2014 or year = 2015
+
+SQL:
+SELECT count(*) FROM concert WHERE year  =  2014 OR year  =  2015
+self correction:
+SELECT count(*) FROM concert WHERE Year IN (2014, 2015)
+
+index is 22
+SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id
+Show the stadium name and the number of concerts in each stadium.
+schema_links:
+Show the stadium name and the number of concerts in each stadium. | stadium : stadium.name , stadium.stadium_id , stadium.capacity , stadium.location , stadium.highest , stadium.* | concert : concert.stadium_id , concert.concert_name , concert.concert_id , concert.theme , concert.year , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , count ( _ ) from _ group by _ | select stadium.name , count ( concert.concert_id ) from stadium join concert on stadium.stadium_id = concert.stadium_id group by stadium.name
+SQL = SELECT stadium.name , COUNT(concert.concert_ID) FROM stadium JOIN concert ON stadium.Stadium_ID  =  concert.Stadium_ID GROUP BY stadium.name
+natsql:
+select _ , count ( _ ) from _ group by _ | select stadium.name , count ( concert.concert_id ) from stadium join concert on stadium.stadium_id = concert.stadium_id group by stadium.name
+
+SQL:
+SELECT stadium.name , COUNT(concert.concert_ID) FROM stadium JOIN concert ON stadium.Stadium_ID  =  concert.Stadium_ID GROUP BY stadium.name
+self correction:
+SELECT stadium.Name , COUNT(concert.concert_ID)  FROM stadium  JOIN concert  ON stadium.Stadium_ID  =  concert.Stadium_ID  GROUP BY stadium.Name
+
+index is 23
+SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id
+For each stadium, how many concerts play there?
+schema_links:
+For each stadium, how many concerts play there? | concert : concert.stadium_id , concert.concert_name , concert.theme , concert.year , concert.concert_id , concert.* | stadium : stadium.name , stadium.stadium_id , stadium.capacity , stadium.highest , stadium.location , stadium.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , count ( _ ) from _ group by _ | select stadium.name , count ( concert.concert_id ) from stadium join concert on stadium.stadium_id = concert.stadium_id group by stadium.name
+SQL = SELECT stadium.name , COUNT(concert.concert_ID) FROM stadium JOIN concert ON stadium.stadium_ID = concert.stadium_ID GROUP BY stadium.name
+natsql:
+select _ , count ( _ ) from _ group by _ | select stadium.name , count ( concert.concert_id ) from stadium join concert on stadium.stadium_id = concert.stadium_id group by stadium.name
+
+SQL:
+SELECT stadium.name , COUNT(concert.concert_ID) FROM stadium JOIN concert ON stadium.stadium_ID = concert.stadium_ID GROUP BY stadium.name
+self correction:
+SELECT stadium.name, COUNT(concert.concert_ID)  FROM stadium  JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID  GROUP BY stadium.name
+
+index is 24
+SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1
+Show the stadium name and capacity with most number of concerts in year 2014 or after.
+schema_links:
+Show the stadium name and capacity with most number of concerts in year 2014 or after. | stadium : stadium.name , stadium.capacity , stadium.stadium_id , stadium.location , stadium.highest , stadium.* | concert : concert.year , concert.stadium_id , concert.concert_name , concert.concert_id , concert.theme , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ , _ from _ where @.@ >= _ group by _ order by count ( _ ) desc limit _ | select stadium.name , stadium.capacity from stadium join concert on stadium.stadium_id = concert.stadium_id where concert.year >= 2014 group by stadium.name , stadium.capacity order by count(concert.concert_id) desc limit 1
+SQL = SELECT name ,  capacity FROM stadium JOIN concert ON stadium.stadium_id  =  concert.stadium_id WHERE concert.year >= 2014 GROUP BY stadium.name ,  stadium.capacity ORDER BY count(concert.concert_id) DESC LIMIT 1
+natsql:
+select _ , _ from _ where @.@ >= _ group by _ order by count ( _ ) desc limit _ | select stadium.name , stadium.capacity from stadium join concert on stadium.stadium_id = concert.stadium_id where concert.year >= 2014 group by stadium.name , stadium.capacity order by count(concert.concert_id) desc limit 1
+
+SQL:
+SELECT name ,  capacity FROM stadium JOIN concert ON stadium.stadium_id  =  concert.stadium_id WHERE concert.year >= 2014 GROUP BY stadium.name ,  stadium.capacity ORDER BY count(concert.concert_id) DESC LIMIT 1
+self correction:
+SELECT stadium.Name, stadium.Capacity FROM stadium JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Year >= 2014 GROUP BY stadium.Stadium_ID ORDER BY COUNT(concert.concert_ID) DESC LIMIT 1
+
+index is 25
+select t2.name ,  t2.capacity from concert as t1 join stadium as t2 on t1.stadium_id  =  t2.stadium_id where t1.year  >  2013 group by t2.stadium_id order by count(*) desc limit 1
+What is the name and capacity of the stadium with the most concerts after 2013 ?
+schema_links:
+What is the name and capacity of the stadium with the most concerts after 2013 ? | stadium : stadium.name , stadium.capacity , stadium.stadium_id , stadium.location , stadium.highest , stadium.* | concert : concert.year , concert.stadium_id , concert.concert_name , concert.concert_id , concert.theme , concert.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ from _ where _ = ( select _ from _ where _ > _ limit _ ) | select stadium.name , stadium.capacity from stadium where stadium.stadium_id = ( select concert.stadium_id from concert where concert.year > 2013 limit 1 )
+SQL = SELECT name ,  capacity FROM stadium WHERE stadium_id  =  (SELECT stadium_id FROM concert WHERE year  >  2013 LIMIT 1)
+natsql:
+select _ from _ where _ = ( select _ from _ where _ > _ limit _ ) | select stadium.name , stadium.capacity from stadium where stadium.stadium_id = ( select concert.stadium_id from concert where concert.year > 2013 limit 1 )
+
+SQL:
+SELECT name ,  capacity FROM stadium WHERE stadium_id  =  (SELECT stadium_id FROM concert WHERE year  >  2013 LIMIT 1)

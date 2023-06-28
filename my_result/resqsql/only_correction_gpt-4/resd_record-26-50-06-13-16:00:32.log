@@ -1,0 +1,14 @@
+
+index is 26
+SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1
+Which year has most number of concerts?
+schema_links:
+Which year has most number of concerts? | concert : concert.year , concert.concert_name , concert.theme , concert.concert_id , concert.stadium_id , concert.* | stadium : stadium.location , stadium.name , stadium.capacity , stadium.highest , stadium.lowest , stadium.* | singer : singer.name , singer.country , singer.age , singer.singer_id , singer.song_name , singer.* | singer_in_concert : singer_in_concert.concert_id , singer_in_concert.singer_id , singer_in_concert.*
+natsql and SQL generation:
+select _ from _ group by _ order by count ( _ ) desc limit _ | select concert.year from concert group by concert.year order by count ( concert.* ) desc limit 1
+SQL = SELECT year FROM concert GROUP BY year ORDER BY count(*) DESC LIMIT 1
+natsql:
+select _ from _ group by _ order by count ( _ ) desc limit _ | select concert.year from concert group by concert.year order by count ( concert.* ) desc limit 1
+
+SQL:
+SELECT year FROM concert GROUP BY year ORDER BY count(*) DESC LIMIT 1
